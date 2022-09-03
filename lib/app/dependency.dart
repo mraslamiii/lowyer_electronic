@@ -1,0 +1,5 @@
+class DependencyCrator {
+  static init() {
+
+  }
+}
