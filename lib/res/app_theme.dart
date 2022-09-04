@@ -24,9 +24,14 @@ class AppThemes {
       dialogBackgroundColor: AppColors.surfaceColor,
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
+
       toggleableActiveColor: AppColors.primaryColor,
       applyElevationOverlayColor: false,
       textTheme:  TextTheme(
+
+        headline5: TextStyle(
+          fontWeight: FontWeight.w700,
+        ),
         subtitle1: TextStyle(
           fontWeight: FontWeight.w600,
         ),
@@ -35,7 +40,8 @@ class AppThemes {
       appBarTheme:  AppBarTheme(
           centerTitle: true,
           color: AppColors.backgroundColor,
-          elevation: 0.9,
+          elevation: 0.6,
+shadowColor: AppColors.primaryColor.withOpacity(0.2),
           titleTextStyle: TextStyle(
               color: AppColors.textBlackColor,
               fontFamily: 'Vazir',
@@ -106,9 +112,11 @@ class AppThemes {
           space: 0),
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
+
               primary: AppColors.primaryColor,
               shadowColor: AppColors.primaryColor.withOpacity(0.50),
               elevation: 0,
+
               padding: EdgeInsets.symmetric(vertical: standardSize,horizontal: standardSize),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(smallRadius),
@@ -116,6 +124,7 @@ class AppThemes {
       buttonTheme: ButtonThemeData(
           padding: EdgeInsets.all(smallSize),
           buttonColor: AppColors.primaryColor,
+          disabledColor: AppColors.primaryColor.withOpacity(0.2),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(mediumRadius),
           )),

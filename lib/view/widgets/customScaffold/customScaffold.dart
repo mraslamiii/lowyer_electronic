@@ -5,10 +5,12 @@ import 'package:kanoon_dadgostari/utilites/utilities.dart';
 
 import '../no_internet_widget/no_internet_widget.dart';
 
-Widget customScaffold(
-    {required BuildContext context,
-    required Widget body,
-     AppBar? appBar}) {
+Widget customScaffold({
+  required BuildContext context,
+  required Widget body,
+  AppBar? appBar,
+  BottomAppBar? bottomAppBar,
+}) {
   // ConnectionStatusController noInternet = Get.find();
 
   return GestureDetector(
@@ -16,6 +18,7 @@ Widget customScaffold(
       closeKeyboard(context);
     },
     child: Scaffold(
+      bottomNavigationBar: bottomAppBar,
       appBar: appBar,
       body: body,
       // body: noInternet.connectionStatus.value == ConnectionStatus.disconnect

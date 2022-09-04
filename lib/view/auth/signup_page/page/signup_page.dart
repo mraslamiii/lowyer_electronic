@@ -80,7 +80,8 @@ class SignUpPage extends StatelessWidget {
                             textDirection: TextDirection.rtl,
                             hint: "انتخاب تاریخ تولد",
                             maxLine: 1,
-                            textEditingController: controller.phoneTxtController),
+                            textEditingController:
+                                controller.phoneTxtController),
                       ),
                       const Expanded(child: SizedBox()),
                       Padding(
@@ -89,14 +90,13 @@ class SignUpPage extends StatelessWidget {
                           width: fullWidth,
                           child: Obx(
                             () => ElevatedButton(
-                                onPressed:
-                                    controller.idCodeNumber.value.isNotEmpty &&
-                                            controller.dateTimeTxtController.text
-                                                .isNotEmpty
-                                        ? () {
-                                            controller.submitFunc();
-                                          }
-                                        : null,
+                                onPressed: controller
+                                            .idCodeNumber.value.isNotEmpty &&
+                                        controller.dateTimeTxt.value.isNotEmpty
+                                    ? () {
+                                        controller.submitFunc();
+                                      }
+                                    : null,
                                 child: const Text("ارسال کد تایید")),
                           ),
                         ),

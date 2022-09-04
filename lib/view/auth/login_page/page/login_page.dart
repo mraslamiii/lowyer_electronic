@@ -17,6 +17,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<LoginController>(
+      init: LoginController(),
       builder: (controller) => WillPopScope(
         onWillPop: () => controller.back(),
         child: customScaffold(

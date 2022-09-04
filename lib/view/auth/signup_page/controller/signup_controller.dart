@@ -108,6 +108,7 @@ class SignUPController extends GetxController {
 
   void showDatePicker(BuildContext context) async {
     Jalali? picked = await showPersianDatePicker(
+
       context: context,
       initialDate: Jalali.now(),
       firstDate: Jalali(1320, 8),

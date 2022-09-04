@@ -9,6 +9,7 @@ import 'package:kanoon_dadgostari/service/preferences_service.dart';
 
 import 'package:kanoon_dadgostari/view/Intro/splash_page/page/splash_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:kanoon_dadgostari/view/user/page/lowyer_card_page.dart';
 
 import 'app/app_pages.dart';
 import 'data/network/network_api_service.dart';
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
       locale: Locale("fa", "IR"),
       // OR Locale('ar', 'AE') OR Other RTL locales,
 
-      home: const SplashPage(),
+      home: const LawyerCardPage(),
       theme: AppThemes.lightThemeMobile(context),
       initialBinding: ConnectionStatusBinding(),
       builder: (context, widget) {

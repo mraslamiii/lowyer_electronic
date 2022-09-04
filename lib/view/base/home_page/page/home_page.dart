@@ -20,82 +20,79 @@ class HomePage extends StatelessWidget {
       init: HomeController(),
       builder: (controller) => customScaffold(
         context: context,
-        body: Padding(
-          padding: EdgeInsets.only(
-              right: largeSize, left: largeSize, top: xxLargeSize * 1.6),
-          child: Column(
-              children: [
-            Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: mediumSize, vertical: mediumSize),
-              decoration: BoxDecoration(
-                  color: AppColors.formFieldColor,
-                  borderRadius: BorderRadius.circular(standardRadius)),
-              child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: fullWidth / 4.8,
-                      height: fullWidth / 4.8,
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage('assets/images/avatar.JPG'),
+        body: Column(
+            children: [
+          Container(
+            margin: EdgeInsets.only(top: kToolbarHeight,left: largeSize,right: largeSize),
+            padding: EdgeInsets.symmetric(
+                horizontal: mediumSize, vertical: mediumSize),
+            decoration: BoxDecoration(
+                color: AppColors.formFieldColor,
+                borderRadius: BorderRadius.circular(standardRadius)),
+            child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: fullWidth / 4.8,
+                    height: fullWidth / 4.8,
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage('assets/images/avatar.JPG'),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(right: xxSmallSize),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Flexible(child: titleWidget("حمیدرضا اسلمی")),
+                              Icon(Icons.notifications_none_outlined)
+                            ],
+                          ),
+                          titleWidget("شماره فعالیت : 31553231"),
+                          titleWidget("شهر محل فعالیت : مشهد"),
+                        ],
                       ),
                     ),
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.only(right: xxSmallSize),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Flexible(child: titleWidget("حمیدرضا اسلمی")),
-                                Icon(Icons.notifications_none_outlined)
-                              ],
-                            ),
-                            titleWidget("شماره فعالیت : 31553231"),
-                            titleWidget("شهر محل فعالیت : مشهد"),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ]),
-            ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: standardSize),
-                child: GridView(
-                  physics: NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3, childAspectRatio: 1 / 1.1),
-                  children: [
-                    menuItemWidget(
-                        'assets/icons/card.png', 'وکیل کارت'),
-                    menuItemWidget(
-                        'assets/icons/shop.png', 'مرکز رفاهی'),
-                    menuItemWidget(
-                        'assets/icons/edu.png', 'مرکز آموزش'),
-                    menuItemWidget(
-                        'assets/icons/daftaryab.png', 'دفتریاب'),
-                    menuItemWidget(
-                        'assets/icons/search.png', 'انتخابات'),
-                    menuItemWidget(
-                        'assets/icons/electronic.png', 'دولت الکترونیک'),
-                    menuItemWidget(
-                        'assets/icons/dadsara.png', 'دادسرا'),
-                    menuItemWidget(
-                        'assets/icons/add_person.png', 'جذب نیرو'),
-                    menuItemWidget(
-                        'assets/icons/peymant.png', 'درگاه خدمات'),
-                  ],
-                ),
+                  ),
+                ]),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: mediumSize,horizontal: smallSize),
+              child: GridView(
+                physics: NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3, childAspectRatio: 1 / 1.1),
+                children: [
+                  menuItemWidget(
+                      'assets/icons/card.png', 'وکیل کارت'),
+                  menuItemWidget(
+                      'assets/icons/shop.png', 'مرکز رفاهی'),
+                  menuItemWidget(
+                      'assets/icons/edu.png', 'مرکز آموزش'),
+                  menuItemWidget(
+                      'assets/icons/daftaryab.png', 'دفتریاب'),
+                  menuItemWidget(
+                      'assets/icons/search.png', 'انتخابات'),
+                  menuItemWidget(
+                      'assets/icons/electronic.png', 'دولت الکترونیک'),
+                  menuItemWidget(
+                      'assets/icons/dadsara.png', 'دادسرا'),
+                  menuItemWidget(
+                      'assets/icons/add_person.png', 'جذب نیرو'),
+                  menuItemWidget(
+                      'assets/icons/peymant.png', 'درگاه خدمات'),
+                ],
               ),
-            )
-          ]),
-        ),
+            ),
+          )
+        ]),
       ),
     );
   }
@@ -128,9 +125,9 @@ class HomePage extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: fullWidth / 4.3,
-          height: fullWidth / 4.3,
-          margin: EdgeInsets.only(bottom: mediumSize),
+          width: fullWidth / 4.5,
+          height: fullWidth / 4.5,
+          margin: EdgeInsets.only(bottom: smallSize),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(standardRadius),
               color: AppColors.formFieldColor),

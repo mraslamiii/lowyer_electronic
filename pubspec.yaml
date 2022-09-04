@@ -47,6 +47,8 @@ dependencies:
   connectivity_plus: ^2.3.6+1
   flutter_svg: ^1.1.4
   lottie: ^1.4.2
+  google_fonts: ^3.0.1
+
   persian_datetime_picker:
     path: edit/persian-datetime-picker
 
@@ -90,16 +92,15 @@ flutter:
   fonts:
     - family: Vazir
       fonts:
-        - asset: fonts/Vazirmatn-Regular.ttf
+        - asset: fonts/Vazir-Light-FD-WOL.ttf
           weight: 300
-        - asset: fonts/Vazirmatn-Medium.ttf
+        - asset: fonts/Vazir-Regular-FD-WOL.ttf
           weight: 400
-        - asset: fonts/Vazirmatn-SemiBold.ttf
+        - asset: fonts/Vazir-Medium-FD-WOL.ttf
           weight: 500
-        - asset: fonts/Vazirmatn-Bold.ttf
-          weight: 600
-        - asset: fonts/Vazirmatn-Bold.ttf
+        - asset: fonts/Vazir-Bold-FD-WOL.ttf
           weight: 700
+
 
 
 
