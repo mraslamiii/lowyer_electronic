@@ -19,6 +19,7 @@ class HomePage extends StatelessWidget {
     return GetBuilder<HomeController>(
       init: HomeController(),
       builder: (controller) => customScaffold(
+        appBar: AppBar(leading: const Icon(Icons.account_circle_sharp,color: Colors.black,),),
         context: context,
         body: Column(
             children: [
