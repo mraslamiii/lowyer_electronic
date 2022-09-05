@@ -14,8 +14,8 @@ class AppColors {
   static const Color textBlackColor =  Color(0xff000000);//
   static const Color cardColor =  Color(0xffF9F9F9);//
   static Color hintColor =  const Color(0xff000000).withOpacity(0.2);//
-  static Color dividerColor = Colors.black.withOpacity(0.05); //
-  static Color splashColor = const Color(0xff5D5FEF).withOpacity(0.03); //todo
+  static Color dividerColor = const Color(0xFF298091).withOpacity(0.18); //
+  static Color splashColor = Colors.grey.shade300; //todo
   static const Color errorColor = Colors.red; //
   static const Color shadowColor = Color(0xffbbbbbb); //
 

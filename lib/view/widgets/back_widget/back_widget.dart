@@ -6,7 +6,7 @@ import '../../../res/dimens/dimens.dart';
 
 Widget backIcon({VoidCallback? onTap , Color? iconColor}) {
   return IconButton(
-    splashRadius: standardSize,
+    splashRadius: largeSize / 1.2,
     splashColor: AppColors.splashColor,
     icon:
     RotatedBox(

@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:kanoon_dadgostari/res/colors/colors.dart';
 import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
 import 'package:kanoon_dadgostari/view/user/controller/lawyer_controller.dart';
+import 'package:kanoon_dadgostari/view/user/history_page/binding/history_binding.dart';
 import 'package:kanoon_dadgostari/view/widgets/customScaffold/customScaffold.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
-
 import '../../widgets/back_widget/back_widget.dart';
+import '../../widgets/progress_button/progress_button.dart';
+import '../history_page/page/history_page.dart';
 
 class LawyerCardPage extends StatelessWidget {
   const LawyerCardPage({Key? key}) : super(key: key);
@@ -27,9 +29,8 @@ class LawyerCardPage extends StatelessWidget {
                         flex: 1,
                         child: SizedBox(
                           width: fullWidth,
-                          child: ElevatedButton(
-                              onPressed: () {},
-                              child: const Text("درخواست جدید")),
+                          child: progressButton(
+                              onTap: () {}, text: "درخواست جدید"),
                         )),
                     SizedBox(
                       width: standardSize,
@@ -38,8 +39,13 @@ class LawyerCardPage extends StatelessWidget {
                         flex: 1,
                         child: SizedBox(
                           width: fullWidth,
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
+                          child: progressButton(
+                              onTap: () {},
+                              text: "مسدود کردن",
+                              customStyle: ElevatedButton.styleFrom(
+                                  foregroundColor: AppColors.splashColor,
+                                  elevation: 0,
+                                  shadowColor: Colors.transparent,
                                   backgroundColor:
                                       const Color(0xFFE0E0E0).withOpacity(0.28),
                                   shape: RoundedRectangleBorder(
@@ -47,15 +53,10 @@ class LawyerCardPage extends StatelessWidget {
                                           BorderRadius.circular(smallRadius),
                                       side: BorderSide(
                                           width: 1,
-                                          color: const Color(0xFF298091)
+                                          color: AppColors.primaryColor
                                               .withOpacity(0.18)))),
-                              onPressed: () {},
-                              child: Text(
-                                "مسدود کردن",
-                                style: Get.theme.textTheme.bodyText1!.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                    color: const Color(0xFF8C8A8A).withOpacity(0.80)),
-                              )),
+                              textColor:
+                                  const Color(0xFF8C8A8A).withOpacity(0.80)),
                         )),
                   ],
                 ),
@@ -73,10 +74,12 @@ class LawyerCardPage extends StatelessWidget {
                 splashColor: AppColors.splashColor,
                 icon: SvgPicture.asset(
                   "assets/icons/ic_history.svg",
+                  width: iconSizeMedium,
+                  height: iconSizeMedium,
                   color: Get.theme.iconTheme.color,
                 ),
                 onPressed: () {
-                  Get.back();
+                  Get.to(const HistoryPage(),binding: HistoryBinding());
                 },
               )
             ],
@@ -86,22 +89,8 @@ class LawyerCardPage extends StatelessWidget {
                 vertical: standardSize, horizontal: standardSize),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const BankCard(),
-                // Padding(
-                //   padding: EdgeInsets.symmetric(vertical: standardSize),
-                //   child: Text("تاریخچه",
-                //       style: Get.theme.textTheme.headline5,
-                //       textAlign: TextAlign.start),
-                // ),
-                // Expanded(
-                //   child: ListView.builder(
-                //     shrinkWrap: true,
-                //     controller: controller.controller,
-                //     itemCount: 10,
-                //     itemBuilder: (context, index) => historyCard(),
-                //   ),
-                // )
+              children: const [
+                _BankCard(),
               ],
             ),
           )),
@@ -109,48 +98,8 @@ class LawyerCardPage extends StatelessWidget {
   }
 }
 
-Widget historyCard() {
-  return Container(
-    margin: EdgeInsets.symmetric(vertical: mediumSize),
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(standardRadius),
-        color: AppColors.formFieldColor),
-    padding: EdgeInsets.all(standardSize),
-    child: Column(
-      children: [
-        historyWidgetItem(
-            'assets/icons/Paper.svg', "نوع درخواست", "صدور کارت جدید"),
-        const Divider(),
-        historyWidgetItem('assets/icons/stickynote.svg', " تاریخ", "28/8/1401"),
-        const Divider(),
-        historyWidgetItem(
-            'assets/icons/clipboard-tick.svg', "وضعیت", "در حال بررسی"),
-      ],
-    ),
-  );
-}
-
-Widget historyWidgetItem(String icon, String title, String subTitle) {
-  return Padding(
-    padding: EdgeInsets.symmetric(vertical: smallSize, horizontal: smallSize),
-    child: Row(
-      children: [
-        SvgPicture.asset(icon),
-        Padding(
-          padding: EdgeInsets.only(right: smallSize),
-          child: Text("$title :",
-              style: Get.theme.textTheme.subtitle1
-                  ?.copyWith(color: AppColors.primaryColor)),
-        ),
-        const Expanded(child: SizedBox()),
-        Text(subTitle, style: Get.theme.textTheme.subtitle1),
-      ],
-    ),
-  );
-}
-
-class BankCard extends GetView<LawyerController> {
-  const BankCard({super.key});
+class _BankCard extends GetView<LawyerController> {
+  const _BankCard();
 
   @override
   Widget build(BuildContext context) {
