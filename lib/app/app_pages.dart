@@ -25,7 +25,7 @@ abstract class Routes {
 }
 
 class AppPages {
-  static const initialRoute = Routes.splashPage;
+  static const initialRoute = Routes.lawyerPage;
 
   static final routes = [
     // GetPage(
