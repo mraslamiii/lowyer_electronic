@@ -39,8 +39,23 @@ class LawyerCardPage extends StatelessWidget {
                         child: SizedBox(
                           width: fullWidth,
                           child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      const Color(0xFFE0E0E0).withOpacity(0.28),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(smallRadius),
+                                      side: BorderSide(
+                                          width: 1,
+                                          color: const Color(0xFF298091)
+                                              .withOpacity(0.18)))),
                               onPressed: () {},
-                              child: const Text("درخواست جدید")),
+                              child: Text(
+                                "مسدود کردن",
+                                style: Get.theme.textTheme.bodyText1!.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                    color: const Color(0xFF8C8A8A).withOpacity(0.80)),
+                              )),
                         )),
                   ],
                 ),
@@ -52,6 +67,19 @@ class LawyerCardPage extends StatelessWidget {
             ),
             automaticallyImplyLeading: false,
             leading: backIcon(),
+            actions: [
+              IconButton(
+                splashRadius: largeSize / 1.2,
+                splashColor: AppColors.splashColor,
+                icon: SvgPicture.asset(
+                  "assets/icons/ic_history.svg",
+                  color: Get.theme.iconTheme.color,
+                ),
+                onPressed: () {
+                  Get.back();
+                },
+              )
+            ],
           ),
           body: Padding(
             padding: EdgeInsets.symmetric(
