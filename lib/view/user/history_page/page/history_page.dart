@@ -30,47 +30,47 @@ class HistoryPage extends StatelessWidget {
           )),
     );
   }
-}
-
-Widget _historyCard() {
-  return Container(
-    margin: EdgeInsets.only(bottom: standardSize),
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(xSmallRadius),
-        color: AppColors.formFieldColor),
-    padding: EdgeInsets.symmetric(horizontal: smallSize),
-    child: Column(
-      children: [
-        _historyWidgetItem(
-            'assets/icons/Paper.svg', "نوع درخواست", "صدور کارت جدید"),
-        const Divider(),
-        _historyWidgetItem(
-            'assets/icons/stickynote.svg', " تاریخ", "28/8/1401"),
-        const Divider(),
-        _historyWidgetItem(
-            'assets/icons/clipboard-tick.svg', "وضعیت", "در حال بررسی"),
-      ],
-    ),
-  );
-}
-
-Widget _historyWidgetItem(String icon, String title, String subTitle) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Row(
+  Widget _historyCard() {
+    return Container(
+      margin: EdgeInsets.only(bottom: standardSize),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(xSmallRadius),
+          color: AppColors.formFieldColor),
+      padding: EdgeInsets.symmetric(horizontal: smallSize),
+      child: Column(
         children: [
-          SvgPicture.asset(icon),
-          Padding(
-            padding: EdgeInsets.only(right: smallSize,top: smallSize,bottom: smallSize),
-            child: Text("$title :",
-                style: Get.theme.textTheme.subtitle2
-                !.copyWith(color: AppColors.primaryColor)),
-          ),
+          _historyWidgetItem(
+              'assets/icons/Paper.svg', "نوع درخواست", "صدور کارت جدید"),
+          const Divider(),
+          _historyWidgetItem(
+              'assets/icons/stickynote.svg', " تاریخ", "28/8/1401"),
+          const Divider(),
+          _historyWidgetItem(
+              'assets/icons/clipboard-tick.svg', "وضعیت", "در حال بررسی"),
         ],
       ),
-      SizedBox(width: xSmallSize),
-      Flexible(child: Text(subTitle, style: Get.theme.textTheme.subtitle2,maxLines: 1,overflow: TextOverflow.ellipsis,)),
-    ],
-  );
+    );
+  }
+
+  Widget _historyWidgetItem(String icon, String title, String subTitle) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            SvgPicture.asset(icon),
+            Padding(
+              padding: EdgeInsets.only(right: smallSize,top: smallSize,bottom: smallSize),
+              child: Text("$title :",
+                  style: Get.theme.textTheme.subtitle2
+                  !.copyWith(color: AppColors.primaryColor)),
+            ),
+          ],
+        ),
+        SizedBox(width: xxSmallSize),
+        Flexible(child: Text(subTitle, style: Get.theme.textTheme.subtitle2,maxLines: 1,overflow: TextOverflow.ellipsis,)),
+      ],
+    );
+  }
 }
+
