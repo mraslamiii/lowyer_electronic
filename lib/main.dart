@@ -6,11 +6,8 @@ import 'package:kanoon_dadgostari/app/dependency.dart';
 import 'package:kanoon_dadgostari/res/app_theme.dart';
 import 'package:kanoon_dadgostari/res/colors/colors.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
-
-import 'package:kanoon_dadgostari/view/Intro/splash_page/page/splash_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:kanoon_dadgostari/view/user/page/lowyer_card_page.dart';
-
+import 'package:kanoon_dadgostari/view/user/lowyer_card_page/page/lowyer_card_page.dart';
 import 'app/app_pages.dart';
 import 'data/network/network_api_service.dart';
 import 'service/connection_service/connection_status_binding.dart';
