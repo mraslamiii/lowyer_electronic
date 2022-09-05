@@ -42,7 +42,7 @@ class AppThemes {
       appBarTheme: AppBarTheme(
           centerTitle: true,
           color: AppColors.backgroundColor,
-          elevation: 0.6,
+          elevation: 1,
           shadowColor: AppColors.primaryColor.withOpacity(0.2),
           titleTextStyle: TextStyle(
               color: AppColors.textBlackColor,
@@ -108,14 +108,14 @@ class AppThemes {
       ),
       dividerTheme: DividerThemeData(
           color: AppColors.dividerColor,
-          thickness: 0.3,
+          thickness: 1,
           endIndent: 0,
           indent: 0,
           space: 0),
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primaryColor,
-              shadowColor: AppColors.primaryColor.withOpacity(0.50),
+              shadowColor: AppColors.primaryColor.withOpacity(0.5),
               elevation: 0,
               padding: EdgeInsets.symmetric(
                   vertical: standardSize, horizontal: standardSize),
