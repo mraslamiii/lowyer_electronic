@@ -52,22 +52,11 @@ class WelfareCenterPage extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(
                   vertical: mediumSize, horizontal: smallSize),
-              child: GridView(
-                physics: BouncingScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3, childAspectRatio: 1 / 1.1),
-                children: [
-                  menuItemWidget('assets/icons/card.png', 'وکیل کارت'),
-                  menuItemWidget('assets/icons/shop.png', 'مرکز رفاهی'),
-                  menuItemWidget('assets/icons/edu.png', 'مرکز آموزش'),
-                  menuItemWidget('assets/icons/daftaryab.png', 'دفتریاب'),
-                  menuItemWidget('assets/icons/search.png', 'انتخابات'),
-                  menuItemWidget(
-                      'assets/icons/electronic.png', 'دولت الکترونیک'),
-                  menuItemWidget('assets/icons/dadsara.png', 'دادسرا'),
-                  menuItemWidget('assets/icons/add_person.png', 'جذب نیرو'),
-                  menuItemWidget('assets/icons/peymant.png', 'درگاه خدمات'),
-                ],
+              child: ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return menuItemWidget('assets/icons/peymant.png', 'درگاه خدمات');
+                },
               ),
             ),
           )
@@ -76,7 +65,7 @@ class WelfareCenterPage extends StatelessWidget {
     );
   }
 
-  Widget menuItemWidget(String icon, String title) {
+  Widget menuItemWidget(String picture, String title) {
     return Column(
       children: [
         Container(
@@ -86,7 +75,7 @@ class WelfareCenterPage extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(standardRadius),
               color: AppColors.formFieldColor),
-          child: Image.asset(icon, scale: 1.2),
+          child: Image.asset(picture, scale: 1.2),
         ),
         Text(
           title,
