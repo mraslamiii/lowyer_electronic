@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-
 import 'colors/colors.dart';
 import 'dimens/dimens.dart';
 import 'dimens/font_size.dart';
@@ -24,30 +22,33 @@ class AppThemes {
       dialogBackgroundColor: AppColors.surfaceColor,
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
-
       toggleableActiveColor: AppColors.primaryColor,
       applyElevationOverlayColor: false,
-      textTheme:  TextTheme(
-
-        headline5: TextStyle(
-          fontWeight: FontWeight.w700,
-        ),
+      textTheme: TextTheme(
+        headline5:
+            TextStyle(fontWeight: FontWeight.w700, fontSize: headline5TextSize),
         subtitle1: TextStyle(
+          fontSize: subtitle2TextSize,
           fontWeight: FontWeight.w600,
         ),
-        bodyText1: TextStyle(fontWeight: FontWeight.w500,fontSize: bodyTxtSize),
+        subtitle2: TextStyle(
+          fontSize: body1TextSize,
+          fontWeight: FontWeight.w500,
+        ),
+        bodyText1:
+            TextStyle(fontWeight: FontWeight.w500, fontSize: body1TextSize),
       ),
-      appBarTheme:  AppBarTheme(
+      appBarTheme: AppBarTheme(
           centerTitle: true,
           color: AppColors.backgroundColor,
           elevation: 0.6,
-shadowColor: AppColors.primaryColor.withOpacity(0.2),
+          shadowColor: AppColors.primaryColor.withOpacity(0.2),
           titleTextStyle: TextStyle(
               color: AppColors.textBlackColor,
               fontFamily: 'Vazir',
               fontSize: subTitleSize,
               fontWeight: FontWeight.w600),
-          systemOverlayStyle: SystemUiOverlayStyle(
+          systemOverlayStyle: const SystemUiOverlayStyle(
               statusBarColor: AppColors.backgroundColor,
               statusBarBrightness: Brightness.dark,
               statusBarIconBrightness: Brightness.dark,
@@ -112,12 +113,11 @@ shadowColor: AppColors.primaryColor.withOpacity(0.2),
           space: 0),
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-
-              primary: AppColors.primaryColor,
+              backgroundColor: AppColors.primaryColor,
               shadowColor: AppColors.primaryColor.withOpacity(0.50),
               elevation: 0,
-
-              padding: EdgeInsets.symmetric(vertical: standardSize,horizontal: standardSize),
+              padding: EdgeInsets.symmetric(
+                  vertical: standardSize, horizontal: standardSize),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(smallRadius),
               ))),
@@ -143,8 +143,7 @@ shadowColor: AppColors.primaryColor.withOpacity(0.2),
           fillColor: MaterialStateProperty.all(AppColors.primaryColor)),
       outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
-              primary: AppColors.primaryColor,
-              shape: RoundedRectangleBorder(
+              foregroundColor: AppColors.primaryColor, shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(mediumRadius),
               ))),
       iconTheme:
