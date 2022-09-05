@@ -11,10 +11,22 @@ import 'package:page_transition/page_transition.dart';
 import '../../../../res/dimens/dimens.dart';
 import '../../../auth/login_page/page/login_page.dart';
 import '../../../widgets/back_widget/back_widget.dart';
+import '../../../widgets/image_widget.dart';
 import '../controller/welfare_center_controller.dart';
 
 class WelfareCenterPage extends StatelessWidget {
-  const WelfareCenterPage({Key? key}) : super(key: key);
+  WelfareCenterPage({Key? key}) : super(key: key);
+
+  // List<String> shoppingImages = [
+  //   'https://images.adsttc.com/media/images/5e13/e676/3312/fdf5/c900/014c/medium_jpg/01.jpg?1578362478',
+  //   // 'https://cdn.wallpaper.com/main/styles/fp_922x565/s3/facade_of_k11_musea_1.jpg',
+  // ];
+  List<String> images = [
+    'https://m3.healio.com/~/media/slack-news/stock-images/fm_im/u/ultraprocessed-foods.jpg',
+    'https://qph.cf2.quoracdn.net/main-qimg-1cf247a96715fe142b6ff10da03e3bb0-pjlq',
+    'https://i.guim.co.uk/img/media/20491572b80293361199ca2fc95e49dfd85e1f42/0_236_5157_3094/master/5157.jpg?width=1200&quality=85&auto=format&fit=max&s=6c20695f8d0e980ee80d47265efee6c5'
+  ];
+  List<String> titles = ['مراکز خـرید', 'پوشـاک', 'دارو'];
 
   @override
   Widget build(BuildContext context) {
@@ -35,53 +47,142 @@ class WelfareCenterPage extends StatelessWidget {
           ],
         ),
         context: context,
-        body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+        body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Container(
             margin: EdgeInsets.only(
                 top: standardSize, left: standardSize, right: standardSize),
-            child:Text(
+            child: Text(
               "دسته بندی",
-              style: Get.theme.textTheme.subtitle1?.copyWith(
-                fontWeight: FontWeight.w600
-              ),
-            ) ,
+              style: Get.theme.textTheme.headline6
+                  ?.copyWith(fontWeight: FontWeight.w600),
+            ),
           ),
-          Expanded(
+          Container(
+            height: fullWidth / 1.95,
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: mediumSize, horizontal: smallSize),
+              padding: EdgeInsetsDirectional.only(
+                  top: mediumSize, bottom: mediumSize),
               child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: titles.length,
+                scrollDirection: Axis.horizontal,
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return menuItemWidget('assets/icons/peymant.png', 'درگاه خدمات');
+                  return Container(
+                      margin: EdgeInsetsDirectional.only(
+                          end: standardSize,
+                          start: index == 0 ? standardSize : 0),
+                      child: categoryWidget(images[index], titles[index]));
                 },
               ),
             ),
-          )
+          ),
+          Container(
+            margin: EdgeInsets.only(
+                top: standardSize, left: standardSize, right: standardSize),
+            child: Text(
+              "مراکز خرید",
+              style: Get.theme.textTheme.headline6
+                  ?.copyWith(fontWeight: FontWeight.w600),
+            ),
+          ),
+          Container(
+            height: fullWidth / 1.9,
+            width: fullWidth,
+            child:
+                //   Padding(
+                //     padding: EdgeInsetsDirectional.only(
+                //         top: mediumSize,
+                //         bottom: mediumSize),
+                //     child:
+                ListView.builder(
+              itemCount: 2,
+              scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return Container(
+                    margin: EdgeInsetsDirectional.only(
+                        end: standardSize,
+                        start: index == 0 ? standardSize : 0),
+                    child: shoppingCenterWidget(
+                        'https://m3.healio.com/~/media/slack-news/stock-images/fm_im/u/ultraprocessed-foods.jpg',
+                        'مرکز خرید پروما',
+                        '4.8',
+                        'لورم ایپسوم لورم ایپسوم لورم ایپسوم'));
+              },
+            ),
+          ),
+          // ),
         ]),
       ),
     );
   }
 
-  Widget menuItemWidget(String picture, String title) {
+  Widget categoryWidget(String picture, String title) {
     return Column(
       children: [
         Container(
-          width: fullWidth / 4.5,
-          height: fullWidth / 4.5,
+          width: fullWidth / 3,
+          height: fullWidth / 3,
           margin: EdgeInsets.only(bottom: smallSize),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(standardRadius),
-              color: AppColors.formFieldColor),
-          child: Image.asset(picture, scale: 1.2),
+              color: AppColors.borderColor),
+          child:
+              imageWidget(picture, radius: standardRadius, fit: BoxFit.cover),
         ),
         Text(
           title,
-          style: Get.theme.textTheme.subtitle2,
+          style: Get.theme.textTheme.subtitle1
+              ?.copyWith(fontWeight: FontWeight.w600),
         )
       ],
+    );
+  }
+
+  Widget shoppingCenterWidget(
+      String picture, String shoppingName, String rating, String subTitle) {
+    return Container(
+      width: fullWidth / 1.5,
+      height: fullWidth / 3,
+      margin: EdgeInsets.only(bottom: smallSize),
+      padding: EdgeInsets.all(smallSize),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(standardRadius),
+          color: AppColors.formFieldColor),
+      child: Column(
+        children: [
+          Expanded(
+            child: imageWidget(picture, radius: standardRadius,
+              // width: fullWidth / 1.5,
+              // height: fullWidth / 4,
+            ),
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  shoppingName,
+                  style: Get.theme.textTheme.subtitle2
+                      ?.copyWith(fontWeight: FontWeight.w600),
+                ),
+              ),
+              Text(
+                rating,
+                style: Get.theme.textTheme.subtitle1
+                    ?.copyWith(fontWeight: FontWeight.w600),
+              ),
+              SvgPicture.asset('assets/icons/ic_star.svg')
+            ],
+          ),
+          Text(
+            subTitle,
+            style: Get.theme.textTheme.bodyText1
+                ?.copyWith(color: AppColors.captionColor),
+          )
+        ],
+      ),
     );
   }
 }
