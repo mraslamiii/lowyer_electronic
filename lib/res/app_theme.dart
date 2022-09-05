@@ -27,12 +27,12 @@ class AppThemes {
       textTheme: TextTheme(
         headline5:
             TextStyle(fontWeight: FontWeight.w700, fontSize: headline5TextSize),
-        subtitle1: TextStyle(
+        subtitle2: TextStyle(
           fontSize: subtitle2TextSize,
           fontWeight: FontWeight.w600,
         ),
-        subtitle2: TextStyle(
-          fontSize: body1TextSize,
+        subtitle1: TextStyle(
+          fontSize: subtitle1TextSize,
           fontWeight: FontWeight.w500,
         ),
         bodyText1:
