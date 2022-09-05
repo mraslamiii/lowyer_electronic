@@ -12,7 +12,7 @@ Widget backIcon({VoidCallback? onTap , Color? iconColor}) {
     RotatedBox(
       quarterTurns: 2,
       child: SvgPicture.asset(
-        "assets/ic_back.svg",
+        "assets/icons/ic_back.svg",
         color: iconColor ?? Get.theme.iconTheme.color,
       ),
     ),
