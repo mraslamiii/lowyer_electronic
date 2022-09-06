@@ -12,6 +12,8 @@ import '../view/auth/signup_page/binding/signup_binding.dart';
 import '../view/auth/verification_page/binding/verification_binding.dart';
 import '../view/base/welfare_center_detail_page/binding/welfare_center_detail_binding.dart';
 import '../view/base/welfare_center_detail_page/page/welfare_center_detail_page.dart';
+import '../view/user/lawyer_skills_page/binding/lawyer_skills_binding.dart';
+import '../view/user/lawyer_skills_page/page/lawyer_skills_page.dart';
 import '../view/user/lowyer_card_page/binding/lawyer_binding.dart';
 import '../view/user/lowyer_card_page/page/lowyer_card_page.dart';
 
@@ -25,10 +27,11 @@ abstract class Routes {
   static const verificationPage = '/verification_page';
   static const verifyDetails = '/verifyDetails_page';
   static const welfareCenterDetail = '/welfare_center_detail';
+  static const lawyerSkillsPage = '/lawyer_skills_page';
 }
 
 class AppPages {
-  static const initialRoute = Routes.welfareCenterDetail;
+  static const initialRoute = Routes.lawyerSkillsPage;
 
   static final routes = [
     // GetPage(
@@ -39,6 +42,11 @@ class AppPages {
       name: Routes.splashPage,
       page: () => const SplashPage(),
       binding: SplashBinding()
+    ),
+    GetPage(
+        name: Routes.lawyerSkillsPage,
+        page: () => const LawyerSkillsPage(),
+        binding: LawyerSkillsBinding()
     ),
 
 
