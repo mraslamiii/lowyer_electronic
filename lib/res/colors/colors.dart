@@ -16,7 +16,7 @@ class AppColors {
   static Color hintColor =  const Color(0xff000000).withOpacity(0.2);//
   static Color dividerColor = const Color(0xFF298091).withOpacity(0.18); //
   static Color splashColor = Colors.grey.shade300; //todo
-  static const Color errorColor = Colors.red; //
+  static const Color errorColor = Color(0xFFFF001F); //
   static const Color shadowColor = Color(0xffbbbbbb); //
 
 
