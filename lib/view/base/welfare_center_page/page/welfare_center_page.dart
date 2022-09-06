@@ -1,32 +1,19 @@
-import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/res/colors/colors.dart';
-import 'package:kanoon_dadgostari/view/Intro/splash_page/controller/splash_controller.dart';
-import 'package:kanoon_dadgostari/view/base/home_page/controller/home_controller.dart';
+import 'package:kanoon_dadgostari/view/base/scan_search_page/page/scan_search_page.dart';
 import 'package:kanoon_dadgostari/view/widgets/customScaffold/customScaffold.dart';
-import 'package:page_transition/page_transition.dart';
-
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 import '../../../../res/dimens/dimens.dart';
-import '../../../auth/login_page/page/login_page.dart';
 import '../../../widgets/back_widget/back_widget.dart';
 import '../../../widgets/image_widget.dart';
 import '../controller/welfare_center_controller.dart';
 
+
 class WelfareCenterPage extends StatelessWidget {
   WelfareCenterPage({Key? key}) : super(key: key);
 
-  // List<String> shoppingImages = [
-  //   'https://images.adsttc.com/media/images/5e13/e676/3312/fdf5/c900/014c/medium_jpg/01.jpg?1578362478',
-  //   // 'https://cdn.wallpaper.com/main/styles/fp_922x565/s3/facade_of_k11_musea_1.jpg',
-  // ];
-  List<String> images = [
-    'https://m3.healio.com/~/media/slack-news/stock-images/fm_im/u/ultraprocessed-foods.jpg',
-    'https://qph.cf2.quoracdn.net/main-qimg-1cf247a96715fe142b6ff10da03e3bb0-pjlq',
-    'https://i.guim.co.uk/img/media/20491572b80293361199ca2fc95e49dfd85e1f42/0_236_5157_3094/master/5157.jpg?width=1200&quality=85&auto=format&fit=max&s=6c20695f8d0e980ee80d47265efee6c5'
-  ];
-  List<String> titles = ['مراکز خـرید', 'پوشـاک', 'دارو'];
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +29,9 @@ class WelfareCenterPage extends StatelessWidget {
             IconButton(
                 splashColor: AppColors.splashColor,
                 splashRadius: largeSize / 1.2,
-                onPressed: () {},
+                onPressed: () async{
+                  Get.to(ScanSearchPage());
+                },
                 icon: SvgPicture.asset('assets/icons/ic_scan.svg'))
           ],
         ),
@@ -64,7 +53,7 @@ class WelfareCenterPage extends StatelessWidget {
                   top: mediumSize, bottom: mediumSize),
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: titles.length,
+                itemCount: controller.titles.length,
                 scrollDirection: Axis.horizontal,
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
@@ -72,7 +61,7 @@ class WelfareCenterPage extends StatelessWidget {
                       margin: EdgeInsetsDirectional.only(
                           end: standardSize,
                           start: index == 0 ? standardSize : 0),
-                      child: categoryWidget(images[index], titles[index]));
+                      child: categoryWidget(controller.images[index], controller.titles[index]));
                 },
               ),
             ),
@@ -87,33 +76,30 @@ class WelfareCenterPage extends StatelessWidget {
             ),
           ),
           Container(
-            height: fullWidth / 1.9,
+            height: fullWidth / 1.7,
             width: fullWidth,
+            margin: EdgeInsetsDirectional.only(
+                top: mediumSize,
+                bottom: mediumSize),
             child:
-                //   Padding(
-                //     padding: EdgeInsetsDirectional.only(
-                //         top: mediumSize,
-                //         bottom: mediumSize),
-                //     child:
-                ListView.builder(
+                  ListView.builder(
               itemCount: 2,
               scrollDirection: Axis.horizontal,
               physics: const BouncingScrollPhysics(),
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                return Container(
-                    margin: EdgeInsetsDirectional.only(
-                        end: standardSize,
-                        start: index == 0 ? standardSize : 0),
-                    child: shoppingCenterWidget(
-                        'https://m3.healio.com/~/media/slack-news/stock-images/fm_im/u/ultraprocessed-foods.jpg',
-                        'مرکز خرید پروما',
-                        '4.8',
-                        'لورم ایپسوم لورم ایپسوم لورم ایپسوم'));
+                  return Container(
+                      margin: EdgeInsetsDirectional.only(
+                          end: standardSize,
+                          start: index == 0 ? standardSize : 0),
+                      child: shoppingCenterWidget(
+                          controller.shoppingImages[index],
+                          'مرکز خرید پروما',
+                          '4.8',
+                          'لورم ایپسوم لورم ایپسوم لورم ایپسوم'));
               },
             ),
           ),
-          // ),
         ]),
       ),
     );
@@ -127,13 +113,17 @@ class WelfareCenterPage extends StatelessWidget {
           height: fullWidth / 3,
           margin: EdgeInsets.only(bottom: smallSize),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(standardRadius),
+              borderRadius: BorderRadius.circular(smallRadius),
               color: AppColors.borderColor),
           child:
-              imageWidget(picture, radius: standardRadius, fit: BoxFit.cover),
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(smallRadius),
+                  child: imageWidget(picture, radius: standardRadius, fit: BoxFit.cover)),
         ),
         Text(
           title,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: Get.theme.textTheme.subtitle1
               ?.copyWith(fontWeight: FontWeight.w600),
         )
@@ -144,27 +134,39 @@ class WelfareCenterPage extends StatelessWidget {
   Widget shoppingCenterWidget(
       String picture, String shoppingName, String rating, String subTitle) {
     return Container(
-      width: fullWidth / 1.5,
-      height: fullWidth / 3,
+      width: fullWidth / 1.35,
       margin: EdgeInsets.only(bottom: smallSize),
-      padding: EdgeInsets.all(smallSize),
+      padding: EdgeInsetsDirectional.only(
+          start: smallSize,
+          end: smallSize,
+          top: smallSize,
+          bottom: standardSize,
+      ),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(standardRadius),
+          borderRadius: BorderRadius.circular(smallRadius),
           color: AppColors.formFieldColor),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: imageWidget(picture, radius: standardRadius,
-              // width: fullWidth / 1.5,
-              // height: fullWidth / 4,
+            child: Container(
+              width: fullWidth,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(smallRadius),
+                child: imageWidget(picture, radius: smallRadius,
+                ),
+              ),
             ),
           ),
+          SizedBox(height: xxSmallSize),
           Row(
             children: [
               Expanded(
                 child: Text(
                   shoppingName,
-                  style: Get.theme.textTheme.subtitle2
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Get.theme.textTheme.subtitle1
                       ?.copyWith(fontWeight: FontWeight.w600),
                 ),
               ),
@@ -173,11 +175,15 @@ class WelfareCenterPage extends StatelessWidget {
                 style: Get.theme.textTheme.subtitle1
                     ?.copyWith(fontWeight: FontWeight.w600),
               ),
+              SizedBox(width: xxSmallSize/2),
               SvgPicture.asset('assets/icons/ic_star.svg')
             ],
           ),
+          SizedBox(height: xxSmallSize),
           Text(
             subTitle,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: Get.theme.textTheme.bodyText1
                 ?.copyWith(color: AppColors.captionColor),
           )

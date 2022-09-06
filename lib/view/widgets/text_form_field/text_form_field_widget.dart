@@ -80,105 +80,109 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        widget.label != null && widget.label!.isNotEmpty
-            ? Container(
-                margin: EdgeInsets.only(bottom: xSmallSize),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  widget.label ?? "",
-                  style: theme.textTheme.subtitle1!.copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: widget.isEnable != null && !widget.isEnable!
-                        ? widget.labelDisabledColor ??
-                            AppColors.secondaryTextColor
-                        : widget.textEditingController.text.isNotEmpty
-                            ? widget.labelColor ?? AppColors.primaryColor
-                            : widget.labelEmptyColor ?? Colors.black,
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          widget.label != null && widget.label!.isNotEmpty
+              ? Container(
+                  margin: EdgeInsets.only(bottom: xSmallSize),
+                  // alignment: Alignment.c,
+                  child: Text(
+                    widget.label ?? "",
+                    style: theme.textTheme.subtitle1!.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: widget.isEnable != null && !widget.isEnable!
+                          ? widget.labelDisabledColor ??
+                              AppColors.secondaryTextColor
+                          : widget.textEditingController.text.isNotEmpty
+                              ? widget.labelColor ?? AppColors.primaryColor
+                              : widget.labelEmptyColor ?? Colors.black,
+                    ),
+                  ),
+                )
+              : const SizedBox(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: TextFormField(
+                  onTap: widget.onTap,
+                  enabled: widget.isEnable,
+
+                  textDirection: widget.textDirection ?? TextDirection.rtl,
+                  maxLines: widget.maxLine ?? 1,
+                  maxLength: widget.maxLength,
+                  inputFormatters: widget.inputFormatters,
+                  controller: widget.textEditingController,
+                  obscureText: widget.isPassword
+                      ? isVisibleContent
+                          ? false
+                          : true
+                      : false,
+                  textInputAction: widget.textInputAction,
+                  keyboardType: widget.keyboardType,
+                  onFieldSubmitted: widget.onFieldSubmitted,
+                  validator: widget.validator,
+                  readOnly: widget.readOnly ?? false,
+                  onEditingComplete: widget.onEditingComplete,
+                  onChanged: widget.onChange ??
+                      (value) {
+                        setState(() {});
+                      },
+                  style: theme.textTheme.bodyText2?.copyWith(color: Colors.black),
+                  decoration: InputDecoration(
+                    errorText: widget.errorText,
+                    hintText: widget.hint,
+                    filled: widget.filled,
+                    fillColor: widget.fillColor,
+                    prefixIcon: widget.prefixIcon,
+                    counter: widget.showCounter != null && widget.showCounter!
+                        ? null
+                        : const SizedBox(),
+                    counterStyle: widget.counterStyle ??
+                        const TextStyle(
+                          color: Colors.black,
+                        ),
+                    suffixIcon: widget.suffixIcon ??
+                        (widget.isPassword
+                            ? IconButton(
+                                icon: isVisibleContent
+                                    ? Container(
+                                        margin:
+                                            EdgeInsets.only(right: xSmallSize),
+                                        child: SvgPicture.asset(
+                                          "assets/ic_eye.svg",
+                                        ),
+                                      )
+                                    : Container(
+                                        margin:
+                                            EdgeInsets.only(right: xSmallSize),
+                                        child: SvgPicture.asset(
+                                          "assets/ic_eye_off.svg",
+                                        ),
+                                      ),
+                                onPressed: () {
+                                  setState(
+                                    () {
+                                      isVisibleContent = !isVisibleContent;
+                                    },
+                                  );
+                                },
+                                color: AppColors.captionColor,
+                              )
+                            : null),
                   ),
                 ),
-              )
-            : const SizedBox(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: TextFormField(
-                onTap: widget.onTap,
-                enabled: widget.isEnable,
-
-                textDirection: widget.textDirection ?? TextDirection.rtl,
-                maxLines: widget.maxLine ?? 1,
-                maxLength: widget.maxLength,
-                inputFormatters: widget.inputFormatters,
-                controller: widget.textEditingController,
-                obscureText: widget.isPassword
-                    ? isVisibleContent
-                        ? false
-                        : true
-                    : false,
-                textInputAction: widget.textInputAction,
-                keyboardType: widget.keyboardType,
-                onFieldSubmitted: widget.onFieldSubmitted,
-                validator: widget.validator,
-                readOnly: widget.readOnly ?? false,
-                onEditingComplete: widget.onEditingComplete,
-                onChanged: widget.onChange ??
-                    (value) {
-                      setState(() {});
-                    },
-                style: theme.textTheme.bodyText2?.copyWith(color: Colors.black),
-                decoration: InputDecoration(
-                  errorText: widget.errorText,
-                  hintText: widget.hint,
-                  filled: widget.filled,
-                  fillColor: widget.fillColor,
-                  prefixIcon: widget.prefixIcon,
-                  counter: widget.showCounter != null && widget.showCounter!
-                      ? null
-                      : const SizedBox(),
-                  counterStyle: widget.counterStyle ??
-                      const TextStyle(
-                        color: Colors.black,
-                      ),
-                  suffixIcon: widget.suffixIcon ??
-                      (widget.isPassword
-                          ? IconButton(
-                              icon: isVisibleContent
-                                  ? Container(
-                                      margin:
-                                          EdgeInsets.only(right: xSmallSize),
-                                      child: SvgPicture.asset(
-                                        "assets/ic_eye.svg",
-                                      ),
-                                    )
-                                  : Container(
-                                      margin:
-                                          EdgeInsets.only(right: xSmallSize),
-                                      child: SvgPicture.asset(
-                                        "assets/ic_eye_off.svg",
-                                      ),
-                                    ),
-                              onPressed: () {
-                                setState(
-                                  () {
-                                    isVisibleContent = !isVisibleContent;
-                                  },
-                                );
-                              },
-                              color: AppColors.captionColor,
-                            )
-                          : null),
-                ),
               ),
-            ),
-            widget.suffixWidget ?? const SizedBox(),
-          ],
-        ),
-      ],
+              widget.suffixWidget ?? const SizedBox(),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
