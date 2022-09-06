@@ -49,7 +49,7 @@ class AppPages {
     ),
     GetPage(
         name: Routes.welfareCenterDetail,
-        page: () => const WelfareCenterDetailPage(),
+        page: () =>  WelfareCenterDetailPage(),
         binding: WelfareCenterDetailBinding()
     ),
 
