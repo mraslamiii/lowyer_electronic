@@ -8,13 +8,13 @@ import 'package:kanoon_dadgostari/view/auth/verification_page/page/verification_
 import 'package:kanoon_dadgostari/view/auth/verifyDetails_page/page/verify_details_page.dart';
 import 'package:kanoon_dadgostari/view/base/home_page/binding/home_binding.dart';
 import 'package:kanoon_dadgostari/view/base/home_page/page/home_page.dart';
-
 import '../view/auth/signup_page/binding/signup_binding.dart';
 import '../view/auth/verification_page/binding/verification_binding.dart';
 import '../view/base/welfare_center_detail_page/binding/welfare_center_detail_binding.dart';
 import '../view/base/welfare_center_detail_page/page/welfare_center_detail_page.dart';
 import '../view/user/lowyer_card_page/binding/lawyer_binding.dart';
 import '../view/user/lowyer_card_page/page/lowyer_card_page.dart';
+
 
 abstract class Routes {
   static const splashPage = '/splash_page';

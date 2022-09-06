@@ -1,14 +1,29 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:kanoon_dadgostari/app/app_pages.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
-import 'package:kanoon_dadgostari/utilites/app_logger.dart';
-import 'package:kanoon_dadgostari/view/auth/login_page/page/login_page.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-class WelfareCenterController extends GetxController {
+
+class ScanSearchController extends GetxController {
   final LocalStorageService pref = Get.find<LocalStorageService>();
 
 
+  @override
+  void onInit() {
+    qrViewController?.resumeCamera();
+    update();
+    super.onInit();
+  }
+
+  TextEditingController codeTxtController = TextEditingController();
+  RxString codeTxt = ''.obs;
+
+  void valueChanged(String val) {
+    codeTxt.value = val;
+  }
+
+  QRViewController? qrViewController;
 
 
   Future<bool> back() async {
