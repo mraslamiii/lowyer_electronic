@@ -18,10 +18,11 @@ Widget uploadImageBoxWidget(
 
   return Obx(() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (title != null)
           Container(
-            margin: EdgeInsets.only(bottom: xSmallSize),
+            margin: EdgeInsets.only(bottom: standardSize, top: standardSize),
             // alignment: Alignment.c,
             child: Text(
               title,
@@ -30,100 +31,104 @@ Widget uploadImageBoxWidget(
               ),
             ),
           ),
-        InkWell(
-            onTap: onTap,
-            borderRadius: BorderRadius.circular(xSmallRadius),
-            splashColor: AppColors.splashColor,
-            child: DottedBorder(
-              borderType: BorderType.RRect,
-              radius: Radius.circular(xSmallRadius),
-              dashPattern: [xSmallSize],
-              color: file.value.path == ''
-                  ? const Color(0xffD1D5DB)
-                  : Colors.transparent,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(xSmallRadius),
-                child: Stack(
-                  children: [
-                    if (file.value.path != '')
-                      Positioned.fill(
-                          child: ShaderMask(
-                        shaderCallback: (rect) {
-                          return LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Colors.black.withOpacity(0.8),
-                              Colors.transparent
-                            ],
-                          ).createShader(Rect.fromLTRB(
-                              0, 160, rect.width, rect.height - 180));
-                        },
-                        blendMode: BlendMode.darken,
-                        child: Image.file(
-                          file.value,
-                          fit: boxFit,
-                        ),
-                      )),
-                    Align(
-                      alignment: AlignmentDirectional.center,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SvgPicture.asset(
-                            icon ?? "assets/ic_camera.svg",
-                            color: const Color(0xffD1D5DB),
+        Container(
+          width: fullWidth,
+          height: fullHeight / 6.3,
+          child: InkWell(
+              onTap: onTap,
+              borderRadius: BorderRadius.circular(xSmallRadius),
+              splashColor: AppColors.splashColor,
+              child: DottedBorder(
+                borderType: BorderType.RRect,
+                radius: Radius.circular(xSmallRadius),
+                dashPattern: [xSmallSize],
+                color: file.value.path == ''
+                    ? const Color(0xffD1D5DB)
+                    : Colors.transparent,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(xSmallRadius),
+                  child: Stack(
+                    children: [
+                      if (file.value.path != '')
+                        Positioned.fill(
+                            child: ShaderMask(
+                          shaderCallback: (rect) {
+                            return LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.black.withOpacity(0.8),
+                                Colors.transparent
+                              ],
+                            ).createShader(Rect.fromLTRB(
+                                0, 160, rect.width, rect.height - 180));
+                          },
+                          blendMode: BlendMode.darken,
+                          child: Image.file(
+                            file.value,
+                            fit: boxFit,
                           ),
-                          SizedBox(
-                            height: xSmallSize,
-                          ),
-                          Text(
-                            hint ?? "فایل مورد نظر را انتخاب کنید",
-                            textAlign: TextAlign.center,
-                            style: Get.theme.textTheme.bodyText2!.copyWith(
-                              color: const Color(0xffD1D5DB),
+                        )),
+                      Align(
+                        alignment: AlignmentDirectional.center,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SvgPicture.asset(
+                              icon ?? "assets/icons/ic_camera.svg",
+                              color: file.value.path == '' ? AppColors.captionColor : Color(0xffD1D5DB),
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              height: xSmallSize,
+                            ),
+                            Text(
+                              hint ?? "فایل مورد نظر را انتخاب کنید",
+                              textAlign: TextAlign.center,
+                              style: Get.theme.textTheme.bodyText2!.copyWith(
+                                color: file.value.path == '' ? AppColors.captionColor : Color(0xffD1D5DB),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
+              )
+              // DottedBorder(
+              //   borderType: BorderType.RRect,
+              //   radius: Radius.circular(xSmallRadius),
+              //   dashPattern: [xSmallSize],
+              //   padding: EdgeInsets.all(standardSize),
+              //   color: const Color(0xffD1D5DB),
+              //   child: ClipRRect(
+              //       borderRadius: BorderRadius.circular(xSmallRadius),
+              //       child: Center(
+              //         child: Column(
+              //           mainAxisAlignment: MainAxisAlignment.center,
+              //           mainAxisSize: MainAxisSize.min,
+              //           children: [
+              //             SvgPicture.asset(
+              //               "assets/ic_camera.svg",
+              //               color: const Color(0xffD1D5DB),
+              //             ),
+              //             SizedBox(
+              //               height: xSmallSize,
+              //             ),
+              //             Text(
+              //               hint ?? "choose_photo".tr,
+              //               textAlign: TextAlign.center,
+              //               style: Get.theme.textTheme.bodyText2!.copyWith(
+              //                 color: const Color(0xffD1D5DB),
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //       )),
+              // ),
               ),
-            )
-            // DottedBorder(
-            //   borderType: BorderType.RRect,
-            //   radius: Radius.circular(xSmallRadius),
-            //   dashPattern: [xSmallSize],
-            //   padding: EdgeInsets.all(standardSize),
-            //   color: const Color(0xffD1D5DB),
-            //   child: ClipRRect(
-            //       borderRadius: BorderRadius.circular(xSmallRadius),
-            //       child: Center(
-            //         child: Column(
-            //           mainAxisAlignment: MainAxisAlignment.center,
-            //           mainAxisSize: MainAxisSize.min,
-            //           children: [
-            //             SvgPicture.asset(
-            //               "assets/ic_camera.svg",
-            //               color: const Color(0xffD1D5DB),
-            //             ),
-            //             SizedBox(
-            //               height: xSmallSize,
-            //             ),
-            //             Text(
-            //               hint ?? "choose_photo".tr,
-            //               textAlign: TextAlign.center,
-            //               style: Get.theme.textTheme.bodyText2!.copyWith(
-            //                 color: const Color(0xffD1D5DB),
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //       )),
-            // ),
-            ),
+        ),
       ],
     );
   });

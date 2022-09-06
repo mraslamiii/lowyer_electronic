@@ -10,6 +10,7 @@ import 'package:kanoon_dadgostari/view/base/home_page/binding/home_binding.dart'
 import 'package:kanoon_dadgostari/view/base/home_page/page/home_page.dart';
 import 'package:kanoon_dadgostari/view/user/edit_social_info_page/page/edit_social_info_page.dart';
 import 'package:kanoon_dadgostari/view/user/lawyer_license_info_page/page/lawyer_license_info_page.dart';
+import 'package:kanoon_dadgostari/view/user/lawyer_upload_image_page/page/lawyer_upload_image_page.dart';
 import '../view/auth/signup_page/binding/signup_binding.dart';
 import '../view/auth/verification_page/binding/verification_binding.dart';
 import '../view/user/lowyer_card_page/binding/lawyer_binding.dart';
@@ -33,7 +34,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: Routes.welfareCenterPage,
-      page: () =>  LawyerLicenseInfoPage(),
+      page: () =>  LawyerUploadImagePage(),
     ),
     GetPage(
       name: Routes.splashPage,

@@ -47,6 +47,8 @@ dependencies:
   dotted_border: ^2.0.0+2
   qr_code_scanner: ^1.0.1
   get_storage: ^2.0.3
+  image_picker: ^0.8.4+8
+  image_cropper: ^1.4.1
   connectivity_plus: ^2.3.6+1
   flutter_svg: ^1.1.4
   lottie: ^1.4.2

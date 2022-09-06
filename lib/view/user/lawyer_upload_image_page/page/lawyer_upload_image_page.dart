@@ -6,6 +6,7 @@ import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import '../../../widgets/back_widget/back_widget.dart';
 import '../../../widgets/progress_button/progress_button.dart';
 import '../../../widgets/text_form_field/text_form_field_widget.dart';
+import '../../../widgets/upload_image_box_widget.dart';
 import '../binding/lawyer_upload_image_binding.dart';
 import 'package:intl/intl.dart' as dateFormat;
 import '../controller/lawyer_upload_image_controller.dart';
@@ -42,32 +43,50 @@ class LawyerUploadImagePage extends GetView<LawyerUploadImageController> {
               leading: backIcon(),
             ),
             body:
-    // Obx(() {
-    //             return
-                  ListView(
-                  physics: const BouncingScrollPhysics(),
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(bottom: xSmallSize),
-                      // alignment: Alignment.c,
-                      child: Text(
-                        "a",
-                        style: theme.textTheme.subtitle1!.copyWith(
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsetsDirectional.only(
-                        start: standardSize,
-                        end: standardSize,
-                        top: standardSize,
-                      ),
-                      child: Container(),
-                    ),
-                  ],
+                // Obx(() {
+                //             return
+                ListView(
+              padding: EdgeInsets.symmetric(horizontal: standardSize),
+              physics: const BouncingScrollPhysics(),
+              children: <Widget>[
+                uploadImageBoxWidget(
+                  boxFit: BoxFit.fitWidth,
+                  title: 'تصویر پروانه وکالت',
+                  onTap: () {
+                    controller.openGallery(controller.lawyerFile);
+                  },
+                  file: controller.lawyerFile,
                 ),
-              // }
+                uploadImageBoxWidget(
+                  boxFit: BoxFit.fitWidth,
+                  title: 'تصویر شناسنامه',
+                  onTap: () {
+                    controller.openGallery(controller.identityFile);
+                  },
+                  file: controller.identityFile,
+                ),
+                uploadImageBoxWidget(
+                  boxFit: BoxFit.fitWidth,
+                  title: 'تصویر جلو کارت ملی',
+                  onTap: () {
+                    controller.openGallery(controller.frontNationalCardFile);
+                  },
+                  file: controller.frontNationalCardFile,
+                ),
+                uploadImageBoxWidget(
+                  boxFit: BoxFit.fitWidth,
+                  title: 'تصویر پشت کارت ملی',
+                  onTap: () {
+                    controller.openGallery(controller.backNationalCardFile);
+                  },
+                  file: controller.backNationalCardFile,
+                ),
+                SizedBox(
+                  height: standardSize
+                )
+              ],
+            ),
+            // }
             // ),
             context: context,
           );
