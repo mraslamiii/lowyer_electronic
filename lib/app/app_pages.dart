@@ -8,10 +8,10 @@ import 'package:kanoon_dadgostari/view/auth/verification_page/page/verification_
 import 'package:kanoon_dadgostari/view/auth/verifyDetails_page/page/verify_details_page.dart';
 import 'package:kanoon_dadgostari/view/base/home_page/binding/home_binding.dart';
 import 'package:kanoon_dadgostari/view/base/home_page/page/home_page.dart';
+import 'package:kanoon_dadgostari/view/user/edit_social_info_page/page/edit_social_info_page.dart';
+import 'package:kanoon_dadgostari/view/user/lawyer_license_info_page/page/lawyer_license_info_page.dart';
 import '../view/auth/signup_page/binding/signup_binding.dart';
 import '../view/auth/verification_page/binding/verification_binding.dart';
-import '../view/base/welfare_center_detail_page/binding/welfare_center_detail_binding.dart';
-import '../view/base/welfare_center_detail_page/page/welfare_center_detail_page.dart';
 import '../view/user/lowyer_card_page/binding/lawyer_binding.dart';
 import '../view/user/lowyer_card_page/page/lowyer_card_page.dart';
 
@@ -21,20 +21,20 @@ abstract class Routes {
   static const loginPage = '/login_page';
   static const homePage = '/home';
   static const lawyerPage = '/lawyer_page';
+  static const welfareCenterPage = '/welfare_center_page';
   static const signupPage = '/signup_page';
   static const verificationPage = '/verification_page';
   static const verifyDetails = '/verifyDetails_page';
-  static const welfareCenterDetail = '/welfare_center_detail';
 }
 
 class AppPages {
-  static const initialRoute = Routes.welfareCenterDetail;
+  static const initialRoute = Routes.welfareCenterPage;
 
   static final routes = [
-    // GetPage(
-    //   name: Routes.homePage,
-    //   page: () =>  HomePage(),
-    // ),
+    GetPage(
+      name: Routes.welfareCenterPage,
+      page: () =>  LawyerLicenseInfoPage(),
+    ),
     GetPage(
       name: Routes.splashPage,
       page: () => const SplashPage(),
@@ -47,11 +47,11 @@ class AppPages {
         page: () => const LawyerCardPage(),
         binding: LawyerBinding()
     ),
-    GetPage(
-        name: Routes.welfareCenterDetail,
-        page: () => const WelfareCenterDetailPage(),
-        binding: WelfareCenterDetailBinding()
-    ),
+    // GetPage(
+    //     name: Routes.welfareCenterDetail,
+    //     page: () => const WelfareCenterDetailPage(),
+    //     binding: WelfareCenterDetailBinding()
+    // ),
 
     GetPage(
         name: Routes.verifyDetails,

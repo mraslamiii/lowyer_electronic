@@ -20,7 +20,6 @@ class TextFormFieldWidget extends StatefulWidget {
     this.maxLine,
     this.readOnly,
     this.textDirection,
-
     this.maxLength,
     this.onEditingComplete,
     this.hint,
@@ -80,31 +79,31 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          widget.label != null && widget.label!.isNotEmpty
-              ? Container(
-                  margin: EdgeInsets.only(bottom: xSmallSize),
-                  // alignment: Alignment.c,
-                  child: Text(
-                    widget.label ?? "",
-                    style: theme.textTheme.subtitle1!.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: widget.isEnable != null && !widget.isEnable!
-                          ? widget.labelDisabledColor ??
-                              AppColors.secondaryTextColor
-                          : widget.textEditingController.text.isNotEmpty
-                              ? widget.labelColor ?? AppColors.primaryColor
-                              : widget.labelEmptyColor ?? Colors.black,
-                    ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        widget.label != null && widget.label!.isNotEmpty
+            ? Container(
+                margin: EdgeInsets.only(bottom: xSmallSize),
+                // alignment: Alignment.c,
+                child: Text(
+                  widget.label ?? "",
+                  style: theme.textTheme.subtitle1!.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: widget.isEnable != null && !widget.isEnable!
+                        ? widget.labelDisabledColor ??
+                            AppColors.secondaryTextColor
+                        : widget.textEditingController.text.isNotEmpty
+                            ? widget.labelColor ?? AppColors.primaryColor
+                            : widget.labelEmptyColor ?? Colors.black,
                   ),
-                )
-              : const SizedBox(),
-          Row(
+                ),
+              )
+            : const SizedBox(),
+        Directionality(
+          textDirection: widget.textDirection ?? TextDirection.rtl,
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -181,8 +180,8 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
               widget.suffixWidget ?? const SizedBox(),
             ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
