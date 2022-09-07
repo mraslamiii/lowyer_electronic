@@ -29,7 +29,7 @@ abstract class Routes {
 }
 
 class AppPages {
-  static const initialRoute = Routes.welfareCenterPage;
+  static const initialRoute = Routes.homePage;
 
   static final routes = [
     GetPage(
