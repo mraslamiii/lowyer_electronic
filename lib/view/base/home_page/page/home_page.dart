@@ -20,11 +20,11 @@ class HomePage extends StatelessWidget {
     return GetBuilder<HomeController>(
       init: HomeController(),
       builder: (controller) => customScaffold(
+        appBar: AppBar(toolbarHeight: 0,elevation: 0,backgroundColor: Colors.transparent,automaticallyImplyLeading: false),
         context: context,
         body: Column(children: [
           Container(
-            margin: EdgeInsets.only(
-                top: kToolbarHeight, left: largeSize, right: largeSize),
+            margin: EdgeInsets.only(top: largeSize,left: standardSize,right: standardSize),
             padding: EdgeInsets.symmetric(
                 horizontal: mediumSize, vertical: mediumSize),
             decoration: BoxDecoration(
