@@ -1,16 +1,12 @@
-import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/app/app_pages.dart';
 import 'package:kanoon_dadgostari/res/colors/colors.dart';
-import 'package:kanoon_dadgostari/view/Intro/splash_page/controller/splash_controller.dart';
 import 'package:kanoon_dadgostari/view/base/home_page/controller/home_controller.dart';
 import 'package:kanoon_dadgostari/view/widgets/customScaffold/customScaffold.dart';
-import 'package:page_transition/page_transition.dart';
 
 import '../../../../res/dimens/dimens.dart';
-import '../../../auth/login_page/page/login_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -38,21 +34,22 @@ class HomePage extends StatelessWidget {
                     height: fullWidth / 4.8,
                     child: Stack(
                       children: [
-                        Positioned.fill(
+                        const Positioned.fill(
                           child: CircleAvatar(
                             backgroundImage: AssetImage('assets/images/avatar.JPG'),
                           ),
                         ),
                         Align(
-                          alignment: AlignmentDirectional(-1,-1),
+                          alignment: const AlignmentDirectional(-1,-1),
                           child: Container(
                             // width: ,
                             // height: fullWidth / 4.5,
-                            padding: EdgeInsets.all(smallSize),
+                            padding: EdgeInsets.all(xSmallSize/1.3),
                             decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white,width: 1),
                                 borderRadius: BorderRadius.circular(standardRadius),
                                 color: AppColors.primaryColor),
-                            child: SvgPicture.asset('assets/icons/ic_edit_filled'),
+                            child: SvgPicture.asset('assets/icons/ic_edit_filled.svg'),
                           ),
                         )
                       ],
@@ -69,7 +66,7 @@ class HomePage extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Flexible(child: titleWidget("حمیدرضا اسلمی")),
-                              Icon(Icons.notifications_none_outlined)
+                              const Icon(Icons.notifications_none_outlined)
                             ],
                           ),
                           titleWidget("شماره فعالیت : 31553231"),
@@ -85,8 +82,8 @@ class HomePage extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                   vertical: mediumSize, horizontal: smallSize),
               child: GridView(
-                physics: NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3, childAspectRatio: 1 / 1.1),
                 children: [
                   menuItemWidget('assets/icons/ic_home_vakil_card.webp', 'وکیل کارت',
