@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:kanoon_dadgostari/app/app_pages.dart';
 import 'package:kanoon_dadgostari/res/colors/colors.dart';
 import 'package:kanoon_dadgostari/view/base/scan_search_page/page/scan_search_page.dart';
 import 'package:kanoon_dadgostari/view/widgets/customScaffold/customScaffold.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 import '../../../../res/dimens/dimens.dart';
 import '../../../widgets/back_widget/back_widget.dart';
 import '../../../widgets/image_widget.dart';
@@ -30,7 +30,7 @@ class WelfareCenterPage extends StatelessWidget {
                 splashColor: AppColors.splashColor,
                 splashRadius: largeSize / 1.2,
                 onPressed: () async{
-                  Get.to(ScanSearchPage());
+                  Get.toNamed(Routes.scan_search_page);
                 },
                 icon: SvgPicture.asset('assets/icons/ic_scan.svg'))
           ],
@@ -133,61 +133,64 @@ class WelfareCenterPage extends StatelessWidget {
 
   Widget shoppingCenterWidget(
       String picture, String shoppingName, String rating, String subTitle) {
-    return Container(
-      width: fullWidth / 1.35,
-      margin: EdgeInsets.only(bottom: smallSize),
-      padding: EdgeInsetsDirectional.only(
-          start: smallSize,
-          end: smallSize,
-          top: smallSize,
-          bottom: standardSize,
-      ),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(smallRadius),
-          color: AppColors.formFieldColor),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Container(
-              width: fullWidth,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(smallRadius),
-                child: imageWidget(picture, radius: smallRadius,
+    return GestureDetector(
+      onTap: () => Get.toNamed(Routes.welfareCenterPageDetail),
+      child: Container(
+        width: fullWidth / 1.35,
+        margin: EdgeInsets.only(bottom: smallSize),
+        padding: EdgeInsetsDirectional.only(
+            start: smallSize,
+            end: smallSize,
+            top: smallSize,
+            bottom: standardSize,
+        ),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(smallRadius),
+            color: AppColors.formFieldColor),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Container(
+                width: fullWidth,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(smallRadius),
+                  child: imageWidget(picture, radius: smallRadius,
+                  ),
                 ),
               ),
             ),
-          ),
-          SizedBox(height: xxSmallSize),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  shoppingName,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+            SizedBox(height: xxSmallSize),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    shoppingName,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Get.theme.textTheme.subtitle1
+                        ?.copyWith(fontWeight: FontWeight.w600),
+                  ),
+                ),
+                Text(
+                  rating,
                   style: Get.theme.textTheme.subtitle1
                       ?.copyWith(fontWeight: FontWeight.w600),
                 ),
-              ),
-              Text(
-                rating,
-                style: Get.theme.textTheme.subtitle1
-                    ?.copyWith(fontWeight: FontWeight.w600),
-              ),
-              SizedBox(width: xxSmallSize/2),
-              SvgPicture.asset('assets/icons/ic_star.svg')
-            ],
-          ),
-          SizedBox(height: xxSmallSize),
-          Text(
-            subTitle,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Get.theme.textTheme.bodyText1
-                ?.copyWith(color: AppColors.captionColor),
-          )
-        ],
+                SizedBox(width: xxSmallSize/2),
+                SvgPicture.asset('assets/icons/ic_star.svg')
+              ],
+            ),
+            SizedBox(height: xxSmallSize),
+            Text(
+              subTitle,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Get.theme.textTheme.bodyText1
+                  ?.copyWith(color: AppColors.captionColor),
+            )
+          ],
+        ),
       ),
     );
   }

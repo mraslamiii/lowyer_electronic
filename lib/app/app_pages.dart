@@ -8,10 +8,13 @@ import 'package:kanoon_dadgostari/view/auth/verification_page/page/verification_
 import 'package:kanoon_dadgostari/view/auth/verifyDetails_page/page/verify_details_page.dart';
 import 'package:kanoon_dadgostari/view/base/home_page/binding/home_binding.dart';
 import 'package:kanoon_dadgostari/view/base/home_page/page/home_page.dart';
+import 'package:kanoon_dadgostari/view/base/scan_search_page/binding/scan_search_binding.dart';
+import 'package:kanoon_dadgostari/view/base/scan_search_page/page/scan_search_page.dart';
 import 'package:kanoon_dadgostari/view/base/welfare_center_page/page/welfare_center_page.dart';
 import 'package:kanoon_dadgostari/view/user/edit_social_info_page/page/edit_social_info_page.dart';
 import 'package:kanoon_dadgostari/view/user/lawyer_license_info_page/page/lawyer_license_info_page.dart';
 import 'package:kanoon_dadgostari/view/user/lawyer_upload_image_page/page/lawyer_upload_image_page.dart';
+import '../map_page.dart';
 import '../view/auth/signup_page/binding/signup_binding.dart';
 import '../view/auth/verification_page/binding/verification_binding.dart';
 import '../view/base/welfare_center_detail_page/page/welfare_center_detail_page.dart';
@@ -25,19 +28,30 @@ abstract class Routes {
   static const homePage = '/home';
   static const lawyerPage = '/lawyer_page';
   static const welfareCenterPage = '/welfare_center_page';
+  static const scan_search_page = '/scan_search_page';
+  static const lawyerLicenseInfoPage = '/lawyer_license_info_page';
   static const welfareCenterPageDetail = '/welfare_center_page_detail';
   static const signupPage = '/signup_page';
   static const verificationPage = '/verification_page';
+  static const mapPage = '/map_page';
   static const verifyDetails = '/verifyDetails_page';
 }
 
 class AppPages {
-  static const initialRoute = Routes.homePage;
+  static const initialRoute = Routes.mapPage;
 
   static final routes = [
     GetPage(
       name: Routes.welfareCenterPage,
       page: () =>  WelfareCenterPage(),
+    ),
+    GetPage(
+      name: Routes.mapPage,
+      page: () =>  const MapPage(),
+    ),
+  GetPage(
+      name: Routes.lawyerLicenseInfoPage,
+      page: () =>  LawyerLicenseInfoPage(),
     ),
 
     GetPage(
@@ -50,6 +64,11 @@ class AppPages {
       binding: SplashBinding()
     ),
 
+    GetPage(
+        name: Routes.scan_search_page,
+        page: () =>  ScanSearchPage(),
+        binding: ScanSearchBinding()
+    ),
 
     GetPage(
         name: Routes.lawyerPage,

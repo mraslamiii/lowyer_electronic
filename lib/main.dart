@@ -5,6 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:kanoon_dadgostari/app/dependency.dart';
 import 'package:kanoon_dadgostari/res/app_theme.dart';
 import 'package:kanoon_dadgostari/res/colors/colors.dart';
+import 'package:kanoon_dadgostari/service/deep_link_service.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kanoon_dadgostari/view/user/lowyer_card_page/page/lowyer_card_page.dart';
@@ -63,6 +64,7 @@ Future initServices() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   Get.put(LocalStorageService());
+  Get.put(DeepLinkService());
   Get.put(APIProvider());
 
   // Get.putAsync<Isar>(() async => IsarUtil(),

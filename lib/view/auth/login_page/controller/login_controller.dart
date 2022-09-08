@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kanoon_dadgostari/models/user.dart';
 
 import '../../../../app/app_pages.dart';
 import '../../../../service/preferences_service.dart';
 
-class LoginController extends GetxController with StateMixin<User> {
+class LoginController extends GetxController {
   /// Variable ///
 
   TextEditingController phoneTxtController = TextEditingController();
