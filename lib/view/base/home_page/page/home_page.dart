@@ -125,11 +125,13 @@ class HomePage extends StatelessWidget {
           Container(
             width: fullWidth / 4.5,
             height: fullWidth / 4.5,
+            padding: EdgeInsets.all(standardSize * 1.3
+            ),
             margin: EdgeInsets.only(bottom: smallSize),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(standardRadius),
                 color: AppColors.formFieldColor),
-            child: Image.asset(icon,height: 0,width: 0,fit: BoxFit.cover,scale: 10,),
+            child: Image.asset(icon),
           ),
           Text(
             title,

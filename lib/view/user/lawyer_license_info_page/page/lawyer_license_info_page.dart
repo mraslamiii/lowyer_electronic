@@ -7,7 +7,6 @@ import '../../../widgets/back_widget/back_widget.dart';
 import '../../../widgets/progress_button/progress_button.dart';
 import '../../../widgets/text_form_field/text_form_field_widget.dart';
 import '../binding/lawyer_license_info_binding.dart';
-import 'package:intl/intl.dart' as dateFormat;
 import '../controller/lawyer_license_info_controller.dart';
 
 class LawyerLicenseInfoPage extends GetView<LawyerLicenseInfoController> {
