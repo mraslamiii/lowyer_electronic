@@ -33,7 +33,7 @@ class EditSocialInfoPage extends GetView<EditSocialInfoController> {
                 )),
             appBar: AppBar(
               title: const Text(
-                "ویـرایش پروفایل",
+                "اطلاعـات فضای مجازی",
               ),
               leading: backIcon(),
             ),

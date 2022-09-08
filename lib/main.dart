@@ -28,6 +28,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    setupChromeSystem();
+
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       defaultTransition: Transition.rightToLeft,
@@ -75,9 +77,9 @@ Future initServices() async {
 
 void setupChromeSystem() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: AppColors.backgroundColor,
-    statusBarBrightness: Brightness.dark,
-    statusBarIconBrightness: Brightness.dark,
+    statusBarColor: Colors.transparent,
+    statusBarBrightness: Brightness.light,
+    statusBarIconBrightness: Brightness.light,
   ));
 
   SystemChrome.setPreferredOrientations([

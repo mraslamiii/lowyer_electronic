@@ -38,7 +38,7 @@ abstract class Routes {
 }
 
 class AppPages {
-  static const initialRoute = Routes.mapPage;
+  static const initialRoute = Routes.homePage;
 
   static final routes = [
     GetPage(

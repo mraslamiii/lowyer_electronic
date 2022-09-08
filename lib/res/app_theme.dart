@@ -49,12 +49,13 @@ class AppThemes {
               fontFamily: 'Vazir',
               fontSize: subTitleSize,
               fontWeight: FontWeight.w600),
-          systemOverlayStyle: const SystemUiOverlayStyle(
-              statusBarColor: AppColors.backgroundColor,
-              statusBarBrightness: Brightness.dark,
-              statusBarIconBrightness: Brightness.dark,
-              systemNavigationBarColor: AppColors.backgroundColor,
-              systemNavigationBarIconBrightness: Brightness.dark)),
+          // systemOverlayStyle: const SystemUiOverlayStyle(
+          //     statusBarColor: AppColors.backgroundColor,
+          //     statusBarBrightness: Brightness.dark,
+          //     statusBarIconBrightness: Brightness.dark,
+          //     systemNavigationBarColor: AppColors.backgroundColor,
+          //     systemNavigationBarIconBrightness: Brightness.dark)
+      ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         elevation: 8.0,
         selectedItemColor: AppColors.primaryColor,

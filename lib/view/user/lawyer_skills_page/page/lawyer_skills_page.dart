@@ -23,53 +23,77 @@ class LawyerSkillsPage extends StatelessWidget {
           ),
           body: ListView.builder(
             physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.only(top: standardSize,left: standardSize,right: standardSize),
+            padding: EdgeInsets.only(
+                top: standardSize, left: standardSize, right: standardSize),
             shrinkWrap: true,
             itemCount: 5,
             itemBuilder: (context, index) => _lawyerSkillsCard(),
           )),
     );
   }
+
   Widget _lawyerSkillsCard() {
     return Container(
       margin: EdgeInsets.only(bottom: standardSize),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(xSmallRadius),
           color: AppColors.formFieldColor),
-      padding: EdgeInsets.symmetric(horizontal: smallSize),
+      padding: EdgeInsets.only(
+          bottom: standardSize,
+          right: standardSize,
+          left: standardSize,
+          top: xSmallSize,
+      ),
       child: Column(
         children: [
           _lawyerSkillsWidgetItem(
-              'assets/icons/clipboard-tick.svg', "مهـارت قضـاوت", "نـام مهـارت"),
-          const Divider(),
+              'assets/icons/ic_skills.svg', "نـام مهـارت", "مهـارت قضـاوت",
+              hasEditIcon: true),
+          Container(
+              margin: EdgeInsets.only(top: smallSize, bottom: standardSize),
+              child: const Divider()),
           _lawyerSkillsWidgetItem(
-              'assets/icons/Paper.svg', "تــوضیحــات مهـارت", "وکیل حرفه ای باید بتواند از اینکه پرونده قضاوت شود خود قضاوت کند. بتواند مانند یک قاضی به پرونده نگاه کند"),
-
+              'assets/icons/ic_paper.svg',
+              "تــوضیحــات مهـارت",
+              "وکیل حرفه ای باید بتواند از اینکه پرونده قضاوت شود خود قضاوت کند. بتواند مانند یک قاضی به پرونده نگاه کند"),
         ],
       ),
     );
   }
 
-  Widget _lawyerSkillsWidgetItem(String icon, String title, String subTitle) {
+  Widget _lawyerSkillsWidgetItem(String icon, String title, String subTitle,
+      {bool hasEditIcon = false}) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SvgPicture.asset(icon),
+        Container(
+            margin: EdgeInsets.only(left: xSmallSize),
+            child: SvgPicture.asset(icon,
+                height: iconSizeXSmall, width: iconSizeXSmall)),
         Expanded(
           child: RichText(
             text: TextSpan(
               text: '$title : ',
-              style: Get.theme.textTheme.subtitle2
-              !.copyWith(color: AppColors.primaryColor),
+              style: Get.theme.textTheme.subtitle2!
+                  .copyWith(color: AppColors.primaryColor),
               children: <TextSpan>[
-                TextSpan(
-                    text: subTitle,
-                    style: Get.theme.textTheme.subtitle2
-                ),
+                TextSpan(text: subTitle, style: Get.theme.textTheme.subtitle2),
               ],
             ),
           ),
         ),
+        if (hasEditIcon)
+          Material(
+              color: Colors.transparent,
+              child: InkWell(
+                  splashColor: AppColors.splashColor,
+                  borderRadius: BorderRadius.circular(xxLargeSize),
+                  onTap: () {},
+                  child: Padding(
+                    padding: EdgeInsets.all(xSmallSize),
+                    child:
+                        SvgPicture.asset('assets/icons/ic_edit_underline.svg',color: Colors.black),
+                  )))
         // Row(
         //   children: [
         //     SvgPicture.asset(icon),
@@ -100,4 +124,3 @@ class LawyerSkillsPage extends StatelessWidget {
     );
   }
 }
-

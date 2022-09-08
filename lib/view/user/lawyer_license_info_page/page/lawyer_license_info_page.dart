@@ -35,7 +35,7 @@ class LawyerLicenseInfoPage extends GetView<LawyerLicenseInfoController> {
                 )),
             appBar: AppBar(
               title: const Text(
-                "ویـرایش پروفایل",
+                "اطلاعـات پروانه وکالت",
               ),
               leading: backIcon(),
             ),
