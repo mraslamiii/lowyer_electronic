@@ -14,7 +14,6 @@ import '../../../auth/login_page/page/login_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
@@ -37,8 +36,26 @@ class HomePage extends StatelessWidget {
                   SizedBox(
                     width: fullWidth / 4.8,
                     height: fullWidth / 4.8,
-                    child: CircleAvatar(
-                      backgroundImage: AssetImage('assets/images/avatar.JPG'),
+                    child: Stack(
+                      children: [
+                        Positioned.fill(
+                          child: CircleAvatar(
+                            backgroundImage: AssetImage('assets/images/avatar.JPG'),
+                          ),
+                        ),
+                        Align(
+                          alignment: AlignmentDirectional(-1,-1),
+                          child: Container(
+                            // width: ,
+                            // height: fullWidth / 4.5,
+                            padding: EdgeInsets.all(smallSize),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(standardRadius),
+                                color: AppColors.primaryColor),
+                            child: SvgPicture.asset('assets/icons/ic_edit_filled'),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                   Expanded(
