@@ -1,17 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart' as dateFormat;
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
-class LawyerLicenseInfoController extends GetxController {
+import '../../../../app/app_exeption.dart';
+import '../../../../models/base/title_value_model.dart';
+import '../../../../models/sec/lawyer_profile_model.dart';
+import '../../../../repo/sec/lawyer_repo.dart';
+import '../../../../service/connection_service/connection_status.dart';
+import '../../../widgets/custom_snackbar/custom_snackbar.dart';
+
+class LawyerLicenseInfoController extends GetxController with StateMixin<LawyerProfileModel> {
   final LocalStorageService pref = Get.find<LocalStorageService>();
 
   @override
   void onInit() {
     super.onInit();
   }
+  RxBool isBusyProfile = false.obs;
+  LawyerProfileModel? result;
+
+  LawyersRepository repo = LawyersRepository();
+  final ConnectionStatusController connectionStatusController =
+  Get.put(ConnectionStatusController());
 
   Rx<Jalali>? receivedDate = Jalali.now().obs;
   Rx<Jalali>? expirationDate = Jalali.now().obs;
@@ -59,5 +71,39 @@ class LawyerLicenseInfoController extends GetxController {
     printInfo(info: 'back');
     SystemNavigator.pop();
     return true;
+  }
+
+  Future<void> fetchData() async {
+    if (!isBusyProfile.value) {
+      try {
+        isBusyProfile.value = true;
+        change(null, status: RxStatus.loading());
+        result = await repo.getLawyer('1');
+        change(result, status: RxStatus.success());
+        isBusyProfile.value = false;
+        nameTxtController.text = '${result?.user?.firstName?.trim() ?? ' '} ';
+        lastNameTxtController.text = '${result?.user?.lastName?.trim() ?? ' '} ';
+        fatherNameTxtController.text = '${result?.user?.fatherName?.trim() ?? ''} ';
+        nationalCodeTxtController.text =
+            result?.user?.national_code?.trim() ?? '';
+        addressTxtController.text = '${result?.user?.address?.trim() ?? ''} ';
+        zipCodeTxtController.text = result?.user?.zipCode?.trim() ?? '';
+
+        // Get.offAllNamed(Routes.homePage);
+      } on TitleValueException catch (exp) {
+        for (TitleValueModel error in exp.errors) {
+          isBusyProfile.value = false;
+          exeptionSnackBar(error.value![0]);
+        }
+      } catch (e) {
+        isBusyProfile.value = false;
+        change(null, status: RxStatus.error('e'));
+
+        rethrow;
+      }
+    } else {
+      change(null, status: RxStatus.error('e'));
+      isBusyProfile.value = false;
+    }
   }
 }

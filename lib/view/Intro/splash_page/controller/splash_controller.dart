@@ -53,6 +53,8 @@ class SplashController extends GetxController {
       AppLogger.e('$e');
     }
   }
+
+
 }
 
 

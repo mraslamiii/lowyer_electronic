@@ -58,22 +58,29 @@ class _ScanSearchPageState extends State<ScanSearchPage> {
       ),
       body: ListView(
         children: <Widget>[
-          AspectRatio(
-              aspectRatio: 1 / 1,
-              child: QRView(
-                key: qrKey,
-                onQRViewCreated: scanController.scanning.isTrue
-                    ? _doNothing
-                    : onQRViewCreated,
-                cameraFacing: CameraFacing.back,
-                overlay: QrScannerOverlayShape(
-                    borderColor: Colors.white,
-                    borderRadius: 10,
-                    borderLength: 26,
-                    borderWidth: 10),
-                onPermissionSet: (ctrl, p) =>
-                    _onPermissionSet(context, ctrl, p),
-              )),
+          Container(
+            padding: EdgeInsets.all(standardSize),
+
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(smallRadius),
+              child: AspectRatio(
+                  aspectRatio: 1 / 1,
+                  child: QRView(
+                    key: qrKey,
+                    onQRViewCreated: scanController.scanning.value
+                        ? _doNothing
+                        : onQRViewCreated,
+                    cameraFacing: CameraFacing.back,
+                    overlay: QrScannerOverlayShape(
+                        borderColor: Colors.white,
+                        borderRadius: 10,
+                        borderLength: 26,
+                        borderWidth: 10),
+                    onPermissionSet: (ctrl, p) =>
+                        _onPermissionSet(context, ctrl, p),
+                  )),
+            ),
+          ),
           Container(
             margin: EdgeInsetsDirectional.only(
               start: standardSize,
@@ -87,7 +94,7 @@ class _ScanSearchPageState extends State<ScanSearchPage> {
 // ],
               keyboardType: TextInputType.text,
               textInputAction: TextInputAction.done,
-              textDirection: TextDirection.ltr,
+              textDirection: TextDirection.rtl,
               label: "کد پـذیرنده",
 //
               onChange: scanController.valueChanged,

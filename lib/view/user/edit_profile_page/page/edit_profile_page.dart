@@ -10,8 +10,6 @@ import '../../../widgets/text_form_field/text_form_field_widget.dart';
 import '../controller/edit_profile_controller.dart';
 
 class EditProfilePage extends GetView<EditProfileController> {
-  LawyerProfileModel entity = LawyerProfileModel(user: null);
-
   EditProfilePage(
       {
       // required this.controller,
@@ -26,20 +24,8 @@ class EditProfilePage extends GetView<EditProfileController> {
         init: controller,
         initState: (state) {
           controller.fetchData();
-          // print();
-
         },
         builder: (_) {
-
-          if (isFirstLunch) {
-            controller.nameTxtController.text = entity.user?.firstName ?? '';
-            controller.lastNameTxtController.text = entity.user?.lastName ?? '';
-            controller.fatherNameTxtController.text = entity.user?.fatherName ?? '';
-            controller.nationalCodeTxtController.text = entity.user?.national_code ?? '';
-            controller.addressTxtController.text = entity.user?.address ?? '';
-            controller.zipCodeTxtController.text = entity.user?.zipCode ?? '';
-            isFirstLunch = false;
-          }
 
           return customScaffold(
             bottomAppBar: BottomAppBar(

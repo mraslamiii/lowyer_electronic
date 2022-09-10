@@ -4,20 +4,11 @@ import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/app/app_pages.dart';
 import 'package:kanoon_dadgostari/res/colors/colors.dart';
 import 'package:kanoon_dadgostari/view/base/home_page/controller/home_controller.dart';
-import 'package:kanoon_dadgostari/view/user/edit_profile_page/page/edit_profile_page.dart';
-import 'package:kanoon_dadgostari/view/user/edit_social_info_page/binding/edit_social_info_binding.dart';
-import 'package:kanoon_dadgostari/view/user/edit_social_info_page/page/edit_social_info_page.dart';
-import 'package:kanoon_dadgostari/view/user/lawyer_license_info_page/binding/lawyer_license_info_binding.dart';
-import 'package:kanoon_dadgostari/view/user/lawyer_skills_page/page/lawyer_skills_page.dart';
-import 'package:kanoon_dadgostari/view/user/lowyer_card_page/binding/lawyer_binding.dart';
 import 'package:kanoon_dadgostari/view/widgets/customScaffold/customScaffold.dart';
 import '../../../../res/dimens/dimens.dart';
 import '../../../../service/preferences_service.dart';
-import '../../../user/edit_profile_page/binding/edit_profile_binding.dart';
-import '../../../user/lawyer_license_info_page/page/lawyer_license_info_page.dart';
-import '../../../user/lawyer_skills_page/binding/lawyer_skills_binding.dart';
-import '../../../user/lowyer_card_page/page/lowyer_card_page.dart';
 import '../../../widgets/custom_bottom_sheet.dart';
+
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -143,7 +134,7 @@ class HomePage extends StatelessWidget {
           Obx(() {
             return DraggableScrollableSheet(
               minChildSize: sheetMinHeight.value,
-              maxChildSize: 0.95,
+              maxChildSize: sheetHeight.value,
               initialChildSize: sheetHeight.value,
               controller: draggableScrollableController,
               builder:
@@ -335,7 +326,7 @@ class HomePage extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         child: ListView(
             padding: EdgeInsetsDirectional.only(
-              bottom: standardSize,
+              bottom: fullHeight/18,
             ),
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),

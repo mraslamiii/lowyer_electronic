@@ -91,13 +91,11 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
                 child: Text(
                   widget.label ?? "",
                   style: theme.textTheme.subtitle1!.copyWith(
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                     color: widget.isEnable != null && !widget.isEnable!
                         ? widget.labelDisabledColor ??
                             AppColors.secondaryTextColor
-                        : widget.textEditingController.text.isNotEmpty
-                            ? widget.labelColor ?? AppColors.primaryColor
-                            : widget.labelEmptyColor ?? Colors.black,
+                        : widget.labelEmptyColor ?? Colors.black,
                   ),
                 ),
               )
