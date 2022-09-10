@@ -6,14 +6,18 @@ import 'package:kanoon_dadgostari/app/app_pages.dart';
 import 'package:kanoon_dadgostari/res/colors/colors.dart';
 import 'package:kanoon_dadgostari/view/base/home_page/controller/home_controller.dart';
 import 'package:kanoon_dadgostari/view/user/edit_profile_page/page/edit_profile_page.dart';
+import 'package:kanoon_dadgostari/view/user/edit_social_info_page/binding/edit_social_info_binding.dart';
 import 'package:kanoon_dadgostari/view/user/edit_social_info_page/page/edit_social_info_page.dart';
 import 'package:kanoon_dadgostari/view/user/lawyer_license_info_page/binding/lawyer_license_info_binding.dart';
 import 'package:kanoon_dadgostari/view/user/lawyer_skills_page/page/lawyer_skills_page.dart';
 import 'package:kanoon_dadgostari/view/user/lawyer_upload_image_page/page/lawyer_upload_image_page.dart';
+import 'package:kanoon_dadgostari/view/user/lowyer_card_page/binding/lawyer_binding.dart';
 import 'package:kanoon_dadgostari/view/widgets/customScaffold/customScaffold.dart';
 
 import '../../../../res/dimens/dimens.dart';
+import '../../../user/edit_profile_page/binding/edit_profile_binding.dart';
 import '../../../user/lawyer_license_info_page/page/lawyer_license_info_page.dart';
+import '../../../user/lawyer_skills_page/binding/lawyer_skills_binding.dart';
 import '../../../user/lowyer_card_page/page/lowyer_card_page.dart';
 import '../../../widgets/custom_bottom_sheet.dart';
 import '../../../widgets/progress_button/progress_button.dart';
@@ -257,12 +261,14 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget sheetItem(String title, String icon, bool isFirst, dynamic page) {
+  Widget sheetItem(
+      String title, String icon, bool isFirst, dynamic page, dynamic binding) {
     return GestureDetector(
       onTap: () {
         Get.to(page,
             transition: Transition.leftToRight,
-            duration: const Duration(milliseconds: 300));
+            duration: const Duration(milliseconds: 300),
+            binding: binding);
       },
       // splashColor: AppColors.splashColor,
       child: Column(
@@ -334,17 +340,17 @@ class HomePage extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             children: [
               sheetItem('اطلاعات پروفایل', 'assets/icons/ic_profile_info.svg',
-                  true, EditProfilePage()),
+                  true, EditProfilePage(), EditProfileBinding()),
               sheetItem('اطلاعات دفتر وکالت', 'assets/icons/ic_law_office.svg',
-                  false, LawyerLicenseInfoPage()),
+                  false, LawyerLicenseInfoPage(), LawyerLicenseInfoBinding()),
               sheetItem('اطلاعات فضای مجازی', 'assets/icons/ic_social_info.svg',
-                  false, const EditSocialInfoPage()),
+                  false, const EditSocialInfoPage(), EditSocialInfoBinding()),
               sheetItem('کیف پول', 'assets/icons/ic_wallet.svg', false,
-                  const LawyerCardPage()),
+                  const LawyerCardPage(), LawyerBinding()),
               sheetItem('مهارت ها', 'assets/icons/ic_skills.svg', false,
-                  const LawyerSkillsPage()),
-              sheetItem(
-                  'آموزش ها', 'assets/icons/ic_trainings.svg', false, null),
+                  const LawyerSkillsPage(), LawyerSkillsBinding()),
+              sheetItem('آموزش ها', 'assets/icons/ic_trainings.svg', false,
+                  null, null),
             ]),
       ),
     );
