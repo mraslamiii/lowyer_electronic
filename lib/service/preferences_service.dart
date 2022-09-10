@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import '../models/sec/user_model.dart';
+
 class LocalStorageService extends GetxService {
   static final _box = GetStorage();
 
@@ -75,15 +77,15 @@ class LocalStorageService extends GetxService {
 
   set phoneNumber(String key) => _box.write(phoneNumberKey, key);
   //
-  // User get user {
-  //   var userJson = _box.read(userKey);
-  //   if (userJson == null) {
-  //     return UserModel();
-  //   }
-  //   UserModel userModel = UserModel.fromJson(json.decode(userJson));
-  //   return userModel;
-  // }
-  //
+  User get user {
+    var userJson = _box.read(userKey);
+    if (userJson == null) {
+      return User();
+    }
+    User userModel = User.fromJson(json.decode(userJson));
+    return userModel;
+  }
+
   //
   // set user(User item) {
   //   try {

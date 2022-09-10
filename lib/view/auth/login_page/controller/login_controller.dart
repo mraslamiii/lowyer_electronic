@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kanoon_dadgostari/app/app_exeption.dart';
+import 'package:kanoon_dadgostari/models/base/title_value_model.dart';
+import 'package:kanoon_dadgostari/repo/sec/auth_repo.dart';
+import 'package:kanoon_dadgostari/service/connection_service/connection_status.dart';
+import 'package:kanoon_dadgostari/view/widgets/custom_snackbar/custom_snackbar.dart';
 
 import '../../../../app/app_pages.dart';
 import '../../../../service/preferences_service.dart';
@@ -13,6 +18,11 @@ class LoginController extends GetxController {
   RxnString errorText = RxnString(null);
   RxBool isValid = RxBool(false);
   final LocalStorageService pref = Get.find<LocalStorageService>();
+  final ConnectionStatusController connectionStatusController =
+      Get.find<ConnectionStatusController>();
+  AuthRepository repo = AuthRepository();
+
+  RxBool isBusyLogin = false.obs;
 
   @override
   void onInit() {
@@ -23,6 +33,38 @@ class LoginController extends GetxController {
 
   void phoneChanged(String val) {
     phoneNumber.value = val;
+  }
+
+  Future<void> fetchData() async {
+    if (isBusyLogin.isFalse &&
+        connectionStatusController.connectionStatus ==
+            ConnectionStatus.connect) {
+      try {
+        isBusyLogin.value = true;
+
+        var result = await repo.loginRequest(phoneNumber.value);
+        isBusyLogin.value = false;
+
+        Get.offAllNamed(Routes.verificationPage, arguments: phoneNumber.value);
+
+        print(result);
+      } on TitleValueException catch (exp) {
+
+        for (TitleValueModel error in exp.errors){
+          isBusyLogin.value = false;
+          Get.toNamed(Routes.signupPage, arguments: phoneNumber.value);
+
+
+        }
+
+      } catch (e) {
+        isBusyLogin.value = false;
+
+        rethrow;
+      }
+    } else {
+      isBusyLogin.value = false;
+    }
   }
 
   void validations(String val) async {
@@ -60,11 +102,11 @@ class LoginController extends GetxController {
     pref.phoneNumber = phoneNumber.value;
     Get.offNamed(Routes.verificationPage);
   }
+
   Future<bool> back() async {
-    Get.defaultDialog(title: "انصراف از ادامه",content: const Text("برای لغو فرایند ورود مطمئن هستید؟"));
+    Get.defaultDialog(
+        title: "انصراف از ادامه",
+        content: const Text("برای لغو فرایند ورود مطمئن هستید؟"));
     return true;
   }
-
-
-
 }

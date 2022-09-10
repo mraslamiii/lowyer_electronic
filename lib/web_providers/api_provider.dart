@@ -4,10 +4,11 @@ import 'package:dio/dio.dart' as dio;
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:kanoon_dadgostari/models/base/base_response.dart';
 
-import '../../service/preferences_service.dart';
-import '../app_exeption.dart';
-import 'api_end_point.dart';
+import '../service/preferences_service.dart';
+import '../app/app_exeption.dart';
+import 'api_endpoints.dart';
 
 class APIProvider extends GetxService {
   static final _singleton = APIProvider();
@@ -17,6 +18,7 @@ class APIProvider extends GetxService {
   Future<T> postRequest<T>(String url, Map<String, dynamic> data,
       {bool hasBaseResponse = true}) async {
     Map<String, String> _headers = Get.find<LocalStorageService>().headers;
+
 
     BaseOptions _postOptions = BaseOptions(
         baseUrl: APIEndpoint.apiBaseURL,
@@ -97,9 +99,9 @@ class APIProvider extends GetxService {
   }
 
   Future<T> getListRequest<T>(
-      String url,
-      Map<String, dynamic> data,
-      ) async {
+    String url,
+    Map<String, dynamic> data,
+  ) async {
     Map<String, String> _headers = Get.find<LocalStorageService>().headers;
     BaseOptions _postOptions = BaseOptions(
         baseUrl: APIEndpoint.apiBaseURL,
@@ -165,7 +167,7 @@ class APIProvider extends GetxService {
     }
   }
 
-  Future<T> putRequest<T>(String url, Map<String, dynamic> data,
+  Future<T> updateRequest<T>(String url, Map<String, dynamic> data,
       {bool hasBaseResponse = false}) async {
     Map<String, String> _headers = Get.find<LocalStorageService>().headers;
     BaseOptions _postOptions = BaseOptions(
@@ -174,7 +176,7 @@ class APIProvider extends GetxService {
         headers: _headers,
         connectTimeout: 12000,
         receiveTimeout: 12000,
-        method: 'put',
+        method: 'post',
         maxRedirects: 5);
 
     Dio _dio = Dio(_postOptions);
@@ -257,21 +259,30 @@ class APIProvider extends GetxService {
   dynamic _returnResponse(dio.Response? response) {
     switch (response?.statusCode) {
       case 200:
-        dynamic responseJson = jsonDecode(response?.data);
-        return responseJson;
+        try {
+          return response?.data;
+
+          // var responseJson = jsonDecode(response?.data);
+          // return responseJson;
+        } catch (e) {
+          throw jsonDecode(response?.data);
+        }
       case 400:
-        throw BadRequestException(response?.toString());
+      // throw BadRequestException(response?.toString());
       case 401:
       case 403:
-        throw UnauthorisedException(response?.data.toString());
+      // throw UnauthorisedException(response?.data.toString());
       case 404:
-        throw UnauthorisedException(response?.data.toString());
+      // throw UnauthorisedException(response?.data.toString());
       case 500:
       default:
-        throw FetchDataException(
-            'Error occured while communication with server' +
-                ' with status code : ${response?.statusCode}');
+        var body = response?.data;
+
+        BaseResponse baseResponse = BaseResponse.fromJson(body, null);
+        throw TitleValueException(baseResponse.exception ?? []);
+      // throw FetchDataException(
+      //     'Error occured while communication with server' +
+      //         ' with status code : ${response?.statusCode}');
     }
   }
-
 }

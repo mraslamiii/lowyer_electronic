@@ -1,46 +1,44 @@
+import 'package:kanoon_dadgostari/models/sec/user_model.dart';
+
 import '../../models/base/safe_convert.dart';
 
-class LoginRQM {
-  final String mobile_number;
+class RegisterRQM {
+  final String nationalCode;
+  final String firstName;
+  final String lastName;
+  final String mobileNumber;
 
-
-  LoginRQM({
-    this.mobile_number = "",
-
+  RegisterRQM({
+    this.nationalCode = '',
+    this.firstName = '',
+    this.lastName = '',
+    this.mobileNumber = '',
   });
 
-  factory LoginRQM.fromJson(Map<String, dynamic> json) =>
-      LoginRQM(
-        mobile_number: asT<String>(json, 'mobile_number', defaultValue: ''),
+  Map<String, dynamic> toJson() => {
+        'national_code': nationalCode,
+        'first_name': firstName,
+        'last_name': lastName,
+        'mobile_number': mobileNumber,
+      };
+}
+
+class AuthRPM {
+  final User? user;
+  final String token;
+
+  AuthRPM({
+    this.user,
+    this.token = '',
+  });
+
+  Map<String, dynamic> toJson() => {
+        'user': user,
+        'token': token,
+      };
+
+  factory AuthRPM.fromJson(Map<String, dynamic> json) => AuthRPM(
+        user: User.fromJson(asT<Map<String, dynamic>>(json, 'user')),
+        token: asT<String>(json, 'token', defaultValue: ''),
       );
-
-  Map<String, dynamic> toJson() => {
-    'mobile_number': this.mobile_number,
-  };
 }
-
-class LoginRPM {
-  final String status;
-  final String data;
-  final String message;
-
-  LoginRPM({
-    this.status = '',
-    this.data = '',
-    this.message = '',
-  });
-
-  factory LoginRPM.fromJson(Map<String, dynamic> json) => LoginRPM(
-    status: asT<String>(json, 'status', defaultValue: ''),
-    data: asT<String>(json, 'data', defaultValue: ''),
-    message: asT<String>(json, 'message', defaultValue: ''),
-  );
-
-  Map<String, dynamic> toJson() => {
-    'status': this.status,
-    'data': this.data,
-    'message': this.message,
-  };
-}
-
-

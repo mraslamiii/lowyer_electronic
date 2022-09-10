@@ -40,7 +40,7 @@ class HomePage extends StatelessWidget {
         body: Stack(children: [
           Positioned(
               child: Image.asset('assets/images/pic_bg_home.jpg',
-                  fit: BoxFit.fill, scale: 2.85)),
+                  fit: BoxFit.fill, scale: 2.4)),
           Container(
             alignment: Alignment.center,
             height: fullWidth / 1.95,

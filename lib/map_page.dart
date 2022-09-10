@@ -1,50 +1,351 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 
 class MapPage extends StatefulWidget {
-  const MapPage({Key? key}) : super(key: key);
-
   @override
-  State<MapPage> createState() => _MapPageState();
+  State<StatefulWidget> createState() => _LocationAppExampleState();
 }
 
-class _MapPageState extends State<MapPage> {
-  MapPosition markerPosition = MapPosition (center: LatLng(36.2972, 59.6067));
-  MapController mapController = MapController();
-
+class _LocationAppExampleState extends State<MapPage> {
+  ValueNotifier<GeoPoint?> notifier = ValueNotifier(null);
 
   @override
   Widget build(BuildContext context) {
-
-    return FlutterMap(
-      options: MapOptions(
-        center: markerPosition.center,
-        onPositionChanged: (position, hasGesture) {
-          setState(() {
-            markerPosition =  position;
-          });
-        },
-        zoom: 15,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("search picker example"),
       ),
-      mapController: MapController(),
-      children: [
-        TileLayer(
-          urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-          userAgentPackageName: 'dev.fleaflet.flutter_map.example',
-        ),
-        MarkerLayer(
-          markers: [
-            Marker(
-              point: markerPosition.center ?? LatLng(36.2972, 59.6067),
-              width: 80,
-              height: 80,
-              builder: (context) => Image.asset('assets/images/avatar.JPG'),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ValueListenableBuilder<GeoPoint?>(
+              valueListenable: notifier,
+              builder: (ctx, p, child) {
+                return Center(
+                  child: Text(
+                    p?.toString() ?? "",
+                    textAlign: TextAlign.center,
+                  ),
+                );
+              },
+            ),
+            Column(
+              children: [
+                ElevatedButton(
+                  onPressed: () async {
+                    var p = await Navigator.push(context, MaterialPageRoute(builder: (context) => SearchPage(),));
+                    if (p != null) {
+                      notifier.value = p as GeoPoint;
+                    }
+                  },
+                  child: const Text("pick address"),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    var p = await showSimplePickerLocation(
+                      context: context,
+                      isDismissible: true,
+                      title: "location picker",
+                      textConfirmPicker: "pick",
+                      initCurrentUserPosition: false,
+                      initZoom: 8,
+                      initPosition:
+                      GeoPoint(latitude: 47.4358055, longitude: 8.4737324),
+                      radius: 8.0,
+                    );
+                    if (p != null) {
+                      notifier.value = p;
+                    }
+                  },
+                  child: const Text("show picker address"),
+                )
+              ],
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class SearchPage extends StatefulWidget {
+  const SearchPage({super.key});
+
+  @override
+  State<StatefulWidget> createState() => _SearchPageState();
+}
+
+class _SearchPageState extends State<SearchPage> {
+   TextEditingController textEditingController = TextEditingController();
+   PickerMapController controller = PickerMapController(
+    initMapWithUserPosition: true,
+  );
+
+  MapController mapController = MapController.customLayer(
+    initMapWithUserPosition: true,
+    initPosition: GeoPoint(
+      latitude: 47.4358055,
+      longitude: 8.4737324,
+    ),
+    customTile: CustomTile(
+      sourceName: "opentopomap",
+      tileExtension: ".png",
+      minZoomLevel: 2,
+      maxZoomLevel: 19,
+      urlsServers: [
+        TileURLs(
+          url: "https://tile.opentopomap.org/",
+          subdomains: [],
+        )
       ],
+      tileSize: 256,
+    ),
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    textEditingController.addListener(textOnChanged);
+  }
+
+  void textOnChanged() {
+    controller.setSearchableText(textEditingController.text);
+  }
+
+  @override
+  void dispose() {
+    textEditingController.removeListener(textOnChanged);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPickerLocation(
+      controller: controller,
+      topWidgetPicker: Padding(
+        padding: const EdgeInsets.only(
+          top: 56,
+          left: 8,
+          right: 8,
+        ),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                TextButton(
+                  style: TextButton.styleFrom(),
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Icon(
+                    Icons.arrow_back_ios,
+                  ),
+                ),
+                Expanded(
+                  child: TextField(
+                    controller: textEditingController,
+                    onEditingComplete: () async {
+                      FocusScope.of(context).requestFocus(new FocusNode());
+                    },
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Colors.black,
+                      ),
+                      suffix: ValueListenableBuilder<TextEditingValue>(
+                        valueListenable: textEditingController,
+                        builder: (ctx, text, child) {
+                          if (text.text.isNotEmpty) {
+                            return child!;
+                          }
+                          return SizedBox.shrink();
+                        },
+                        child: InkWell(
+                          focusNode: FocusNode(),
+                          onTap: () {
+                            textEditingController.clear();
+                            controller.setSearchableText("");
+                            FocusScope.of(context)
+                                .requestFocus(new FocusNode());
+                          },
+                          child: Icon(
+                            Icons.close,
+                            size: 16,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      focusColor: Colors.black,
+                      filled: true,
+                      hintText: "search",
+                      border: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      fillColor: Colors.grey[300],
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            TopSearchWidget()
+          ],
+        ),
+      ),
+      bottomWidgetPicker: Positioned(
+        bottom: 12,
+        right: 8,
+        child: FloatingActionButton(
+          onPressed: () async {
+
+
+            await mapController.currentLocation();
+
+
+            // GeoPoint p = await controller.selectAdvancedPositionPicker();
+            // Navigator.pop(context, p);
+          },
+          child: Icon(Icons.arrow_forward),
+        ),
+      ),
+      pickerConfig: CustomPickerLocationConfig(
+        initZoom: 8,
+      ),
+    );
+  }
+}
+
+class TopSearchWidget extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _TopSearchWidgetState();
+}
+
+class _TopSearchWidgetState extends State<TopSearchWidget> {
+  late PickerMapController controller;
+  ValueNotifier<GeoPoint?> notifierGeoPoint = ValueNotifier(null);
+  ValueNotifier<bool> notifierAutoCompletion = ValueNotifier(false);
+
+  late StreamController<List<SearchInfo>> streamSuggestion = StreamController();
+  late Future<List<SearchInfo>> _futureSuggestionAddress;
+  String oldText = "";
+  Timer? _timerToStartSuggestionReq;
+  final Key streamKey = Key("streamAddressSug");
+
+  @override
+  void initState() {
+    super.initState();
+    controller = CustomPickerLocation.of(context);
+    controller.searchableText.addListener(onSearchableTextChanged);
+  }
+
+  void onSearchableTextChanged() async {
+    final v = controller.searchableText.value;
+    if (v.length > 3 && oldText != v) {
+      oldText = v;
+      if (_timerToStartSuggestionReq != null &&
+          _timerToStartSuggestionReq!.isActive) {
+        _timerToStartSuggestionReq!.cancel();
+      }
+      _timerToStartSuggestionReq =
+          Timer.periodic(Duration(seconds: 3), (timer) async {
+            await suggestionProcessing(v);
+            timer.cancel();
+          });
+    }
+    if (v.isEmpty) {
+      await reInitStream();
+    }
+  }
+
+  Future reInitStream() async {
+    notifierAutoCompletion.value = false;
+    await streamSuggestion.close();
+    setState(() {
+      streamSuggestion = StreamController();
+    });
+  }
+
+  Future<void> suggestionProcessing(String addr) async {
+    notifierAutoCompletion.value = true;
+    _futureSuggestionAddress = addressSuggestion(
+      addr,
+      limitInformation: 5,
+    );
+    _futureSuggestionAddress.then((value) {
+      streamSuggestion.sink.add(value);
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.searchableText.removeListener(onSearchableTextChanged);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<bool>(
+      valueListenable: notifierAutoCompletion,
+      builder: (ctx, isVisible, child) {
+        return AnimatedContainer(
+          duration: Duration(
+            milliseconds: 500,
+          ),
+          height: isVisible ? MediaQuery.of(context).size.height / 4 : 0,
+          child: Card(
+            child: child!,
+          ),
+        );
+      },
+      child: StreamBuilder<List<SearchInfo>>(
+        stream: streamSuggestion.stream,
+        key: streamKey,
+        builder: (ctx, snap) {
+          if (snap.hasData) {
+            return ListView.builder(
+              itemExtent: 50.0,
+              itemBuilder: (ctx, index) {
+                return ListTile(
+                  title: Text(
+                    snap.data![index].address.toString(),
+                    maxLines: 1,
+                    overflow: TextOverflow.fade,
+                  ),
+                  onTap: () async {
+                    /// go to location selected by address
+                    controller.goToLocation(
+                      snap.data![index].point!,
+                    );
+
+                    /// hide suggestion card
+                    notifierAutoCompletion.value = false;
+                    await reInitStream();
+                    FocusScope.of(context).requestFocus(
+                      new FocusNode(),
+                    );
+                  },
+                );
+              },
+              itemCount: snap.data!.length,
+            );
+          }
+          if (snap.connectionState == ConnectionState.waiting) {
+            return Card(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+          return SizedBox();
+        },
+      ),
     );
   }
 }

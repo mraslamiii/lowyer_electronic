@@ -38,7 +38,7 @@ abstract class Routes {
 }
 
 class AppPages {
-  static const initialRoute = Routes.homePage;
+  static const initialRoute = Routes.splashPage;
 
   static final routes = [
     GetPage(
@@ -47,7 +47,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.mapPage,
-      page: () =>  const MapPage(),
+      page: () =>   MapPage(),
     ),
   GetPage(
       name: Routes.lawyerLicenseInfoPage,
@@ -110,6 +110,7 @@ class AppPages {
 
     GetPage(
       name: Routes.verificationPage,
+
       page: () => VerificationPage(),
       binding: VerifyBinding()
     ),

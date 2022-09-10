@@ -35,13 +35,14 @@ class TextFormFieldWidget extends StatefulWidget {
     this.showCounter = false,
     this.counterStyle,
     this.errorText,
+    this.autovalidateMode,
     this.onTap,
     this.suffixWidget,
   }) : super(key: key);
 
   final TextEditingController textEditingController;
   final List<TextInputFormatter>? inputFormatters;
-
+  final AutovalidateMode? autovalidateMode;
   final String? hint;
   final String? label;
   final String? errorText;
@@ -111,7 +112,7 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
                 child: TextFormField(
                   onTap: widget.onTap,
                   enabled: widget.isEnable,
-
+                  autovalidateMode: widget.autovalidateMode,
                   textDirection: widget.textDirection ?? TextDirection.rtl,
                   maxLines: widget.maxLine ?? 1,
                   maxLength: widget.maxLength,
@@ -132,7 +133,8 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
                       (value) {
                         setState(() {});
                       },
-                  style: theme.textTheme.bodyText2?.copyWith(color: Colors.black),
+                  style:
+                      theme.textTheme.bodyText2?.copyWith(color: Colors.black),
                   decoration: InputDecoration(
                     errorText: widget.errorText,
                     hintText: widget.hint,

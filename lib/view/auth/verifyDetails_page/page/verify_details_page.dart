@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/res/colors/colors.dart';
 import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
+import 'package:kanoon_dadgostari/service/preferences_service.dart';
 import 'package:kanoon_dadgostari/view/auth/success_signup_page/succses_signup_page.dart';
 import 'package:kanoon_dadgostari/view/auth/verification_page/controller/verify_controller.dart';
 import 'package:kanoon_dadgostari/view/widgets/customScaffold/customScaffold.dart';
@@ -12,6 +13,8 @@ import 'package:kanoon_dadgostari/view/widgets/customScaffold/customScaffold.dar
 import '../../../../app/app_pages.dart';
 
 class VerifyDetailsPage extends StatelessWidget {
+  final LocalStorageService pref = Get.find<LocalStorageService>();
+
   VerifyDetailsPage({Key? key}) : super(key: key);
 
   @override
@@ -33,7 +36,7 @@ class VerifyDetailsPage extends StatelessWidget {
                   padding: EdgeInsets.only(
                       bottom: smallSize, left: largeSize, right: largeSize),
                   child: Text("آیا اطلاعات زیر متعلق به شماست؟",
-                      style: Get.theme.textTheme.subtitle2
+                      style: Get.theme.textTheme.subtitle1
                           ?.copyWith(color: AppColors.primaryColor)),
                 ),
                 Container(
@@ -44,11 +47,11 @@ class VerifyDetailsPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(standardRadius)),
                   child: Column(
                     children: [
-                      infoWidget("نام", "حمیدرضا"),
-                      infoWidget("نام خانوادگی", "اسلمی"),
-                      infoWidget("نام پدر", "علیرضا"),
-                      infoWidget("کد ملی", "092645445"),
-                      infoWidget("شماره شناسنامه", "4781062", isLast: true),
+                      infoWidget("نام", pref.user.firstName ?? ""),
+                      infoWidget("نام خانوادگی", pref.user.lastName ?? ""),
+                      // infoWidget("نام پدر", "${pref.user.firstName}"),
+                      // infoWidget("کد ملی", "${pref.user.firstName}"),
+                      infoWidget("شماره شناسنامه", pref.user.national_code ?? "", isLast: true),
                     ],
                   ),
                 ),
@@ -83,8 +86,8 @@ class VerifyDetailsPage extends StatelessWidget {
                 child:
                     Icon(Icons.circle, color: Colors.black, size: xxSmallSize),
               ),
-              Text("${title} : "),
-              Text(value),
+              Text("${title} : ",style: Get.textTheme.subtitle1),
+              Text(value,style: Get.textTheme.subtitle1),
             ],
           ),
         ),

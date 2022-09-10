@@ -1,114 +1,73 @@
 import 'dart:math';
 
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kanoon_dadgostari/app/app_exeption.dart';
+import 'package:kanoon_dadgostari/models/base/title_value_model.dart';
+import 'package:kanoon_dadgostari/models/sec/user_model.dart';
+import 'package:kanoon_dadgostari/repo/sec/auth_repo.dart';
 import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
+import 'package:kanoon_dadgostari/service/connection_service/connection_status.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
+import 'package:kanoon_dadgostari/web_models/auth/auth_web_model.dart';
 import 'package:lottie/lottie.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 import '../../../../app/app_pages.dart';
+import '../../../widgets/custom_snackbar/custom_snackbar.dart';
 
 class SignUPController extends GetxController {
   TextEditingController idCodeUserController = TextEditingController();
   TextEditingController dateTimeTxtController = TextEditingController();
   TextEditingController phoneTxtController = TextEditingController();
-  LocalStorageService pref = Get.find<LocalStorageService>();
+  TextEditingController nameTxtController = TextEditingController();
+  TextEditingController lastNameTxtController = TextEditingController();
 
-  RxString idCodeNumber = RxString('');
-  RxString dateTimeTxt = RxString('');
-  RxnString errorCodeNumber = RxnString(null);
-  RxBool idIsValid = RxBool(false);
-  RxBool dateIsValid = RxBool(false);
+  final LocalStorageService pref = Get.find<LocalStorageService>();
+  final ConnectionStatusController connectionStatusController =
+      Get.find<ConnectionStatusController>();
+  AuthRepository repo = AuthRepository();
 
-  @override
-  void onInit() {
-    super.onInit();
-    phoneTxtController.text = pref.phoneNumber;
-    debounce<String>(idCodeNumber, validations,
-        time: const Duration(milliseconds: 500));
+  RxBool isBusyLogin = false.obs;
 
-    debounce<String>(dateTimeTxt, validationsDte,
-        time: const Duration(milliseconds: 500));
-  }
+  Future<void> fetchData(String phone) async {
+    if (isBusyLogin.isFalse &&
+        connectionStatusController.connectionStatus ==
+            ConnectionStatus.connect) {
+      try {
+        isBusyLogin.value = true;
 
-  void valueChanged(String val) {
-    idCodeNumber.value = val;
-  }
+        var result = await repo.registerRequest(RegisterRQM(
+            firstName: nameTxtController.text,
+            lastName: lastNameTxtController.text,
+            mobileNumber: phone,
+            nationalCode: idCodeUserController.text));
+        isBusyLogin.value = false;
 
-  void validations(String val) async {
-    errorCodeNumber.value = null; // reset validation errors to nothing
-    idIsValid.value = false;
+        pref.setUser(result.user!.toJson());
 
-    if (val.isNotEmpty) {
-      if (lengthOK(val)) {
-        idIsValid.value = true;
-        errorCodeNumber.value = null;
+        Get.offAllNamed(Routes.verifyDetails);
+      } on TitleValueException catch (exp) {
+        for (TitleValueModel error in exp.errors) {
+          isBusyLogin.value = false;
+          exeptionSnackBar(error.value![0]);
+        }
+      } catch (e) {
+        isBusyLogin.value = false;
+
+        rethrow;
       }
-    }
-  }
-
-  void validationsDte(String val) async {
-    if (val.isNotEmpty) {
-      if (dateTimeTxtController.text.isNotEmpty) {
-        dateIsValid.value = true;
-      }
-    }
-  }
-
-  bool lengthOK(String val, {int minLen = 10}) {
-    if (val.length < minLen) {
-      errorCodeNumber.value = 'کد ملی باید 10 رقم باشد';
-      return false;
     } else {
-      return true;
+      isBusyLogin.value = false;
     }
   }
 
-  void submitFunc() {
-    if (lengthOK(idCodeNumber.value) && dateTimeTxt.value.isNotEmpty) {
-      Get.offAllNamed(Routes.verifyDetails);
-    }
-  }
 
-  Future<bool> back() async {
-    bool isBack = false;
-    Get.defaultDialog(
-      barrierDismissible: true,
-      textCancel: "خیر",
-      textConfirm: "بله",
-      title: "انصراف از ثبت نام",
-      titleStyle: Get.theme.textTheme.subtitle2,
-      content: Column(
-        children: [
-          SizedBox(
-              width: fullWidth / 5,
-              height: fullWidth / 5,
-              child: Lottie.asset('assets/icons/close.json')),
-          Padding(
-            padding: EdgeInsets.only(top: smallSize),
-            child: Text("برای لغو فرایند ثبت نام مطمئن هستید؟",
-                textAlign: TextAlign.center,
-                style: Get.theme.textTheme.bodyText1),
-          ),
-        ],
-      ),
-      onCancel: () {
-        Navigator.of(Get.overlayContext!, rootNavigator: true).pop();
-      },
-      onConfirm: () {
-        Navigator.of(Get.overlayContext!, rootNavigator: true).pop();
-
-        Get.offAllNamed(Routes.loginPage);
-      },
-    );
-    return isBack;
-  }
 
   void showDatePicker(BuildContext context) async {
     Jalali? picked = await showPersianDatePicker(
-
       context: context,
       initialDate: Jalali.now(),
       firstDate: Jalali(1320, 8),
@@ -117,7 +76,7 @@ class SignUPController extends GetxController {
       initialDatePickerMode: PDatePickerMode.day,
     );
     if (picked != null) {
-      dateTimeTxt.value = "${picked.formatFullDate()} ";
+      // dateTimeTxt.value = "${picked.formatFullDate()} ";
       dateTimeTxtController.text = "${picked.formatFullDate()} ";
     }
   }

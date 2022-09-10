@@ -36,19 +36,19 @@ class SplashController extends GetxController {
 
   void controlNavigation() async {
     try {
-      Get.offAllNamed(Routes.loginPage);
+      // Get.offAllNamed(Routes.loginPage);
 
-      // if (pref.isFirstTimeLaunch) {
-      //   Get.offNamed(Routes.loginPage);
-      // } else
-      // if (pref.token == "") {
-      //   Get.toNamed(Routes.verificationPage);
-      //   // await _navigationService.pushNamedAndRemoveUntil(Routes.loginPage);
-      // } else {
-      //   Get.toNamed(Routes.verificationPage);
-      //   // _navigationService.pushNamedAndRemoveUntil(Routes.mainPage,
-      //   //     arguments: MainPageArguments(selectedIndex: 0));
-      // }
+      if (pref.isFirstTimeLaunch) {
+        Get.offNamed(Routes.loginPage);
+      } else
+      if (pref.token == "" ) {
+        Get.toNamed(Routes.loginPage);
+        // await _navigationService.pushNamedAndRemoveUntil(Routes.loginPage);
+      } else {
+        Get.toNamed(Routes.homePage);
+        // _navigationService.pushNamedAndRemoveUntil(Routes.mainPage,
+        //     arguments: MainPageArguments(selectedIndex: 0));
+      }
     } catch (e) {
       AppLogger.e('$e');
     }

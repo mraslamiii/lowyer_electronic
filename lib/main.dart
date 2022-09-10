@@ -10,7 +10,7 @@ import 'package:kanoon_dadgostari/service/preferences_service.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kanoon_dadgostari/view/user/lowyer_card_page/page/lowyer_card_page.dart';
 import 'app/app_pages.dart';
-import 'data/network/network_api_service.dart';
+import 'web_providers/api_provider.dart';
 import 'service/connection_service/connection_status_binding.dart';
 
 void main() async {
@@ -33,16 +33,16 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       defaultTransition: Transition.rightToLeft,
-      localizationsDelegates: [
+      localizationsDelegates: const [
         GlobalCupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: [
+      supportedLocales: const [
         Locale("en", "US"),
         Locale("fa", "IR"), // OR Locale('ar', 'AE') OR Other RTL locales
       ],
-      locale: Locale("fa", "IR"),
+      locale: const Locale("fa", "IR"),
       // OR Locale('ar', 'AE') OR Other RTL locales,
 
       home: const LawyerCardPage(),

@@ -1,3 +1,5 @@
+import 'package:kanoon_dadgostari/models/base/title_value_model.dart';
+
 class AppException implements Exception {
   final _message;
   final _prefix;
@@ -24,4 +26,11 @@ class UnauthorisedException extends AppException {
 
 class InvalidInputException extends AppException {
   InvalidInputException([String? message]) : super(message, "Invalid Input: ");
+}
+
+class TitleValueException extends AppException {
+  List<TitleValueModel> errors;
+
+  TitleValueException(this.errors)
+      : super("message", "Invalid Input: ");
 }

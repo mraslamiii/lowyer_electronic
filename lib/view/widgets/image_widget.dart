@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../data/network/api_end_point.dart';
+import '../../web_providers/api_endpoints.dart';
 import '../../res/colors/colors.dart';
 import '../../res/dimens/dimens.dart';
 

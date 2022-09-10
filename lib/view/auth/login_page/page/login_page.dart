@@ -9,6 +9,7 @@ import 'package:kanoon_dadgostari/view/auth/verification_page/page/verification_
 
 import '../../../../app/app_pages.dart';
 import '../../../widgets/customScaffold/customScaffold.dart';
+import '../../../widgets/progress_button/progress_button.dart';
 import '../../../widgets/text_form_field/text_form_field_widget.dart';
 
 class LoginPage extends StatelessWidget {
@@ -18,43 +19,46 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<LoginController>(
       init: LoginController(),
-      builder: (controller) => WillPopScope(
-        onWillPop: () => controller.back(),
-        child: customScaffold(
-            context: context,
-            appBar: AppBar(
-                title: const Text(
-                  "ورود به اپلیکیشن",
-                ),
-                automaticallyImplyLeading: false),
-            body: SizedBox(
-              width: Get.width,
-              height: Get.height,
-              child: Padding(
-                padding: EdgeInsets.all(largeSize),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text("شماره تلفن همراه خود را وارد کنید",
+      builder: (controller) =>
+          WillPopScope(
+            onWillPop: () => controller.back(),
+            child: customScaffold(
+                context: context,
+                appBar: AppBar(
+                    title: const Text(
+                      "ورود به اپلیکیشن",
+                    ),
+                    automaticallyImplyLeading: false),
+                body: SizedBox(
+                  width: Get.width,
+                  height: Get.height,
+                  child: Padding(
+                    padding: EdgeInsets.all(largeSize),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                        Text("شماره تلفن همراه خود را وارد کنید",
                         style: Get.theme.textTheme.subtitle1),
                     Padding(
                       padding: EdgeInsets.only(top: standardSize),
                       child: Directionality(
                         textDirection: TextDirection.ltr,
                         child: Obx(
-                          () => TextFormFieldWidget(
+                              () =>
+                              TextFormFieldWidget(
 
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                            maxLength: 11,
-                            onChange: controller.phoneChanged,
-                            textDirection: TextDirection.ltr,
-                            errorText: controller.errorText.value,
-                            hint: "09xxxxxxxxx",
-                            textEditingController: controller.phoneTxtController,
-                          ),
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                                maxLength: 11,
+                                onChange: controller.phoneChanged,
+                                textDirection: TextDirection.ltr,
+                                errorText: controller.errorText.value,
+                                hint: "09xxxxxxxxx",
+                                textEditingController: controller
+                                    .phoneTxtController,
+                              ),
                         ),
                       ),
                     ),
@@ -62,21 +66,19 @@ class LoginPage extends StatelessWidget {
                     SizedBox(
                       width: fullWidth,
                       child: Obx(
-                        () => ElevatedButton(
-
-                            onPressed: controller.isValid.value  ? () {
-
-                              controller.submitFunction();
-
-                            } : null,
-                            child: const Text("ارسال کد تایید")),
+                            () =>
+                            progressButton(
+                              isProgress: controller.isBusyLogin.value,
+                                onTap: controller.isValid.value && controller.isBusyLogin.isFalse ? () {
+                                  controller.fetchData();
+                                } : null, text: "ارسال کد تایید"
+                            ),
                       ),
-                    )
-                  ],
-                ),
-              ),
-            )),
-      ),
+                    )],
+                    ),
+                  ),
+                )),
+          ),
     );
   }
 }
