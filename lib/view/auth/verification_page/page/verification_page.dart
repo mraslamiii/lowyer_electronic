@@ -52,7 +52,7 @@ class VerificationPage extends StatelessWidget {
                     padding: EdgeInsets.only(top: smallSize),
                     child: Row(
                       children: [
-                        SvgPicture.asset('assets/icons/ic_edit.svg',
+                        SvgPicture.asset('assets/icons/ic_edit_underline.svg',
                             color: AppColors.primaryColor),
                         Padding(
                             padding: EdgeInsets.only(right: xSmallSize),

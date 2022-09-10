@@ -67,9 +67,9 @@ class _ScanSearchPageState extends State<ScanSearchPage> {
                     : onQRViewCreated,
                 cameraFacing: CameraFacing.back,
                 overlay: QrScannerOverlayShape(
-                    borderColor: Colors.red,
+                    borderColor: Colors.white,
                     borderRadius: 10,
-                    borderLength: 30,
+                    borderLength: 26,
                     borderWidth: 10),
                 onPermissionSet: (ctrl, p) =>
                     _onPermissionSet(context, ctrl, p),

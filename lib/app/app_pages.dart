@@ -18,6 +18,10 @@ import '../map_page.dart';
 import '../view/auth/signup_page/binding/signup_binding.dart';
 import '../view/auth/verification_page/binding/verification_binding.dart';
 import '../view/base/welfare_center_detail_page/page/welfare_center_detail_page.dart';
+import '../view/user/edit_profile_page/binding/edit_profile_binding.dart';
+import '../view/user/edit_profile_page/page/edit_profile_page.dart';
+import '../view/user/edit_social_info_page/binding/edit_social_info_binding.dart';
+import '../view/user/lawyer_license_info_page/binding/lawyer_license_info_binding.dart';
 import '../view/user/lowyer_card_page/binding/lawyer_binding.dart';
 import '../view/user/lowyer_card_page/page/lowyer_card_page.dart';
 
@@ -25,6 +29,8 @@ import '../view/user/lowyer_card_page/page/lowyer_card_page.dart';
 abstract class Routes {
   static const splashPage = '/splash_page';
   static const loginPage = '/login_page';
+  static const editSocialInfoPage = '/edit_social_info_page';
+  static const editProfile = '/edit_profile';
   static const homePage = '/home';
   static const lawyerPage = '/lawyer_page';
   static const welfareCenterPage = '/welfare_center_page';
@@ -47,16 +53,17 @@ class AppPages {
     ),
     GetPage(
       name: Routes.mapPage,
-      page: () =>   MapPage(),
+      page: () => MapPage(),
     ),
   GetPage(
       name: Routes.lawyerLicenseInfoPage,
       page: () =>  LawyerLicenseInfoPage(),
+      binding: LawyerLicenseInfoBinding(),
     ),
 
     GetPage(
       name: Routes.welfareCenterPageDetail,
-      page: () =>  WelfareCenterDetailPage(),
+      page: () =>  const WelfareCenterDetailPage(),
     ),
     GetPage(
       name: Routes.splashPage,
@@ -66,7 +73,7 @@ class AppPages {
 
     GetPage(
         name: Routes.scan_search_page,
-        page: () =>  ScanSearchPage(),
+        page: () =>  const ScanSearchPage(),
         binding: ScanSearchBinding()
     ),
 
@@ -113,6 +120,20 @@ class AppPages {
 
       page: () => VerificationPage(),
       binding: VerifyBinding()
+    ),
+
+
+    GetPage(
+      name: Routes.editProfile,
+      page: () => EditProfilePage(),
+      binding: EditProfileBinding()
+    ),
+
+
+    GetPage(
+      name: Routes.editSocialInfoPage,
+      page: () => const EditSocialInfoPage(),
+      binding: EditSocialInfoBinding()
     ),
   ];
 }

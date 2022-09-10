@@ -122,22 +122,20 @@ class _BankCard extends GetView<LawyerController> {
         height: controller.heightCard.value,
         child: Stack(children: [
           Positioned(
-              top: -25,
-              right: -15,
+              top: -xLargeSize/1.4,
+              right: -standardSize,
               child: SvgPicture.asset('assets/icons/dots_btm.svg')),
           Positioned(
-              bottom: -25,
-              left: -15,
+              bottom: -xLargeSize/1.4,
+              left: -standardSize,
               child: SvgPicture.asset('assets/icons/dots_btm.svg')),
           Align(
               alignment: Alignment.center,
               child: Text(
-                "6274 1212 0298 5289",
+                "6274  1212  0298  5289",
                 textDirection: TextDirection.ltr,
-                style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontSize: fullWidth / 17,
-                    fontWeight: FontWeight.w500),
+                style: Get.theme.textTheme.headline5!
+                    .copyWith(color: Colors.white)
               )),
           Positioned(
               top: standardSize,

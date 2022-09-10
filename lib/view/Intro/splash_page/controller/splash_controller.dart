@@ -41,11 +41,11 @@ class SplashController extends GetxController {
       if (pref.isFirstTimeLaunch) {
         Get.offNamed(Routes.loginPage);
       } else
-      if (pref.token == "" ) {
-        Get.toNamed(Routes.loginPage);
+      if (pref.token != "" ) {
+        Get.toNamed(Routes.homePage);
         // await _navigationService.pushNamedAndRemoveUntil(Routes.loginPage);
       } else {
-        Get.toNamed(Routes.homePage);
+        Get.toNamed(Routes.loginPage);
         // _navigationService.pushNamedAndRemoveUntil(Routes.mainPage,
         //     arguments: MainPageArguments(selectedIndex: 0));
       }
@@ -53,8 +53,6 @@ class SplashController extends GetxController {
       AppLogger.e('$e');
     }
   }
-
-
 }
 
 

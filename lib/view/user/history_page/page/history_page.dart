@@ -40,7 +40,7 @@ class HistoryPage extends StatelessWidget {
       child: Column(
         children: [
           _historyWidgetItem(
-              'assets/icons/Paper.svg', "نوع درخواست", "صدور کارت جدید"),
+              'assets/icons/ic_paper.svg', "نوع درخواست", "صدور کارت جدید"),
           const Divider(),
           _historyWidgetItem(
               'assets/icons/stickynote.svg', " تاریخ", "28/8/1401"),

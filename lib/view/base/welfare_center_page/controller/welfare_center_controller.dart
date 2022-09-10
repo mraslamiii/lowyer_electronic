@@ -1,9 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:kanoon_dadgostari/app/app_pages.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
-import 'package:kanoon_dadgostari/utilites/app_logger.dart';
-import 'package:kanoon_dadgostari/view/auth/login_page/page/login_page.dart';
+
 
 class WelfareCenterController extends GetxController {
   final LocalStorageService pref = Get.find<LocalStorageService>();
@@ -19,11 +17,11 @@ class WelfareCenterController extends GetxController {
 
 
   List<String> images = [
-    'https://m3.healio.com/~/media/slack-news/stock-images/fm_im/u/ultraprocessed-foods.jpg',
-    'https://qph.cf2.quoracdn.net/main-qimg-1cf247a96715fe142b6ff10da03e3bb0-pjlq',
-    'https://i.guim.co.uk/img/media/20491572b80293361199ca2fc95e49dfd85e1f42/0_236_5157_3094/master/5157.jpg?width=1200&quality=85&auto=format&fit=max&s=6c20695f8d0e980ee80d47265efee6c5'
+    'https://s6.uupload.ir/files/pic_welfare_foods_jc6a.jpg',
+    'https://s6.uupload.ir/files/pic_welfare_dress_zkbv.jpg',
+    'https://s6.uupload.ir/files/pic_welfare_medicine_kt5x.jpg'
   ];
-  List<String> titles = ['مراکز خـرید', 'پوشـاک', 'دارو'];
+  List<String> titles = ['مواد غذایی', 'پوشـاک', 'دارو'];
 
 List<String> shoppingImages = [
   'https://images.adsttc.com/media/images/5e13/e676/3312/fdf5/c900/014c/medium_jpg/01.jpg?1578362478',
