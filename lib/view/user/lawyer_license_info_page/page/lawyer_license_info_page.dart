@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
 import 'package:kanoon_dadgostari/view/widgets/customScaffold/customScaffold.dart';
@@ -12,7 +12,6 @@ import '../controller/lawyer_license_info_controller.dart';
 
 class LawyerLicenseInfoPage extends GetView<LawyerLicenseInfoController> {
   const LawyerLicenseInfoPage({Key? key}) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {

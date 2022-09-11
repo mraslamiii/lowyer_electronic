@@ -51,10 +51,7 @@ class AppPages {
       name: Routes.welfareCenterPage,
       page: () =>  WelfareCenterPage(),
     ),
-    GetPage(
-      name: Routes.mapPage,
-      page: () => MapPage(),
-    ),
+
   GetPage(
       name: Routes.lawyerLicenseInfoPage,
       page: () =>  LawyerLicenseInfoPage(),
