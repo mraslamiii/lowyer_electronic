@@ -5,20 +5,20 @@ import 'package:get/get.dart';
 
 import '../../res/dimens/dimens.dart';
 
-void customBottomSheet(
+Future <T?> customBottomSheet<T>(
   BuildContext context,
   Widget child, {
-  bool isDismissible = false,
+  bool isDismissible = true,
+  bool hasClose = false,
   Widget? button,
   double? height,
   EdgeInsetsGeometry? padding,
-}) {
+}) async {
   final theme = Get.theme;
-
-  showModalBottomSheet(
+  return showModalBottomSheet(
       isScrollControlled: true,
-      enableDrag: isDismissible ? false : true,
-      isDismissible: isDismissible ? false : true,
+      enableDrag: isDismissible ? true : false,
+      isDismissible: isDismissible ? true : false,
       context: context,
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
@@ -42,18 +42,52 @@ void customBottomSheet(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Container(
-                          width: xxLargeSize * 1.5,
-                          height: xxSmallSize,
-                          margin: EdgeInsets.only(
-                            top: standardSize,
-                            bottom: mediumSize,
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(largeRadius),
-                            color: theme.dividerColor,
-                          ),
-                        ),
+                        hasClose
+                            ? Container(
+                                width: fullWidth,
+                                height: kToolbarHeight,
+                                child: Stack(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: TextButton(
+                                          onPressed: () {
+                                            Get.back();
+                                          },
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                right: mediumSize),
+                                            child: Text("بستن",style: Get.textTheme.subtitle2?.copyWith(color: Colors.red)),
+                                          )),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Container(
+                                        width: xxLargeSize * 1.5,
+                                        height: xxSmallSize,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                              largeRadius),
+                                          color: theme.dividerColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : Container(
+                                width: xxLargeSize * 1.5,
+                                height: xxSmallSize,
+                                margin: EdgeInsets.only(
+                                  top: standardSize,
+                                  bottom: mediumSize,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.circular(largeRadius),
+                                  color: theme.dividerColor,
+                                ),
+                              ),
                         Container(
                           height: height,
                           margin: padding ??

@@ -258,38 +258,42 @@ class HomePage extends StatelessWidget {
 
   Widget sheetItem(
       String title, String icon, bool isFirst, String? routeName) {
-    return GestureDetector(
-      onTap: () {
-        Get.toNamed(routeName!);
-      },
-      // splashColor: AppColors.splashColor,
-      child: Column(
-        children: [
-          if (!isFirst)
-            Divider(
-              color: AppColors.dividerColor,
-              height: 0.8,
+    return Ink(
+color: Colors.black54,
+      child: InkWell(
+
+        onTap: () {
+          Get.toNamed(routeName!);
+        },
+        // splashColor: AppColors.splashColor,
+        child: Column(
+          children: [
+            if (!isFirst)
+              Divider(
+                color: AppColors.dividerColor,
+                height: 0.8,
+              ),
+            Container(
+              padding: EdgeInsets.only(top: standardSize, bottom: standardSize),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: smallSize),
+                    child: SvgPicture.asset(icon),
+                  ),
+                  Expanded(
+                    child: Text(title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.start,
+                        style: Get.theme.textTheme.subtitle2),
+                  ),
+                ],
+              ),
             ),
-          Container(
-            padding: EdgeInsets.only(top: standardSize, bottom: standardSize),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: smallSize),
-                  child: SvgPicture.asset(icon),
-                ),
-                Expanded(
-                  child: Text(title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.start,
-                      style: Get.theme.textTheme.subtitle2),
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
@@ -11,19 +12,25 @@ import '../../../../repo/sec/lawyer_repo.dart';
 import '../../../../service/connection_service/connection_status.dart';
 import '../../../widgets/custom_snackbar/custom_snackbar.dart';
 
-class LawyerLicenseInfoController extends GetxController with StateMixin<LawyerProfileModel> {
+class LawyerLicenseInfoController extends GetxController
+    with StateMixin<LawyerProfileModel> {
   final LocalStorageService pref = Get.find<LocalStorageService>();
+  final GeoPoint _geoPoint = GeoPoint(latitude: 36.2972, longitude: 59.6067); //todo //get from server f
+  late MapController controller;
 
   @override
-  void onInit() {
+  void onInit() async {
+    controller =
+        MapController(initMapWithUserPosition: false, initPosition: _geoPoint);
     super.onInit();
   }
+
   RxBool isBusyProfile = false.obs;
   LawyerProfileModel? result;
 
   LawyersRepository repo = LawyersRepository();
   final ConnectionStatusController connectionStatusController =
-  Get.put(ConnectionStatusController());
+      Get.put(ConnectionStatusController());
 
   Rx<Jalali>? receivedDate = Jalali.now().obs;
   Rx<Jalali>? expirationDate = Jalali.now().obs;
@@ -34,6 +41,13 @@ class LawyerLicenseInfoController extends GetxController with StateMixin<LawyerP
   TextEditingController cityTxtController = TextEditingController();
   TextEditingController officeAddressTxtController = TextEditingController();
   TextEditingController officeTelephoneTxtController = TextEditingController();
+
+  Future<void> changeLoctaion(GeoPoint geoPoint) async {
+    await controller.changeLocationMarker(
+        oldLocation: _geoPoint, newLocation: geoPoint);
+    await controller.changeLocation(geoPoint); //todo// dosen't update in ui
+    update();
+  }
 
   void showDatePickerReceivedDate(BuildContext context) async {
     Jalali? picked = await showPersianDatePicker(
@@ -73,37 +87,37 @@ class LawyerLicenseInfoController extends GetxController with StateMixin<LawyerP
     return true;
   }
 
-  // Future<void> fetchData() async {
-  //   if (!isBusyProfile.value) {
-  //     try {
-  //       isBusyProfile.value = true;
-  //       change(null, status: RxStatus.loading());
-  //       result = await repo.getLawyer('1');
-  //       change(result, status: RxStatus.success());
-  //       isBusyProfile.value = false;
-  //       nameTxtController.text = '${result?.user?.firstName?.trim() ?? ' '} ';
-  //       lastNameTxtController.text = '${result?.user?.lastName?.trim() ?? ' '} ';
-  //       fatherNameTxtController.text = '${result?.user?.fatherName?.trim() ?? ''} ';
-  //       nationalCodeTxtController.text =
-  //           result?.user?.national_code?.trim() ?? '';
-  //       addressTxtController.text = '${result?.user?.address?.trim() ?? ''} ';
-  //       zipCodeTxtController.text = result?.user?.zipCode?.trim() ?? '';
-  //
-  //       // Get.offAllNamed(Routes.homePage);
-  //     } on TitleValueException catch (exp) {
-  //       for (TitleValueModel error in exp.errors) {
-  //         isBusyProfile.value = false;
-  //         exeptionSnackBar(error.value![0]);
-  //       }
-  //     } catch (e) {
-  //       isBusyProfile.value = false;
-  //       change(null, status: RxStatus.error('e'));
-  //
-  //       rethrow;
-  //     }
-  //   } else {
-  //     change(null, status: RxStatus.error('e'));
-  //     isBusyProfile.value = false;
-  //   }
-  // }
+// Future<void> fetchData() async {
+//   if (!isBusyProfile.value) {
+//     try {
+//       isBusyProfile.value = true;
+//       change(null, status: RxStatus.loading());
+//       result = await repo.getLawyer('1');
+//       change(result, status: RxStatus.success());
+//       isBusyProfile.value = false;
+//       nameTxtController.text = '${result?.user?.firstName?.trim() ?? ' '} ';
+//       lastNameTxtController.text = '${result?.user?.lastName?.trim() ?? ' '} ';
+//       fatherNameTxtController.text = '${result?.user?.fatherName?.trim() ?? ''} ';
+//       nationalCodeTxtController.text =
+//           result?.user?.national_code?.trim() ?? '';
+//       addressTxtController.text = '${result?.user?.address?.trim() ?? ''} ';
+//       zipCodeTxtController.text = result?.user?.zipCode?.trim() ?? '';
+//
+//       // Get.offAllNamed(Routes.homePage);
+//     } on TitleValueException catch (exp) {
+//       for (TitleValueModel error in exp.errors) {
+//         isBusyProfile.value = false;
+//         exeptionSnackBar(error.value![0]);
+//       }
+//     } catch (e) {
+//       isBusyProfile.value = false;
+//       change(null, status: RxStatus.error('e'));
+//
+//       rethrow;
+//     }
+//   } else {
+//     change(null, status: RxStatus.error('e'));
+//     isBusyProfile.value = false;
+//   }
+// }
 }
