@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
@@ -13,11 +14,10 @@ class EditSocialInfoPage extends GetView<EditSocialInfoController> {
 
   @override
   Widget build(BuildContext context) {
-    EditSocialInfoBinding().dependencies();
-    return GetBuilder(
+    return GetBuilder<EditSocialInfoController>(
         init: controller,
         initState: (state) {
-          controller.update();
+          controller.fetchData();
           // print();
         },
         builder: (_) {
@@ -37,108 +37,97 @@ class EditSocialInfoPage extends GetView<EditSocialInfoController> {
               ),
               leading: backIcon(),
             ),
-            body: ListView(
-              physics: const BouncingScrollPhysics(),
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsetsDirectional.only(
-                    start: standardSize,
-                    end: standardSize,
-                    top: standardSize,
-                  ),
-                  child: TextFormFieldWidget(
-                    // inputFormatters: [
-                    //   FilteringTextInputFormatter.digitsOnly
-                    // ],
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    textDirection: TextDirection.ltr,
-                    label: "آدرس صفحه اینستاگرام",
-                    // onChange: controller.valueChanged,
-                    hint: "www.instagram.com",
-                    textEditingController: controller.instagramTxtController,
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsetsDirectional.only(
-                    start: standardSize,
-                    end: standardSize,
-                    top: standardSize,
-                  ),
-                  child: TextFormFieldWidget(
-                    // inputFormatters: [
-                    //   FilteringTextInputFormatter.digitsOnly
-                    // ],
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    textDirection: TextDirection.ltr,
-                    label: "آدرس آیدی واتساپ",
-                    // onChange: controller.valueChanged,
-                    hint: "www.whatsapp.com",
-                    textEditingController: controller.whatsAppTxtController,
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsetsDirectional.only(
-                    start: standardSize,
-                    end: standardSize,
-                    top: standardSize,
-                  ),
-                  child: TextFormFieldWidget(
-                    // inputFormatters: [
-                    //   FilteringTextInputFormatter.digitsOnly
-                    // ],
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    textDirection: TextDirection.ltr,
-                    label: "آدرس وب سایت",
-                    // onChange: controller.valueChanged,
-                    hint: "www.example.com",
-                    textEditingController: controller.websiteTxtController,
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsetsDirectional.only(
-                    start: standardSize,
-                    end: standardSize,
-                    top: standardSize,
-                  ),
-                  child: TextFormFieldWidget(
-                    // inputFormatters: [
-                    //   FilteringTextInputFormatter.digitsOnly
-                    // ],
-                    keyboardType: TextInputType.number,
-                    textInputAction: TextInputAction.next,
-                    textDirection: TextDirection.ltr,
-                    label: "کد ملی",
-                    // onChange: controller.valueChanged,
-                    hint: "0923456789",
-                    textEditingController: controller.nationalCodeTxtController,
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsetsDirectional.only(
-                    start: standardSize,
-                    end: standardSize,
-                    top: standardSize,
-                    bottom: standardSize,
-                  ),
-                  child: TextFormFieldWidget(
-                    // inputFormatters: [
-                    //   FilteringTextInputFormatter.digitsOnly
-                    // ],
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.done,
-                    textDirection: TextDirection.rtl,
-                    label: "آدرس دفتر وکیل",
-                    // onChange: controller.valueChanged,
-                    hint: "آدرس",
-                    textEditingController:
-                        controller.officeAddressTxtController,
-                  ),
-                ),
-              ],
-            ),
+            body: controller.obx(
+                (state) => ListView(
+                      physics: const BouncingScrollPhysics(),
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsetsDirectional.only(
+                            start: standardSize,
+                            end: standardSize,
+                            top: standardSize,
+                          ),
+                          child: TextFormFieldWidget(
+                            // inputFormatters: [
+                            //   FilteringTextInputFormatter.digitsOnly
+                            // ],
+                            keyboardType: TextInputType.text,
+                            textInputAction: TextInputAction.next,
+                            textDirection: TextDirection.ltr,
+                            label: "آدرس صفحه اینستاگرام",
+                            // onChange: controller.valueChanged,
+                            hint: "www.instagram.com",
+                            textEditingController:
+                                controller.instagramTxtController,
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsetsDirectional.only(
+                            start: standardSize,
+                            end: standardSize,
+                            top: standardSize,
+                          ),
+                          child: TextFormFieldWidget(
+                            // inputFormatters: [
+                            //   FilteringTextInputFormatter.digitsOnly
+                            // ],
+                            keyboardType: TextInputType.text,
+                            textInputAction: TextInputAction.next,
+                            textDirection: TextDirection.ltr,
+                            label: "آدرس آیدی واتساپ",
+                            // onChange: controller.valueChanged,
+                            hint: "www.whatsapp.com",
+                            textEditingController:
+                                controller.whatsAppTxtController,
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsetsDirectional.only(
+                            start: standardSize,
+                            end: standardSize,
+                            top: standardSize,
+                          ),
+                          child: TextFormFieldWidget(
+                            // inputFormatters: [
+                            //   FilteringTextInputFormatter.digitsOnly
+                            // ],
+                            keyboardType: TextInputType.text,
+                            textInputAction: TextInputAction.next,
+                            textDirection: TextDirection.ltr,
+                            label: "آدرس وب سایت",
+                            // onChange: controller.valueChanged,
+                            hint: "www.example.com",
+                            textEditingController:
+                                controller.websiteTxtController,
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsetsDirectional.only(
+                            start: standardSize,
+                            end: standardSize,
+                            top: standardSize,
+                            bottom: standardSize,
+                          ),
+                          child: TextFormFieldWidget(
+                            // inputFormatters: [
+                            //   FilteringTextInputFormatter.digitsOnly
+                            // ],
+                            keyboardType: TextInputType.text,
+                            textInputAction: TextInputAction.done,
+                            textDirection: TextDirection.rtl,
+                            label: "آدرس دفتر وکیل",
+                            // onChange: controller.valueChanged,
+                            hint: "آدرس",
+                            textEditingController:
+                                controller.officeAddressTxtController,
+                          ),
+                        ),
+                      ],
+                    ),
+                onEmpty: Container(),
+                onError: (error) => Text('خطا در ارتباط با سرور',
+                    style: Get.theme.textTheme.subtitle1),
+                onLoading: const Center(child: CupertinoActivityIndicator())),
             context: context,
           );
         });

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
@@ -10,16 +11,15 @@ import '../binding/lawyer_license_info_binding.dart';
 import '../controller/lawyer_license_info_controller.dart';
 
 class LawyerLicenseInfoPage extends GetView<LawyerLicenseInfoController> {
-  LawyerLicenseInfoPage({Key? key}) : super(key: key);
+  const LawyerLicenseInfoPage({Key? key}) : super(key: key);
 
 
   @override
   Widget build(BuildContext context) {
-    LawyerLicenseInfoBinding().dependencies();
-    return GetBuilder(
+    return GetBuilder<LawyerLicenseInfoController>(
         init: controller,
         initState: (state) {
-          controller.update();
+          controller.fetchData();
           // print();
         },
         builder: (_) {
@@ -40,8 +40,8 @@ class LawyerLicenseInfoPage extends GetView<LawyerLicenseInfoController> {
               leading: backIcon(),
             ),
             body:
-    // Obx(() {
-    //             return
+    controller.obx((_) {
+                return
                   ListView(
                   physics: const BouncingScrollPhysics(),
                   children: <Widget>[
@@ -168,9 +168,12 @@ class LawyerLicenseInfoPage extends GetView<LawyerLicenseInfoController> {
                       ),
                     ),
                   ],
-                ),
-              // }
-            // ),
+                );
+              },
+        onEmpty: Container(),
+        onError: (error) => Text('خطا در ارتباط با سرور',style: Get.theme.textTheme.subtitle1),
+        onLoading: const Center(child: CupertinoActivityIndicator())
+            ),
             context: context,
           );
         });

@@ -196,24 +196,45 @@ class HomePage extends StatelessWidget {
                                   'مرکز رفاهی',
                                   action: () =>
                                       Get.toNamed(Routes.welfareCenterPage)),
-                              menuItemWidget(
-                                  'assets/icons/Ic_home_edu_center.webp',
-                                  'مرکز آموزش'),
-                              menuItemWidget(
-                                  'assets/icons/Ic_home_book_finder.webp',
-                                  'دفتریاب'),
-                              menuItemWidget(
-                                  'assets/icons/Ic_search.webp', 'انتخابات'),
-                              menuItemWidget('assets/icons/Ic_electronic.webp',
-                                  'دولت الکترونیک'),
-                              menuItemWidget(
-                                  'assets/icons/Ic_home_court.webp', 'دادسرا'),
-                              menuItemWidget(
-                                  'assets/icons/Ic_home_add_person.webp',
-                                  'جذب نیرو'),
-                              menuItemWidget(
-                                  'assets/icons/Ic_home_peyment.webp',
-                                  'درگاه خدمات'),
+                              Opacity(
+                                opacity: 0.5,
+                                child: menuItemWidget(
+                                    'assets/icons/Ic_home_edu_center.webp',
+                                    'مرکز آموزش'),
+                              ),
+                              Opacity(
+                                opacity: 0.5,
+                                child: menuItemWidget(
+                                    'assets/icons/Ic_home_book_finder.webp',
+                                    'دفتریاب'),
+                              ),
+                              Opacity(
+                                opacity: 0.5,
+                                child: menuItemWidget(
+                                    'assets/icons/Ic_search.webp', 'انتخابات'),
+                              ),
+                              Opacity(
+                                opacity: 0.5,
+                                child: menuItemWidget('assets/icons/Ic_electronic.webp',
+                                    'دولت الکترونیک'),
+                              ),
+                              Opacity(
+                                opacity: 0.5,
+                                child: menuItemWidget(
+                                    'assets/icons/Ic_home_court.webp', 'دادسرا'),
+                              ),
+                              Opacity(
+                                opacity: 0.5,
+                                child: menuItemWidget(
+                                    'assets/icons/Ic_home_add_person.webp',
+                                    'جذب نیرو'),
+                              ),
+                              Opacity(
+                                opacity: 0.5,
+                                child: menuItemWidget(
+                                    'assets/icons/Ic_home_peyment.webp',
+                                    'درگاه خدمات'),
+                              ),
                             ],
                           ),
                         ),

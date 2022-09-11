@@ -170,6 +170,7 @@ class EditProfilePage extends GetView<EditProfileController> {
                       ],
                     ),
                 onEmpty: Container(),
+                onError: (error) => Text('خطا در ارتباط با سرور',style: Get.theme.textTheme.subtitle1),
                 onLoading: Center(child: CupertinoActivityIndicator())),
             context: context,
           );

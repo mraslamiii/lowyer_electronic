@@ -73,37 +73,37 @@ class LawyerLicenseInfoController extends GetxController with StateMixin<LawyerP
     return true;
   }
 
-  // Future<void> fetchData() async {
-  //   if (!isBusyProfile.value) {
-  //     try {
-  //       isBusyProfile.value = true;
-  //       change(null, status: RxStatus.loading());
-  //       result = await repo.getLawyer('1');
-  //       change(result, status: RxStatus.success());
-  //       isBusyProfile.value = false;
-  //       nameTxtController.text = '${result?.user?.firstName?.trim() ?? ' '} ';
-  //       lastNameTxtController.text = '${result?.user?.lastName?.trim() ?? ' '} ';
-  //       fatherNameTxtController.text = '${result?.user?.fatherName?.trim() ?? ''} ';
-  //       nationalCodeTxtController.text =
-  //           result?.user?.national_code?.trim() ?? '';
-  //       addressTxtController.text = '${result?.user?.address?.trim() ?? ''} ';
-  //       zipCodeTxtController.text = result?.user?.zipCode?.trim() ?? '';
-  //
-  //       // Get.offAllNamed(Routes.homePage);
-  //     } on TitleValueException catch (exp) {
-  //       for (TitleValueModel error in exp.errors) {
-  //         isBusyProfile.value = false;
-  //         exeptionSnackBar(error.value![0]);
-  //       }
-  //     } catch (e) {
-  //       isBusyProfile.value = false;
-  //       change(null, status: RxStatus.error('e'));
-  //
-  //       rethrow;
-  //     }
-  //   } else {
-  //     change(null, status: RxStatus.error('e'));
-  //     isBusyProfile.value = false;
-  //   }
-  // }
+  Future<void> fetchData() async {
+    if (!isBusyProfile.value) {
+      try {
+        isBusyProfile.value = true;
+        change(null, status: RxStatus.loading());
+        result = await repo.getLawyer('1');
+        change(result, status: RxStatus.success());
+        isBusyProfile.value = false;
+        lawyerNumberTxtController.text = '${result?.licenseNumber.trim() ?? ' '} ';
+        dateReceivedTxtController.text = '${result?.licenseCreateDate.trim() ?? ' '} ';
+        expirationDateTxtController.text = '${result?.licenseExpireDate.trim() ?? ''} ';
+        cityTxtController.text =
+            result?.cityName.trim() ?? '';
+        officeAddressTxtController.text = '${result?.addressOffice.trim() ?? ''} ';
+        officeTelephoneTxtController.text = result?.TellOffice.trim() ?? '';
+
+        // Get.offAllNamed(Routes.homePage);
+      } on TitleValueException catch (exp) {
+        for (TitleValueModel error in exp.errors) {
+          isBusyProfile.value = false;
+          exeptionSnackBar(error.value![0]);
+        }
+      } catch (e) {
+        isBusyProfile.value = false;
+        change(null, status: RxStatus.error('e'));
+
+        rethrow;
+      }
+    } else {
+      change(null, status: RxStatus.error('e'));
+      isBusyProfile.value = false;
+    }
+  }
 }
