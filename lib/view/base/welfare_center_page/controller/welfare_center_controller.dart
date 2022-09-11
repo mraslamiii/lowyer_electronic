@@ -24,8 +24,8 @@ class WelfareCenterController extends GetxController {
   List<String> titles = ['مواد غذایی', 'پوشـاک', 'دارو'];
 
 List<String> shoppingImages = [
-  'https://images.adsttc.com/media/images/5e13/e676/3312/fdf5/c900/014c/medium_jpg/01.jpg?1578362478',
-  'https://cdn.wallpaper.com/main/styles/fp_922x565/s3/facade_of_k11_musea_1.jpg',
+  'https://s6.uupload.ir/files/rectangle_2035_duic.jpg',
+  'https://s6.uupload.ir/files/rectangle_2035_crvk.png',
 ];
 
 }

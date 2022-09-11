@@ -9,7 +9,6 @@ import '../../../../res/dimens/dimens.dart';
 import '../../../../service/preferences_service.dart';
 import '../../../widgets/custom_bottom_sheet.dart';
 
-
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
   var theme = Get.theme;
@@ -31,21 +30,31 @@ class HomePage extends StatelessWidget {
         //     backgroundColor: Colors.transparent,
         //     automaticallyImplyLeading: false),
         context: context,
-        body: Stack(children: [
-          Positioned(
-              child: Image.asset('assets/images/pic_bg_home.jpg',
-                  fit: BoxFit.fill, scale: 2.4)),
-          Container(
-            alignment: Alignment.center,
-            height: fullWidth / 1.95,
-            padding: EdgeInsets.only(
-              right: standardSize,
-              left: standardSize,
-            ),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(standardRadius)),
-            child: Center(
-              child: Row(
+        body: Stack(
+          children: [
+            // Positioned(
+            //   child: Image.asset(
+            //     'assets/images/pic_bg_home.jpg',
+            //     fit: BoxFit.fill,
+            //     scale: 2.4,
+            //   ),
+            // ),
+            Container(
+              alignment: Alignment.center,
+              height: fullWidth / 1.95,
+              padding: EdgeInsets.only(
+                right: standardSize,
+                left: standardSize,
+              ),
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/pic_bg_home.jpg"),
+                  fit: BoxFit.fill,
+                  scale: 2.4,
+                ),
+              ),
+              child: Center(
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -65,14 +74,17 @@ class HomePage extends StatelessWidget {
                                       blurRadius: 6,
                                       spreadRadius: 0,
                                       offset: const Offset(0, 3),
-                                      color: const Color(0xff000000)
-                                          .withOpacity(0.2),
+                                      color:
+                                          const Color(0xff000000).withOpacity(
+                                        0.2,
+                                      ),
                                     ),
                                   ],
                                 ),
                                 child: const CircleAvatar(
-                                  backgroundImage:
-                                      AssetImage('assets/images/avatar.JPG'),
+                                  backgroundImage: AssetImage(
+                                    'assets/images/avatar.JPG',
+                                  ),
                                 ),
                               ),
                             ),
@@ -87,20 +99,24 @@ class HomePage extends StatelessWidget {
                                   homeSheet(context);
                                 },
                                 style: ElevatedButton.styleFrom(
-                                    foregroundColor: AppColors.splashColor,
-                                    padding: EdgeInsets.all(xxSmallSize),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(standardRadius),
-                                      side: const BorderSide(
-                                          color: AppColors.primaryColor,
-                                          width: 1.5),
+                                  foregroundColor: AppColors.splashColor,
+                                  padding: EdgeInsets.all(xxSmallSize),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                      standardRadius,
                                     ),
-                                    backgroundColor: Colors.white,
-                                    elevation: 0),
+                                    side: const BorderSide(
+                                      color: AppColors.primaryColor,
+                                      width: 1.5,
+                                    ),
+                                  ),
+                                  backgroundColor: Colors.white,
+                                  elevation: 0,
+                                ),
                                 child: SvgPicture.asset(
-                                    'assets/icons/ic_edit_filled.svg',
-                                    color: theme.primaryColor),
+                                  'assets/icons/ic_edit_filled.svg',
+                                  color: theme.primaryColor,
+                                ),
                               ),
                             ),
                           )
@@ -117,9 +133,14 @@ class HomePage extends StatelessWidget {
                             Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Flexible(child: titleWidget('${pref.user.firstName} ${pref.user.lastName ?? ''}')),
+                                Flexible(
+                                  child: titleWidget(
+                                    '${pref.user.firstName} ${pref.user.lastName ?? ''}',
+                                  ),
+                                ),
                                 SvgPicture.asset(
-                                    'assets/icons/ic_notification.svg')
+                                  'assets/icons/ic_notification.svg',
+                                )
                               ],
                             ),
                             titleWidget("شماره فعالیت : 31553231"),
@@ -128,126 +149,91 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ]),
+                  ],
+                ),
+              ),
             ),
-          ),
-          Obx(() {
-            return DraggableScrollableSheet(
-              minChildSize: sheetMinHeight.value,
-              maxChildSize: sheetHeight.value,
-              initialChildSize: sheetHeight.value,
-              controller: draggableScrollableController,
-              builder:
-                  (BuildContext context, ScrollController scrollController) {
-                return NotificationListener(
-                  onNotification: (OverscrollIndicatorNotification overScroll) {
-                    overScroll.disallowIndicator();
-                    return true;
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(largeRadius),
-                        topRight: Radius.circular(largeRadius),
-                      ),
-                      color: theme.backgroundColor,
-                    ),
-                    child:
-                        // ListView(
-                        //   physics: const BouncingScrollPhysics(),
-                        //   children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(largeRadius),
+                  topRight: Radius.circular(largeRadius),
+                ),
+                color: theme.backgroundColor,
+              ),
+              margin: EdgeInsets.only(top: fullHeight / 4),
+              child:
+                  // ListView(
+                  //   physics: const BouncingScrollPhysics(),
+                  //   children: [
 
-                        Column(
-                      children: [
-                        Container(
-                          width: xxLargeSize * 1.5,
-                          height: xxSmallSize,
-                          margin: EdgeInsets.only(
-                            top: standardSize,
-                            bottom: mediumSize,
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(largeRadius),
-                            color: theme.dividerColor,
-                          ),
-                        ),
-                        Expanded(
-                          child: GridView(
-                            // shrinkWrap: true,
-                            padding: EdgeInsets.only(
-                                top: mediumSize,
-                                left: standardSize,
-                                right: standardSize),
-                            physics: const BouncingScrollPhysics(),
-                            controller: scrollController,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                    crossAxisSpacing: standardSize,
-                                    mainAxisSpacing: xSmallSize,
-                                    childAspectRatio: 1 / 1.35),
-                            children: [
-                              menuItemWidget(
-                                  'assets/icons/ic_home_vakil_card.webp',
-                                  'وکیل کارت',
-                                  action: () => Get.toNamed(Routes.lawyerPage)),
-                              menuItemWidget(
-                                  'assets/icons/Ic_home_welfare_center.webp',
-                                  'مرکز رفاهی',
-                                  action: () =>
-                                      Get.toNamed(Routes.welfareCenterPage)),
-                              Opacity(
-                                opacity: 0.5,
-                                child: menuItemWidget(
-                                    'assets/icons/Ic_home_edu_center.webp',
-                                    'مرکز آموزش'),
-                              ),
-                              Opacity(
-                                opacity: 0.5,
-                                child: menuItemWidget(
-                                    'assets/icons/Ic_home_book_finder.webp',
-                                    'دفتریاب'),
-                              ),
-                              Opacity(
-                                opacity: 0.5,
-                                child: menuItemWidget(
-                                    'assets/icons/Ic_search.webp', 'انتخابات'),
-                              ),
-                              Opacity(
-                                opacity: 0.5,
-                                child: menuItemWidget('assets/icons/Ic_electronic.webp',
-                                    'دولت الکترونیک'),
-                              ),
-                              Opacity(
-                                opacity: 0.5,
-                                child: menuItemWidget(
-                                    'assets/icons/Ic_home_court.webp', 'دادسرا'),
-                              ),
-                              Opacity(
-                                opacity: 0.5,
-                                child: menuItemWidget(
-                                    'assets/icons/Ic_home_add_person.webp',
-                                    'جذب نیرو'),
-                              ),
-                              Opacity(
-                                opacity: 0.5,
-                                child: menuItemWidget(
-                                    'assets/icons/Ic_home_peyment.webp',
-                                    'درگاه خدمات'),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    // ],
-                    // ),
+                  GridView(
+                // shrinkWrap: true,
+                padding: EdgeInsets.only(
+                  top: standardSize,
+                  left: standardSize,
+                  right: standardSize,
+                ),
+                physics: const BouncingScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: standardSize,
+                  mainAxisSpacing: xSmallSize,
+                  childAspectRatio: 1 / 1.35,
+                ),
+                children: [
+                  menuItemWidget(
+                    'assets/icons/ic_home_vakil_card.png',
+                    'وکیل کارت',
+                    action: () => Get.toNamed(Routes.lawyerPage),
                   ),
-                );
-              },
-            );
-          })
-        ]),
+                  menuItemWidget(
+                    'assets/icons/Ic_home_welfare_center.webp',
+                    'مرکز رفاهی',
+                    action: () => Get.toNamed(Routes.welfareCenterPage),
+                  ),
+                  menuItemWidget(
+                    'assets/icons/Ic_home_edu_center.webp',
+                    'مرکز آموزش',
+                    disabled: true,
+                  ),
+                  menuItemWidget(
+                    'assets/icons/Ic_home_book_finder.webp',
+                    'دفتریاب',
+                    disabled: true,
+                  ),
+                  menuItemWidget(
+                    'assets/icons/Ic_search.webp',
+                    'انتخابات',
+                    disabled: true,
+                  ),
+                  menuItemWidget(
+                    'assets/icons/Ic_electronic.webp',
+                    'دولت الکترونیک',
+                    disabled: true,
+                  ),
+                  menuItemWidget(
+                    'assets/icons/Ic_home_court.webp',
+                    'دادسرا',
+                    disabled: true,
+                  ),
+                  menuItemWidget(
+                    'assets/icons/Ic_home_add_person.webp',
+                    'جذب نیرو',
+                    disabled: true,
+                  ),
+                  menuItemWidget(
+                    'assets/icons/Ic_home_peyment.webp',
+                    'درگاه خدمات',
+                    disabled: true,
+                  ),
+                ],
+              ),
+              // ],
+              // ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -255,22 +241,30 @@ class HomePage extends StatelessWidget {
   Widget titleWidget(String title) {
     return Padding(
       padding: EdgeInsets.symmetric(
-          vertical: xxSmallSize / 2, horizontal: xxSmallSize),
+        vertical: xxSmallSize / 2,
+        horizontal: xxSmallSize,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
             padding: EdgeInsets.only(left: xxSmallSize),
-            child: Icon(Icons.circle,
-                color: Colors.white, size: xxSmallSize * 1.2),
+            child: Icon(
+              Icons.circle,
+              color: Colors.white,
+              size: xxSmallSize * 1.2,
+            ),
           ),
           Expanded(
-            child: Text(title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.start,
-                style: Get.theme.textTheme.subtitle2
-                    ?.copyWith(color: Colors.white)),
+            child: Text(
+              title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.start,
+              style: Get.theme.textTheme.subtitle2?.copyWith(
+                color: Colors.white,
+              ),
+            ),
           ),
         ],
       ),
@@ -278,12 +272,17 @@ class HomePage extends StatelessWidget {
   }
 
   Widget sheetItem(
-      String title, String icon, bool isFirst, String? routeName) {
+    BuildContext context,
+    String title,
+    String icon,
+    bool isFirst,
+    String? routeName,
+  ) {
     return Ink(
-color: Colors.black54,
+      color: Colors.black54,
       child: InkWell(
-
         onTap: () {
+          Navigator.pop(context);
           Get.toNamed(routeName!);
         },
         // splashColor: AppColors.splashColor,
@@ -304,11 +303,13 @@ color: Colors.black54,
                     child: SvgPicture.asset(icon),
                   ),
                   Expanded(
-                    child: Text(title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.start,
-                        style: Get.theme.textTheme.subtitle2),
+                    child: Text(
+                      title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.start,
+                      style: Get.theme.textTheme.subtitle2,
+                    ),
                   ),
                 ],
               ),
@@ -319,25 +320,36 @@ color: Colors.black54,
     );
   }
 
-  Widget menuItemWidget(String icon, String title,
-      {GestureTapCallback? action}) {
+  Widget menuItemWidget(
+    String icon,
+    String title, {
+    GestureTapCallback? action,
+    bool disabled = false,
+  }) {
     return GestureDetector(
       onTap: action,
       child: Column(
         children: [
-          Container(
-            width: fullWidth / 4,
-            height: fullWidth / 4,
-            padding: EdgeInsets.all(standardSize * 1.3),
-            margin: EdgeInsets.only(bottom: smallSize),
-            decoration: BoxDecoration(
+          Opacity(
+            opacity: disabled ? 0.5 : 1,
+            child: Container(
+              width: fullWidth / 4,
+              height: fullWidth / 4,
+              padding: EdgeInsets.all(standardSize * 1.3),
+              margin: EdgeInsets.only(bottom: smallSize),
+              decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(standardRadius),
-                color: AppColors.formFieldColor),
-            child: Image.asset(icon),
+                color: AppColors.formFieldColor,
+              ),
+              child: Image.asset(icon),
+            ),
           ),
-          Text(
-            title,
-            style: Get.theme.textTheme.subtitle2,
+          Opacity(
+            opacity: disabled ? 0.4 : 1,
+            child: Text(
+              title,
+              style: Get.theme.textTheme.subtitle2,
+            ),
           )
         ],
       ),
@@ -351,19 +363,39 @@ color: Colors.black54,
         physics: const BouncingScrollPhysics(),
         child: ListView(
             padding: EdgeInsetsDirectional.only(
-              bottom: fullHeight/18,
+              bottom: fullHeight / 18,
             ),
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
             children: [
-              sheetItem('اطلاعات پروفایل', 'assets/icons/ic_profile_info.svg',
-                  true, Routes.editProfile),
-              sheetItem('اطلاعات دفتر وکالت', 'assets/icons/ic_law_office.svg',
-                  false, Routes.lawyerLicenseInfoPage),
-              sheetItem('اطلاعات فضای مجازی', 'assets/icons/ic_social_info.svg',
-                  false, Routes.editSocialInfoPage),
-              sheetItem('کیف پول', 'assets/icons/ic_wallet.svg', false,
-                  null),
+              sheetItem(
+                context,
+                'اطلاعات پروفایل',
+                'assets/icons/ic_profile_info.svg',
+                true,
+                Routes.editProfile,
+              ),
+              sheetItem(
+                context,
+                'اطلاعات دفتر وکالت',
+                'assets/icons/ic_law_office.svg',
+                false,
+                Routes.lawyerLicenseInfoPage,
+              ),
+              sheetItem(
+                context,
+                'اطلاعات فضای مجازی',
+                'assets/icons/ic_social_info.svg',
+                false,
+                Routes.editSocialInfoPage,
+              ),
+              sheetItem(
+                context,
+                'کیف پول',
+                'assets/icons/ic_wallet.svg',
+                false,
+                null,
+              ),
               // sheetItem('مهارت ها', 'assets/icons/ic_skills.svg', false,
               //     const LawyerSkillsPage()),
               // sheetItem('آموزش ها', 'assets/icons/ic_trainings.svg', false,

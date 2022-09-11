@@ -11,7 +11,7 @@ Widget customScaffold({
   required Widget body,
   AppBar? appBar,
   Color? bgColor,
-  BottomAppBar? bottomAppBar,
+  Widget? bottomAppBar,
 }) {
   // ConnectionStatusController noInternet = Get.find();
 

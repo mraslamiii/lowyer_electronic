@@ -19,66 +19,71 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<LoginController>(
       init: LoginController(),
-      builder: (controller) =>
-          WillPopScope(
-            onWillPop: () => controller.back(),
-            child: customScaffold(
-                context: context,
-                appBar: AppBar(
-                    title: const Text(
-                      "ورود به اپلیکیشن",
-                    ),
-                    automaticallyImplyLeading: false),
-                body: SizedBox(
-                  width: Get.width,
-                  height: Get.height,
-                  child: Padding(
-                    padding: EdgeInsets.all(largeSize),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                        Text("شماره تلفن همراه خود را وارد کنید",
-                        style: Get.theme.textTheme.subtitle1),
-                    Padding(
-                      padding: EdgeInsets.only(top: standardSize),
-                      child: Directionality(
-                        textDirection: TextDirection.ltr,
-                        child: Obx(
-                              () =>
-                              TextFormFieldWidget(
-
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
-                                maxLength: 11,
-                                onChange: controller.phoneChanged,
-                                textDirection: TextDirection.ltr,
-                                errorText: controller.errorText.value,
-                                hint: "09xxxxxxxxx",
-                                textEditingController: controller
-                                    .phoneTxtController,
-                              ),
+      builder: (controller) => WillPopScope(
+        onWillPop: () => controller.back(),
+        child: customScaffold(
+          context: context,
+          appBar: AppBar(
+            title: const Text(
+              "ورود به اپلیکیشن",
+            ),
+            automaticallyImplyLeading: false,
+          ),
+          body: SizedBox(
+            width: Get.width,
+            height: Get.height,
+            child: Padding(
+              padding: EdgeInsets.all(largeSize),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    "شماره تلفن همراه خود را وارد کنید",
+                    style: Get.theme.textTheme.subtitle1,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: standardSize),
+                    child: Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: Obx(
+                        () => TextFormFieldWidget(
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          maxLength: 11,
+                          onChange: controller.phoneChanged,
+                          textDirection: TextDirection.ltr,
+                          errorText: controller.errorText.value,
+                          hint: "09xxxxxxxxx",
+                          keyboardType: TextInputType.number,
+                          textEditingController: controller.phoneTxtController,
                         ),
                       ),
                     ),
-                    const Expanded(child: SizedBox()),
-                    SizedBox(
-                      width: fullWidth,
-                      child: Obx(
-                            () =>
-                            progressButton(
-                              isProgress: controller.isBusyLogin.value,
-                                onTap: controller.isValid.value && controller.isBusyLogin.isFalse ? () {
-                                  controller.fetchData();
-                                } : null, text: "ارسال کد تایید"
-                            ),
-                      ),
-                    )],
-                    ),
                   ),
-                )),
+                  const Expanded(child: SizedBox()),
+                  SizedBox(
+                    width: fullWidth,
+                    child: Obx(
+                      () => progressButton(
+                        isProgress: controller.isBusyLogin.value,
+                        onTap: controller.isValid.value &&
+                                controller.isBusyLogin.isFalse
+                            ? () {
+                                controller.fetchData();
+                              }
+                            : null,
+                        text: "ارسال کد تایید",
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
+        ),
+      ),
     );
   }
 }

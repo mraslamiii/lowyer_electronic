@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
@@ -13,9 +14,13 @@ import '../../../widgets/custom_snackbar/custom_snackbar.dart';
 
 class LawyerLicenseInfoController extends GetxController with StateMixin<LawyerProfileModel> {
   final LocalStorageService pref = Get.find<LocalStorageService>();
+  final GeoPoint _geoPoint = GeoPoint(latitude: 36.2972, longitude: 59.6067); //todo //get from server f
+  late MapController controller;
 
   @override
-  void onInit() {
+  void onInit() async {
+    controller =
+        MapController(initMapWithUserPosition: false, initPosition: _geoPoint);
     super.onInit();
   }
   RxBool isBusyProfile = false.obs;
@@ -34,6 +39,13 @@ class LawyerLicenseInfoController extends GetxController with StateMixin<LawyerP
   TextEditingController cityTxtController = TextEditingController();
   TextEditingController officeAddressTxtController = TextEditingController();
   TextEditingController officeTelephoneTxtController = TextEditingController();
+
+  Future<void> changeLoctaion(GeoPoint geoPoint) async {
+    await controller.changeLocationMarker(
+        oldLocation: _geoPoint, newLocation: geoPoint);
+    await controller.changeLocation(geoPoint); //todo// dosen't update in ui
+    update();
+  }
 
   void showDatePickerReceivedDate(BuildContext context) async {
     Jalali? picked = await showPersianDatePicker(

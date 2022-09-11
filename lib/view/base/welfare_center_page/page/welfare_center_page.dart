@@ -10,10 +10,8 @@ import '../../../widgets/back_widget/back_widget.dart';
 import '../../../widgets/image_widget.dart';
 import '../controller/welfare_center_controller.dart';
 
-
 class WelfareCenterPage extends StatelessWidget {
   WelfareCenterPage({Key? key}) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -27,80 +25,102 @@ class WelfareCenterPage extends StatelessWidget {
           leading: backIcon(),
           actions: [
             IconButton(
-                splashColor: AppColors.splashColor,
-                splashRadius: largeSize / 1.2,
-                onPressed: () async{
-                  Get.toNamed(Routes.scan_search_page);
-                },
-                icon: SvgPicture.asset('assets/icons/ic_scan.svg'))
+              splashColor: AppColors.splashColor,
+              splashRadius: largeSize / 1.2,
+              onPressed: () async {
+                Get.toNamed(Routes.scan_search_page);
+              },
+              icon: SvgPicture.asset('assets/icons/ic_scan.svg'),
+            )
           ],
         ),
         context: context,
-        body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Container(
-            margin: EdgeInsets.only(
-                top: standardSize, left: standardSize, right: standardSize),
-            child: Text(
-              "دسته بندی",
-              style: Get.theme.textTheme.headline6
-                  ?.copyWith(fontWeight: FontWeight.w600),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              margin: EdgeInsets.only(
+                top: standardSize,
+                left: standardSize,
+                right: standardSize,
+              ),
+              child: Text(
+                "دسته بندی",
+                style: Get.theme.textTheme.headline6?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
-          ),
-          Container(
-            height: fullWidth / 1.95,
-            child: Padding(
-              padding: EdgeInsetsDirectional.only(
-                  top: mediumSize, bottom: mediumSize),
+            SizedBox(
+              height: fullWidth / 1.95,
+              child: Padding(
+                padding: EdgeInsetsDirectional.only(
+                  top: mediumSize,
+                  bottom: mediumSize,
+                ),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: controller.titles.length,
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: EdgeInsetsDirectional.only(
+                        end: standardSize,
+                        start: index == 0 ? standardSize : 0,
+                      ),
+                      child: categoryWidget(
+                        controller.images[index],
+                        controller.titles[index],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                top: standardSize,
+                left: standardSize,
+                right: standardSize,
+              ),
+              child: Text(
+                "مراکز خرید",
+                style: Get.theme.textTheme.headline6?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Container(
+              height: fullWidth / 1.7,
+              width: fullWidth,
+              margin: EdgeInsetsDirectional.only(
+                top: mediumSize,
+                bottom: mediumSize,
+              ),
               child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: controller.titles.length,
+                itemCount: 2,
                 scrollDirection: Axis.horizontal,
                 physics: const BouncingScrollPhysics(),
+                shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return Container(
-                      margin: EdgeInsetsDirectional.only(
-                          end: standardSize,
-                          start: index == 0 ? standardSize : 0),
-                      child: categoryWidget(controller.images[index], controller.titles[index]));
+                    margin: EdgeInsetsDirectional.only(
+                      end: standardSize,
+                      start: index == 0 ? standardSize : 0,
+                    ),
+                    child: shoppingCenterWidget(
+                      controller.shoppingImages[index],
+                      'مرکز خرید پروما',
+                      '4.8',
+                      'لورم ایپسوم لورم ایپسوم لورم ایپسوم',
+                    ),
+                  );
                 },
               ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.only(
-                top: standardSize, left: standardSize, right: standardSize),
-            child: Text(
-              "مراکز خرید",
-              style: Get.theme.textTheme.headline6
-                  ?.copyWith(fontWeight: FontWeight.w600),
-            ),
-          ),
-          Container(
-            height: fullWidth / 1.7,
-            width: fullWidth,
-            margin: EdgeInsetsDirectional.only(
-                top: mediumSize,
-                bottom: mediumSize),
-            child:
-                  ListView.builder(
-              itemCount: 2,
-              scrollDirection: Axis.horizontal,
-              physics: const BouncingScrollPhysics(),
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                  return Container(
-                      margin: EdgeInsetsDirectional.only(
-                          end: standardSize,
-                          start: index == 0 ? standardSize : 0),
-                      child: shoppingCenterWidget(
-                          controller.shoppingImages[index],
-                          'مرکز خرید پروما',
-                          '4.8',
-                          'لورم ایپسوم لورم ایپسوم لورم ایپسوم'));
-              },
-            ),
-          ),
-        ]),
+          ],
+        ),
       ),
     );
   }
@@ -113,81 +133,83 @@ class WelfareCenterPage extends StatelessWidget {
           height: fullWidth / 3,
           margin: EdgeInsets.only(bottom: smallSize),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(smallRadius),
-              color: AppColors.borderColor),
-          child:
-              ClipRRect(
-                  borderRadius: BorderRadius.circular(smallRadius),
-                  child: imageWidget(picture, radius: standardRadius, fit: BoxFit.cover)),
+            borderRadius: BorderRadius.circular(smallRadius),
+            color: AppColors.borderColor,
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(smallRadius),
+            child: imageWidget(
+              picture,
+              radius: standardRadius,
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
         Text(
           title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: Get.theme.textTheme.subtitle1
-              ?.copyWith(fontWeight: FontWeight.w600),
+          style: Get.theme.textTheme.subtitle1?.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
         )
       ],
     );
   }
 
   Widget shoppingCenterWidget(
-      String picture, String shoppingName, String rating, String subTitle) {
+    String picture,
+    String shoppingName,
+    String rating,
+    String subTitle,
+  ) {
     return GestureDetector(
       onTap: () => Get.toNamed(Routes.welfareCenterPageDetail),
       child: Container(
         width: fullWidth / 1.35,
         margin: EdgeInsets.only(bottom: smallSize),
         padding: EdgeInsetsDirectional.only(
-            start: smallSize,
-            end: smallSize,
-            top: smallSize,
-            bottom: standardSize,
+          start: smallSize,
+          end: smallSize,
+          top: smallSize,
+          bottom: standardSize,
         ),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(smallRadius),
-            color: AppColors.formFieldColor),
+          borderRadius: BorderRadius.circular(smallRadius),
+          color: AppColors.formFieldColor,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: Container(
+              child: SizedBox(
                 width: fullWidth,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(smallRadius),
-                  child: imageWidget(picture, radius: smallRadius,
+                  child: imageWidget(
+                    picture,
+                    radius: smallRadius,
                   ),
                 ),
               ),
             ),
             SizedBox(height: xxSmallSize),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    shoppingName,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Get.theme.textTheme.subtitle1
-                        ?.copyWith(fontWeight: FontWeight.w600),
-                  ),
-                ),
-                Text(
-                  rating,
-                  style: Get.theme.textTheme.subtitle1
-                      ?.copyWith(fontWeight: FontWeight.w600),
-                ),
-                SizedBox(width: xxSmallSize/2),
-                SvgPicture.asset('assets/icons/ic_star.svg')
-              ],
+            Text(
+              shoppingName,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Get.theme.textTheme.subtitle1?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
             ),
             SizedBox(height: xxSmallSize),
             Text(
               subTitle,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Get.theme.textTheme.bodyText1
-                  ?.copyWith(color: AppColors.captionColor),
+              style: Get.theme.textTheme.bodyText1?.copyWith(
+                color: AppColors.captionColor,
+              ),
             )
           ],
         ),

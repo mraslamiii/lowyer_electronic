@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/res/colors/colors.dart';
 import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
 import 'package:kanoon_dadgostari/view/user/history_page/binding/history_binding.dart';
 import 'package:kanoon_dadgostari/view/widgets/customScaffold/customScaffold.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:get/get.dart';
+
 import '../../../widgets/back_widget/back_widget.dart';
 import '../../../widgets/progress_button/progress_button.dart';
 import '../../history_page/page/history_page.dart';
