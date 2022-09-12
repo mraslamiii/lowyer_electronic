@@ -171,7 +171,7 @@ class WelfareCenterPage extends StatelessWidget {
         padding: EdgeInsetsDirectional.only(
           start: smallSize,
           end: smallSize,
-          top: smallSize,
+          top: standardSize,
           bottom: standardSize,
         ),
         decoration: BoxDecoration(
@@ -193,7 +193,7 @@ class WelfareCenterPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: xxSmallSize),
+            SizedBox(height: xSmallSize),
             Text(
               shoppingName,
               maxLines: 1,
