@@ -35,91 +35,93 @@ class WelfareCenterPage extends StatelessWidget {
           ],
         ),
         context: context,
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: EdgeInsets.only(
-                top: standardSize,
-                left: standardSize,
-                right: standardSize,
-              ),
-              child: Text(
-                "دسته بندی",
-                style: Get.theme.textTheme.headline6?.copyWith(
-                  fontWeight: FontWeight.w600,
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: EdgeInsets.only(
+                  top: standardSize,
+                  left: standardSize,
+                  right: standardSize,
+                ),
+                child: Text(
+                  "دسته بندی",
+                  style: Get.theme.textTheme.headline6?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: fullWidth / 1.95,
-              child: Padding(
-                padding: EdgeInsetsDirectional.only(
+              SizedBox(
+                height: fullWidth / 1.95,
+                child: Padding(
+                  padding: EdgeInsetsDirectional.only(
+                    top: mediumSize,
+                    bottom: mediumSize,
+                  ),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: controller.titles.length,
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: EdgeInsetsDirectional.only(
+                          end: standardSize,
+                          start: index == 0 ? standardSize : 0,
+                        ),
+                        child: categoryWidget(
+                          controller.images[index],
+                          controller.titles[index],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(
+                  top: standardSize,
+                  left: standardSize,
+                  right: standardSize,
+                ),
+                child: Text(
+                  "مراکز خرید",
+                  style: Get.theme.textTheme.headline6?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              Container(
+                height: fullWidth / 1.7,
+                width: fullWidth,
+                margin: EdgeInsetsDirectional.only(
                   top: mediumSize,
                   bottom: mediumSize,
                 ),
                 child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: controller.titles.length,
+                  itemCount: 2,
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
+                  shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return Container(
                       margin: EdgeInsetsDirectional.only(
                         end: standardSize,
                         start: index == 0 ? standardSize : 0,
                       ),
-                      child: categoryWidget(
-                        controller.images[index],
-                        controller.titles[index],
+                      child: shoppingCenterWidget(
+                        controller.shoppingImages[index],
+                        'مرکز خرید پروما',
+                        '4.8',
+                        'لورم ایپسوم لورم ایپسوم لورم ایپسوم',
                       ),
                     );
                   },
                 ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.only(
-                top: standardSize,
-                left: standardSize,
-                right: standardSize,
-              ),
-              child: Text(
-                "مراکز خرید",
-                style: Get.theme.textTheme.headline6?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            Container(
-              height: fullWidth / 1.7,
-              width: fullWidth,
-              margin: EdgeInsetsDirectional.only(
-                top: mediumSize,
-                bottom: mediumSize,
-              ),
-              child: ListView.builder(
-                itemCount: 2,
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: EdgeInsetsDirectional.only(
-                      end: standardSize,
-                      start: index == 0 ? standardSize : 0,
-                    ),
-                    child: shoppingCenterWidget(
-                      controller.shoppingImages[index],
-                      'مرکز خرید پروما',
-                      '4.8',
-                      'لورم ایپسوم لورم ایپسوم لورم ایپسوم',
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -171,7 +173,7 @@ class WelfareCenterPage extends StatelessWidget {
         padding: EdgeInsetsDirectional.only(
           start: smallSize,
           end: smallSize,
-          top: standardSize,
+          top: smallSize,
           bottom: standardSize,
         ),
         decoration: BoxDecoration(

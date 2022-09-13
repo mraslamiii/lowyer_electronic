@@ -33,28 +33,27 @@ class AppThemes {
           fontSize: subtitle1TextSize,
           fontWeight: FontWeight.w500,
         ),
-        subtitle2: TextStyle(
-          fontSize: subtitle2TextSize,
-          fontWeight: FontWeight.w600),
+        subtitle2:
+            TextStyle(fontSize: subtitle2TextSize, fontWeight: FontWeight.w600),
         bodyText1:
             TextStyle(fontWeight: FontWeight.w500, fontSize: body1TextSize),
       ),
       appBarTheme: AppBarTheme(
-          centerTitle: true,
-          color: AppColors.backgroundColor,
-          elevation: 1,
-          shadowColor: AppColors.primaryColor.withOpacity(0.2),
-          titleTextStyle: TextStyle(
-              color: AppColors.textBlackColor,
-              fontFamily: 'Vazir',
-              fontSize: subTitleSize,
-              fontWeight: FontWeight.w600),
-          // systemOverlayStyle: const SystemUiOverlayStyle(
-          //     statusBarColor: AppColors.backgroundColor,
-          //     statusBarBrightness: Brightness.dark,
-          //     statusBarIconBrightness: Brightness.dark,
-          //     systemNavigationBarColor: AppColors.backgroundColor,
-          //     systemNavigationBarIconBrightness: Brightness.dark)
+        centerTitle: true,
+        color: AppColors.backgroundColor,
+        elevation: 1,
+        shadowColor: AppColors.primaryColor.withOpacity(0.2),
+        titleTextStyle: TextStyle(
+            color: AppColors.textBlackColor,
+            fontFamily: 'Vazir',
+            fontSize: subTitleSize,
+            fontWeight: FontWeight.w600),
+        // systemOverlayStyle: const SystemUiOverlayStyle(
+        //     statusBarColor: AppColors.backgroundColor,
+        //     statusBarBrightness: Brightness.dark,
+        //     statusBarIconBrightness: Brightness.dark,
+        //     systemNavigationBarColor: AppColors.backgroundColor,
+        //     systemNavigationBarIconBrightness: Brightness.dark)
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         elevation: 8.0,
@@ -145,7 +144,8 @@ class AppThemes {
           fillColor: MaterialStateProperty.all(AppColors.primaryColor)),
       outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
-              foregroundColor: AppColors.primaryColor, shape: RoundedRectangleBorder(
+              foregroundColor: AppColors.primaryColor,
+              shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(mediumRadius),
               ))),
       iconTheme:
@@ -169,8 +169,10 @@ class AppThemes {
       ),
       textSelectionTheme:
           const TextSelectionThemeData(cursorColor: AppColors.primaryColor),
-      colorScheme:
-          ColorScheme.fromSwatch().copyWith(secondary: AppColors.accentColor),
+      colorScheme: ColorScheme.fromSwatch().copyWith(
+        secondary: AppColors.accentColor,
+        primary: AppColors.primaryColor,
+      ),
     );
   }
 }

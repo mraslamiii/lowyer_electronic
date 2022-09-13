@@ -362,45 +362,44 @@ class HomePage extends StatelessWidget {
       SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: ListView(
-            padding: EdgeInsetsDirectional.only(
-              bottom: fullHeight / 18,
+          padding: EdgeInsetsDirectional.only(bottom: fullHeight / 18),
+          shrinkWrap: true,
+          physics: const BouncingScrollPhysics(),
+          children: [
+            sheetItem(
+              context,
+              'اطلاعات پروفایل',
+              'assets/icons/ic_profile_info.svg',
+              true,
+              Routes.editProfile,
             ),
-            shrinkWrap: true,
-            physics: const BouncingScrollPhysics(),
-            children: [
-              sheetItem(
-                context,
-                'اطلاعات پروفایل',
-                'assets/icons/ic_profile_info.svg',
-                true,
-                Routes.editProfile,
-              ),
-              sheetItem(
-                context,
-                'اطلاعات دفتر وکالت',
-                'assets/icons/ic_law_office.svg',
-                false,
-                Routes.lawyerLicenseInfoPage,
-              ),
-              sheetItem(
-                context,
-                'اطلاعات فضای مجازی',
-                'assets/icons/ic_social_info.svg',
-                false,
-                Routes.editSocialInfoPage,
-              ),
-              sheetItem(
-                context,
-                'کیف پول',
-                'assets/icons/ic_wallet.svg',
-                false,
-                null,
-              ),
-              // sheetItem('مهارت ها', 'assets/icons/ic_skills.svg', false,
-              //     const LawyerSkillsPage()),
-              // sheetItem('آموزش ها', 'assets/icons/ic_trainings.svg', false,
-              //     null),
-            ]),
+            sheetItem(
+              context,
+              'اطلاعات پروانه وکالت',
+              'assets/icons/ic_law_office.svg',
+              false,
+              Routes.lawyerLicenseInfoPage,
+            ),
+            sheetItem(
+              context,
+              'اطلاعات فضای مجازی',
+              'assets/icons/ic_social_info.svg',
+              false,
+              Routes.editSocialInfoPage,
+            ),
+            sheetItem(
+              context,
+              'کیف پول',
+              'assets/icons/ic_wallet.svg',
+              false,
+              null,
+            ),
+            // sheetItem('مهارت ها', 'assets/icons/ic_skills.svg', false,
+            //     const LawyerSkillsPage()),
+            // sheetItem('آموزش ها', 'assets/icons/ic_trainings.svg', false,
+            //     null),
+          ],
+        ),
       ),
     );
   }
