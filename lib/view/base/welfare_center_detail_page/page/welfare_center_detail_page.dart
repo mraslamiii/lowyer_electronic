@@ -68,6 +68,7 @@ class WelfareCenterDetailPage extends StatelessWidget {
           padding: EdgeInsetsDirectional.all(standardSize),
           child: progressButton(
             onTap: () {},
+            isDisabled: true,
             text: "صورتحساب",
           ),
         ),
@@ -182,7 +183,7 @@ class WelfareCenterDetailPage extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: smallSize),
+          SizedBox(height: standardSize),
           Padding(
             padding: EdgeInsets.only(left: standardSize),
             child: _itemServiceCard(
@@ -194,29 +195,104 @@ class WelfareCenterDetailPage extends StatelessWidget {
           SizedBox(height: smallSize),
           Padding(
             padding: EdgeInsets.only(left: xxSmallSize),
-            child: Expanded(child: _itemServiceCard("قیمت", "200,000 تومان")),
-          ),
-          Obx(
-            () => controller.counter.value != 0
-                ? _counterBoxWidget(controller.counter)
-                : const SizedBox(),
-          ),
-          Obx(
-            () => controller.counter.value == 0
-                ? Container(
-                    margin: EdgeInsets.only(
-                      top: smallSize,
-                      left: standardSize,
-                    ),
-                    width: fullWidth,
-                    child: progressButton(
-                      onTap: () {
-                        controller.counter.value++;
-                      },
-                      text: "افــزودن",
-                    ),
-                  )
-                : const SizedBox(),
+            child: Row(
+              children: [
+                Expanded(child: _itemServiceCard("قیمت", "200,000 تومان")),
+                Obx(
+                  () => controller.counter.value == 0
+                      ? SizedBox(
+                          width: fullWidth / 2.6,
+                          child: Container(
+                            margin: EdgeInsets.only(
+                              left: standardSize,
+                            ),
+                            // width: fullWidth,
+                            height: fullHeight / 16,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                controller.counter.value++;
+                              },
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: Size.zero,
+                                padding: EdgeInsets.zero,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(xSmallRadius),
+                                ),
+                              ),
+                              child: Text(
+                                "افزودن",
+                                style:
+                                    Get.theme.textTheme.bodyText1!.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      : Obx(
+                          () => SizedBox(
+                            width: fullWidth / 2.6,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: AppColors.primaryColor,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(
+                                  xSmallRadius,
+                                ),
+                              ),
+                              // width: fullWidth,
+                              height: fullHeight / 16,
+                              margin: EdgeInsetsDirectional.only(
+                                end: standardSize,
+                              ),
+                              padding: EdgeInsetsDirectional.only(
+                                start: xSmallSize,
+                                end: xSmallSize,
+                              ),
+                              child: Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      controller.counter.value =
+                                          controller.counter.value + 1;
+                                    },
+                                    child: Icon(
+                                      Icons.add,
+                                      color: Get.theme.primaryColor,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      controller.counter.value.toString(),
+                                      style: Get.theme.textTheme.subtitle2,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      if (controller.counter.value != 0) {
+                                        controller.counter.value =
+                                            controller.counter.value - 1;
+                                      }
+                                    },
+                                    child: Icon(
+                                      Icons.remove,
+                                      color: controller.counter.value == 0
+                                          ? AppColors.secondaryTextColor
+                                          : AppColors.primaryColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

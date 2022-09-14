@@ -325,11 +325,21 @@ class _DatePickerDialogState extends State<_DatePickerDialog> {
       children: <Widget>[
         TextButton(
           onPressed: _handleCancel,
-          child: Text(widget.cancelText ?? 'لغو'),
+          child: Text(
+            widget.cancelText ?? 'لغو',
+            style: textTheme.bodyText2?.copyWith(
+              color: Colors.black,
+            ),
+          ),
         ),
         TextButton(
           onPressed: _handleOk,
-          child: Text(widget.confirmText ?? 'تایید'),
+          child: Text(
+            widget.confirmText ?? 'تایید',
+            style: textTheme.bodyText2?.copyWith(
+              color: Colors.black,
+            ),
+          ),
         ),
       ],
     );

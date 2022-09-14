@@ -25,8 +25,22 @@ class EditProfileController extends GetxController
   TextEditingController lastNameTxtController = TextEditingController();
   TextEditingController fatherNameTxtController = TextEditingController();
   TextEditingController nationalCodeTxtController = TextEditingController();
+  TextEditingController eduMajorTxtController = TextEditingController();
+  TextEditingController educationTxtController = TextEditingController();
+  TextEditingController eduLocationTxtController = TextEditingController();
+  TextEditingController phoneTxtController = TextEditingController();
   TextEditingController addressTxtController = TextEditingController();
   TextEditingController zipCodeTxtController = TextEditingController();
+
+  RxInt educationSelected = RxInt(-1);
+  List<String> educations = [
+    "دیپلم",
+    "فوق دیپلم",
+    "لیسانس",
+    "فوق لیسانس",
+    "دکتری",
+    "فوق دکتری",
+  ];
 
   Future<bool> back() async {
     printInfo(info: 'back');

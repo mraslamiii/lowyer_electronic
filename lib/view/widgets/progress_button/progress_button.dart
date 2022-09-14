@@ -6,18 +6,22 @@ Widget progressButton({
   required VoidCallback? onTap,
   required String text,
   bool isProgress = false,
+  bool isDisabled = false,
   Color? textColor,
   ButtonStyle? customStyle,
 }) {
+  ThemeData theme = Get.theme;
   return ElevatedButton(
-    onPressed: onTap,
+    onPressed: isDisabled ? null : onTap,
     style: customStyle,
     child: isProgress
         ? const CupertinoActivityIndicator()
-        : Text(text,
-            style: Get.theme.textTheme.bodyText1!.copyWith(
+        : Text(
+            text,
+            style: theme.textTheme.bodyText1!.copyWith(
               fontWeight: FontWeight.w700,
               color: textColor ?? Colors.white,
-            )),
+            ),
+          ),
   );
 }
