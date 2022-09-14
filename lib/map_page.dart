@@ -1,5 +1,5 @@
-import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:get/get.dart';
@@ -7,50 +7,103 @@ import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
 import 'package:kanoon_dadgostari/view/user/lawyer_license_info_page/controller/lawyer_license_info_controller.dart';
 import 'package:kanoon_dadgostari/view/widgets/progress_button/progress_button.dart';
 
-import 'res/colors/colors.dart';
 
 class MapPage extends StatefulWidget {
-  MapController controller;
-
-  MapPage(this.controller);
+  // MapController controller;
+  //
+  // MapPage(this.controller);
 
   @override
   State<StatefulWidget> createState() => _LocationAppExampleState();
 }
 
 class _LocationAppExampleState extends State<MapPage> {
+  final theme = Get.theme;
+
+  @override
+  void initState() {
+    controller= PickerMapController(
+      initMapWithUserPosition: true,
+    );
+
+  }
+
+  late PickerMapController controller ;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.symmetric(horizontal: standardSize),
-        child: progressButton(
-            onTap: () async {
-              var a = await widget.controller
-                  .getCurrentPositionAdvancedPositionPicker();
-              Get.back(result: a);
-            },
-            text: "انتخاب موقیعت مکانی"),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.location_searching),
-        onPressed: () async {
-          GeoPoint geoPoint = await widget.controller.myLocation();
 
-          await widget.controller.changeLocation(geoPoint);
-          await widget.controller.setZoom(stepZoom: 3);
-        },
+    return CustomPickerLocation(
+      controller: controller,
+
+      bottomWidgetPicker: Positioned(
+        bottom: 0,
+        right: 0,
+        left: 0,
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: standardSize),
+              child: progressButton(
+                  onTap: (){},
+                  // async {
+                  //   var a = await controller
+                  //       .getCurrentPositionAdvancedPositionPicker();
+                  //   Get.back(result: a);
+                  // },
+                  text: "انتخاب موقیعت مکانی"),
+            ),
+
+            FloatingActionButton(
+              child: const Icon(Icons.location_searching),
+              onPressed: () async {
+                GeoPoint geoPoint = await controller.osmBaseController.myLocation();
+                debugPrint('${geoPoint.latitude} FacELord');
+                debugPrint('${geoPoint.longitude} FacELordLong');
+                await controller.osmBaseController.changeLocation(geoPoint);
+                await controller.osmBaseController.setZoom(stepZoom: 3);
+
+              },
+            ),
+
+          ],
+        ),
       ),
-      body: Container(
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.horizontal(
-                left: Radius.circular(standardRadius),
-                right: Radius.circular(standardRadius))),
-        margin: EdgeInsets.only(
-            bottom: standardSize, right: largeSize, left: largeSize),
-        child: const CustomMap(true),
+      pickerConfig:
+      CustomPickerLocationConfig(
+        initZoom: 16,
+        minZoomLevel: 6,
+        maxZoomLevel: 18,
+        stepZoom: 1.0,
+        loadingWidget: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const CupertinoActivityIndicator(),
+            SizedBox(
+              height: smallSize,
+            ),
+            Text(
+              "Receiving information",
+              style: theme.textTheme.bodyText1,
+            ),
+          ],
+        ),
+
+        advancedMarkerPicker: MarkerIcon(
+          iconWidget:
+            Icon(Icons.location_on,
+            color: Colors.red,
+              size: iconSizeLarge * 4,
+            ),
+          // icon:Icon(Icons.access_alarm) ,
+          // assetMarker: AssetMarker(scaleAssetImage: 12,
+          // image: AssetImage('assets/avatar.JPG')),
+          // SvgPicture.asset("assets/ic_location_bold.svg",
+          //     width: fullWidth/4, height: fullWidth/4),
+        ),
       ),
+
     );
   }
 }

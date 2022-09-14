@@ -13,7 +13,6 @@ import 'package:kanoon_dadgostari/view/base/scan_search_page/page/scan_search_pa
 import 'package:kanoon_dadgostari/view/base/welfare_center_page/page/welfare_center_page.dart';
 import 'package:kanoon_dadgostari/view/user/edit_social_info_page/page/edit_social_info_page.dart';
 import 'package:kanoon_dadgostari/view/user/lawyer_license_info_page/page/lawyer_license_info_page.dart';
-import 'package:kanoon_dadgostari/view/user/lawyer_upload_image_page/page/lawyer_upload_image_page.dart';
 import '../map_page.dart';
 import '../view/auth/signup_page/binding/signup_binding.dart';
 import '../view/auth/verification_page/binding/verification_binding.dart';
@@ -47,6 +46,10 @@ class AppPages {
   static const initialRoute = Routes.splashPage;
 
   static final routes = [
+    GetPage(
+      name: Routes.mapPage,
+      page: () =>  MapPage( ),
+    ),
     GetPage(
       name: Routes.welfareCenterPage,
       page: () =>  WelfareCenterPage(),
