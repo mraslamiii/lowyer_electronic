@@ -5,35 +5,26 @@ import 'package:kanoon_dadgostari/service/preferences_service.dart';
 import 'package:kanoon_dadgostari/utilites/app_logger.dart';
 import 'package:kanoon_dadgostari/view/auth/login_page/page/login_page.dart';
 
+import '../../../../models/sec/info_profile_model.dart';
+import '../../../../repo/sec/splash_repo.dart';
+
 class SplashController extends GetxController {
   final LocalStorageService pref = Get.find<LocalStorageService>();
-
-
   RxBool isProgress = true.obs;
-
-
-
-
-
   @override
   Future<void> onReady() async {
     await Future.delayed(const Duration(milliseconds: 4000));
     isProgress.value = false;
     update();
     controlNavigation();
+    getBasicData();
     super.onReady();
   }
-
-
-
   Future<bool> back() async {
     printInfo(info: 'back');
     SystemNavigator.pop();
     return true;
   }
-
-
-
   void controlNavigation() async {
     try {
       // Get.offAllNamed(Routes.loginPage);
@@ -56,17 +47,10 @@ class SplashController extends GetxController {
 
 
 }
+SplashRepository repository = SplashRepository();
 
 
-
-// Future getBasicData() async {
-//   bool result = await _useCase.execute();
-//
-//
-//   if (result == true) {
-//     showError.value = false;
-//   } else{
-//     showError.value = true;
-//   }
-//
-// }
+Future getBasicData() async {
+  bool result = await repository.syncApp();
+  return result;
+  }

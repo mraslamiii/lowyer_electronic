@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:kanoon_dadgostari/models/sec/lawyer_profile_model.dart';
 import 'package:kanoon_dadgostari/res/colors/colors.dart';
 import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
 import 'package:kanoon_dadgostari/view/widgets/customScaffold/customScaffold.dart';
@@ -17,17 +16,36 @@ class EditProfilePage extends GetView<EditProfileController> {
     // required this.controller,
     Key? key,
   }) : super(key: key);
-
   bool isFirstLunch = true;
 
   @override
+  EditProfileController controller  =Get.put(EditProfileController());
+
+  @override
   Widget build(BuildContext context) {
+    if (isFirstLunch) {
+      controller.nameTxtController.text = controller.pref.lawyer.data?.user?.firstName ?? '';
+      controller.lastNameTxtController.text = controller.pref.lawyer.data?.user?.lastName ?? '';
+      controller.fatherNameTxtController.text = controller.pref.lawyer.data?.user?.fatherName ?? '';
+      controller.nationalCodeTxtController.text = controller.pref.lawyer.data?.user?.nationalCode ?? '';
+      controller.educationTxtController.text = controller.pref.lawyer.data?.profile?.education ?? '';
+      controller.eduLocationTxtController.text = controller.pref.lawyer.data?.profile?.educationPlace ?? '';
+      // controller.phoneTxtController.text = controller.pref.lawyer.data?.user?.phoneNumber ?? '';
+      controller.addressTxtController.text = controller.pref.lawyer.data?.user?.address ?? '';
+      controller.zipCodeTxtController.text = controller.pref.lawyer.data?.user?.postalCode ?? '';
+      controller.eduMajorTxtController.text = controller.pref.lawyer.data?.profile?.academicDiscipline ?? '';
+      controller.educationSelected =controller.educations.indexOf( controller.pref.lawyer.data?.profile?.education ??'');
+
+      controller.isFirstLunch = false;
+      controller.update();
+    }
     return GetBuilder<EditProfileController>(
       init: controller,
       initState: (state) {
         controller.fetchData();
       },
       builder: (_) {
+
         return customScaffold(
           bottomAppBar: BottomAppBar(
             elevation: 0,
@@ -36,7 +54,10 @@ class EditProfilePage extends GetView<EditProfileController> {
               child: SizedBox(
                 width: fullWidth,
                 child: progressButton(
-                  onTap: () {},
+                  isProgress: controller.isBusyProfile.value,
+                  onTap: () {
+                     controller.changeProfileData();
+                  },
                   text: "ثبت اطلاعات",
                 ),
               ),
@@ -46,8 +67,10 @@ class EditProfilePage extends GetView<EditProfileController> {
             title: const Text("ویـرایش پروفایل"),
             leading: backIcon(),
           ),
-          body: controller.obx(
-            (state) => ListView(
+          body:
+          controller.obx(
+            (state) =>
+                ListView(
               physics: const BouncingScrollPhysics(),
               children: <Widget>[
                 Container(
@@ -153,13 +176,10 @@ class EditProfilePage extends GetView<EditProfileController> {
                         physics: const BouncingScrollPhysics(),
                         itemCount: controller.educations.length,
                         itemBuilder: (context, index) {
-                          return Obx(
-                            () => sheetItem(
+                          return  sheetItem(
                               context: context,
                               title: controller.educations[index],
                               index: index,
-                              selectedIndex: controller.educationSelected,
-                            ),
                           );
                         },
                       ),
@@ -178,17 +198,15 @@ class EditProfilePage extends GetView<EditProfileController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Obx(
-                          () => Text(
-                            controller.educationSelected.value != -1
-                                ? controller.educations[
-                                    controller.educationSelected.value]
+                      Text(
+                            controller.educationSelected != -1
+                                ? controller.educations[controller.educationSelected]
                                 : "تحصیلات",
                             style: Get.theme.textTheme.bodyText1?.copyWith(
-                              color: controller.educationSelected.value != -1
+                              color: controller.educationSelected != -1
                                   ? Colors.black
                                   : AppColors.hintColor,
-                            ),
+
                           ),
                         ),
                         SvgPicture.asset(
@@ -237,6 +255,7 @@ class EditProfilePage extends GetView<EditProfileController> {
                     textEditingController: controller.eduLocationTxtController,
                   ),
                 ),
+/*
                 Container(
                   margin: EdgeInsetsDirectional.only(
                     start: standardSize,
@@ -256,6 +275,7 @@ class EditProfilePage extends GetView<EditProfileController> {
                     textEditingController: controller.phoneTxtController,
                   ),
                 ),
+*/
                 Container(
                   margin: EdgeInsetsDirectional.only(
                     start: standardSize,
@@ -307,31 +327,32 @@ class EditProfilePage extends GetView<EditProfileController> {
           ),
           context: context,
         );
-      },
+      }
     );
   }
 
   Widget sheetItem({
     required BuildContext context,
     required int index,
-    required RxInt selectedIndex,
     required String title,
   }) {
     return GestureDetector(
       onTap: () {
         Navigator.pop(context);
-        selectedIndex.value = index;
+        controller.educationSelected = index;
+        controller.update();
+
       },
       child: Container(
         margin: EdgeInsetsDirectional.only(bottom: smallSize),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(smallRadius),
-          color: selectedIndex.value == index
+          color: controller.educationSelected == index
               ? AppColors.primaryColor.withOpacity(0.2)
               : Colors.transparent,
           border: Border.all(
             width: 1,
-            color: selectedIndex.value == index
+            color: controller.educationSelected == index
                 ? AppColors.primaryColor
                 : AppColors.borderColor,
           ),
@@ -355,15 +376,15 @@ class EditProfilePage extends GetView<EditProfileController> {
             Visibility(
               visible: false,
               child: Radio(
-                value: selectedIndex.value,
+                value: controller.educationSelected,
                 groupValue: index,
                 onChanged: (val) {
-                  selectedIndex.value == val;
+                  controller.educationSelected == val;
                 },
               ),
             ),
             SvgPicture.asset(
-              selectedIndex.value == index
+              controller.educationSelected == index
                   ? 'assets/icons/ic_selected.svg'
                   : 'assets/icons/ic_unselected.svg',
               height: iconSizeSmall,

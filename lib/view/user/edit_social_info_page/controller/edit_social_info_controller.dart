@@ -2,17 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-import '../../../../app/app_exeption.dart';
-import '../../../../models/base/title_value_model.dart';
-import '../../../../models/sec/lawyer_profile_model.dart';
+import '../../../../models/sec/info_profile_model.dart';
 import '../../../../repo/sec/lawyer_repo.dart';
 import '../../../../service/connection_service/connection_status.dart';
-import '../../../widgets/custom_snackbar/custom_snackbar.dart';
 
 class EditSocialInfoController extends GetxController
-    with StateMixin<LawyerProfileModel> {
+    with StateMixin<InfoProfileModel> {
   final LocalStorageService pref = Get.find<LocalStorageService>();
 
   RxBool isBusyProfile = false.obs;
@@ -33,27 +29,28 @@ class EditSocialInfoController extends GetxController
     return true;
   }
 
-  LawyerProfileModel? result;
+  InfoProfileModel? result;
 
   LawyersRepository repo = LawyersRepository();
   final ConnectionStatusController connectionStatusController =
       Get.put(ConnectionStatusController());
 
+/*
   Future<void> fetchData() async {
     if (!isBusyProfile.value) {
       try {
         isBusyProfile.value = true;
         change(null, status: RxStatus.loading());
-        result = await repo.getLawyer('1');
+        result = await repo.getLawyer('${pref.user.lawyerProfile}');
         change(result, status: RxStatus.success());
         isBusyProfile.value = false;
-        instagramTxtController.text = result?.instagram.trim() ?? ' ';
+        instagramTxtController.text = result?.data.profile.instagram.trim() ?? ' ';
         whatsAppTxtController.text =
-            result?.whatsApp.trim() ?? ' ';
+            result?.data.profile.whatsApp.trim() ?? ' ';
         websiteTxtController.text =
-            result?.webSite.trim() ?? '';
+            result?.data.profile.webSite.trim() ?? '';
         officeAddressTxtController.text =
-            result?.addressOffice.trim() ?? '';
+            result?.data.user.address.trim() ?? '';
 
         // Get.offAllNamed(Routes.homePage);
       } on TitleValueException catch (exp) {
@@ -72,4 +69,13 @@ class EditSocialInfoController extends GetxController
       isBusyProfile.value = false;
     }
   }
+*/
+  // Future changeSocialData()async {
+  // try{
+  //   result = await repo.getLawyer(id);
+  //
+  // }catch(e){
+  //   AppLogger.e('$e');
+  // }
+  // }
 }

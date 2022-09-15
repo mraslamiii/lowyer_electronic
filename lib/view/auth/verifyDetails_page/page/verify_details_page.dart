@@ -51,7 +51,7 @@ class VerifyDetailsPage extends StatelessWidget {
                       infoWidget("نام خانوادگی", pref.user.lastName ?? ""),
                       // infoWidget("نام پدر", "${pref.user.firstName}"),
                       // infoWidget("کد ملی", "${pref.user.firstName}"),
-                      infoWidget("شماره شناسنامه", pref.user.national_code ?? "", isLast: true),
+                      infoWidget("شماره شناسنامه", pref.user.nationalCode ?? "", isLast: true),
                     ],
                   ),
                 ),

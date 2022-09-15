@@ -7,6 +7,7 @@ class User {
   String? fatherName = "";
   String? zipCode = "";
   String? address = "";
+  int? lawyerProfile ;
 
   // late String roles;
   bool? isDeactive = false;
@@ -23,6 +24,7 @@ class User {
     this.fatherName,
     this.zipCode,
     this.address,
+    this.lawyerProfile,
   });
 
   User.fromJson(Map<String, dynamic> json) {
@@ -35,6 +37,7 @@ class User {
     fatherName = json['father_name'];
     zipCode = json['code_at'];
     address = json['address'];
+    lawyerProfile = json['lawyer_profile'];
   }
 
   Map<String, dynamic> toJson() {
@@ -42,12 +45,13 @@ class User {
     data['id'] = id;
     data['first_name'] = firstName;
     data['last_name'] = lastName;
-    data['phoneNumber'] = phoneNumber;
-    data['isDeactive'] = isDeactive;
+    data['phone_number'] = phoneNumber;
+    data['is_deactive'] = isDeactive;
     data['national_code'] = national_code;
     data['father_name'] = fatherName;
     data['code_at'] = zipCode;
     data['address'] = address;
+    data['lawyer_profile'] = lawyerProfile;
     return data;
   }
 }

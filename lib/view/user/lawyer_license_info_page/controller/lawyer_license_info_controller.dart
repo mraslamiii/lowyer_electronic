@@ -7,12 +7,14 @@ import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 import '../../../../app/app_exeption.dart';
 import '../../../../models/base/title_value_model.dart';
+import '../../../../models/sec/info_profile_model.dart';
 import '../../../../models/sec/lawyer_profile_model.dart';
+import '../../../../models/sec/profile_vakil_model.dart';
 import '../../../../repo/sec/lawyer_repo.dart';
 import '../../../../service/connection_service/connection_status.dart';
 import '../../../widgets/custom_snackbar/custom_snackbar.dart';
 
-class LawyerLicenseInfoController extends GetxController with StateMixin<LawyerProfileModel> {
+class LawyerLicenseInfoController extends GetxController with StateMixin<InfoProfileModel> {
   final LocalStorageService pref = Get.find<LocalStorageService>();
   final GeoPoint _geoPoint = GeoPoint(latitude: 36.2972, longitude: 59.6067); //todo //get from server f
   late MapController controller;
@@ -24,7 +26,7 @@ class LawyerLicenseInfoController extends GetxController with StateMixin<LawyerP
     super.onInit();
   }
   RxBool isBusyProfile = false.obs;
-  LawyerProfileModel? result;
+  InfoProfileModel? result;
 
   LawyersRepository repo = LawyersRepository();
   final ConnectionStatusController connectionStatusController =
@@ -85,21 +87,22 @@ class LawyerLicenseInfoController extends GetxController with StateMixin<LawyerP
     return true;
   }
 
+/*
   Future<void> fetchData() async {
     if (!isBusyProfile.value) {
       try {
         isBusyProfile.value = true;
         change(null, status: RxStatus.loading());
-        result = await repo.getLawyer('1');
+        result = await repo.getLawyer('${pref.user.lawyerProfile}');
         change(result, status: RxStatus.success());
         isBusyProfile.value = false;
-        lawyerNumberTxtController.text = '${result?.licenseNumber.trim() ?? ' '} ';
-        dateReceivedTxtController.text = '${result?.licenseCreateDate.trim() ?? ' '} ';
-        expirationDateTxtController.text = '${result?.licenseExpireDate.trim() ?? ''} ';
+        lawyerNumberTxtController.text = '${result?.data.profile.licenseNumber.trim() ?? ' '} ';
+        dateReceivedTxtController.text = '${result?.data.profile.licenseCreateDate.trim() ?? ' '} ';
+        expirationDateTxtController.text = '${result?.data.profile.licenseExpireDate.trim() ?? ''} ';
         cityTxtController.text =
-            result?.cityName.trim() ?? '';
-        officeAddressTxtController.text = '${result?.addressOffice.trim() ?? ''} ';
-        officeTelephoneTxtController.text = result?.TellOffice.trim() ?? '';
+            result?.data.profile.cityName.trim() ?? '';
+        officeAddressTxtController.text = '${result?.data.profile.addressOffice.trim() ?? ''} ';
+        officeTelephoneTxtController.text = result?.data.profile.TellOffice.trim() ?? '';
 
         // Get.offAllNamed(Routes.homePage);
       } on TitleValueException catch (exp) {
@@ -118,4 +121,5 @@ class LawyerLicenseInfoController extends GetxController with StateMixin<LawyerP
       isBusyProfile.value = false;
     }
   }
+*/
 }

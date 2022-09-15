@@ -2,8 +2,14 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:kanoon_dadgostari/models/entity/lawyer_profile_entity.dart';
+import 'package:kanoon_dadgostari/models/sec/info_profile_model.dart';
+import 'package:kanoon_dadgostari/models/sec/profile_vakil_model.dart';
 
-import '../models/sec/user_model.dart';
+import '../models/entity/infoProfileEntity.dart';
+import '../utilites/app_logger.dart';
+
+
 
 class LocalStorageService extends GetxService {
   static final _box = GetStorage();
@@ -11,6 +17,8 @@ class LocalStorageService extends GetxService {
   static const String firebaseKey = "FirebaseKey";
   static const String phoneNumberKey = "phoneNumberKey";
   static const String userKey = "UserKey";
+  static const String profileKey = "ProfileKey";
+  static const String lawyerKey = "LawyerKey";
   static const String homeKey = "homeKey";
   static const String isFirstTimeLaunchKey = "IsFirstTimeLaunch";
   static const String tenantKey = "TokenKey";
@@ -86,14 +94,23 @@ class LocalStorageService extends GetxService {
     return userModel;
   }
 
+  Profile get profile {
+    var userJson = _box.read(userKey);
+    if (userJson == null) {
+      return Profile();
+    }
+    Profile userModel = Profile.fromJson(json.decode(userJson));
+    return userModel;
+  }
+
   //
-  // set user(User item) {
-  //   try {
-  //     _box.write(userKey, json.encode(UserModel.fromEntity(item).toJson()));
-  //   } catch (e) {
-  //     AppLogger.e('$e');
-  //   }
-  // }
+  set lawyer(InfoProfileEntity item) {
+    try {
+      _box.write(lawyerKey, json.encode(InfoProfileModel.fromEntity(item).toJson()));
+    } catch (e) {
+      AppLogger.e('$e');
+    }
+  }
   bool isLogin() {
     if (token != LocalStorageService.defaultTokenValue) {
       return true;
@@ -103,6 +120,29 @@ class LocalStorageService extends GetxService {
   setUser(Map<String, dynamic> _json) async {
     try {
       await _box.write(userKey, json.encode(_json));
+    } catch (e) {
+      debugPrint("$e");
+    }
+  }
+  setProfile(Map<String, dynamic> _json) async {
+    try {
+      await _box.write(profileKey, json.encode(_json));
+    } catch (e) {
+      debugPrint("$e");
+    }
+  }
+
+  InfoProfileModel get lawyer {
+    var userJson = _box.read(lawyerKey);
+    if (userJson == null) {
+      return InfoProfileModel(data: LawyerData(user: user, profile: profile, cards: Cards()));
+    }
+    InfoProfileModel infoProfileModel = InfoProfileModel.fromJson(json.decode(userJson));
+    return infoProfileModel;
+  }
+  setLawyer(Map<String, dynamic> _json) async {
+    try {
+      await _box.write(lawyerKey, json.encode(_json));
     } catch (e) {
       debugPrint("$e");
     }

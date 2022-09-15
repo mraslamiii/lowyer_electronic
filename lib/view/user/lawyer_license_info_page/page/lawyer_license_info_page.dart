@@ -18,10 +18,10 @@ class LawyerLicenseInfoPage extends GetView<LawyerLicenseInfoController> {
   Widget build(BuildContext context) {
     return GetBuilder<LawyerLicenseInfoController>(
         init: controller,
-        initState: (state) {
-          controller.fetchData();
-          // print();
-        },
+        // initState: (state) {
+        //   controller.fetchData();
+        //   print();
+        // },
         builder: (_) {
           return customScaffold(
             bottomAppBar: BottomAppBar(
@@ -42,9 +42,10 @@ class LawyerLicenseInfoPage extends GetView<LawyerLicenseInfoController> {
             body:
     controller.obx((_) {
                 return
-                  ListView(
+                  SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  children: <Widget>[
+                  child:
+                      Column(children:[
                     Container(
                       margin: EdgeInsetsDirectional.only(
                         start: standardSize,
@@ -168,7 +169,7 @@ class LawyerLicenseInfoPage extends GetView<LawyerLicenseInfoController> {
                       ),
                     ),
                   ],
-                );
+                      ));
               },
         onEmpty: Container(),
         onError: (error) => Text('خطا در ارتباط با سرور',style: Get.theme.textTheme.subtitle1),

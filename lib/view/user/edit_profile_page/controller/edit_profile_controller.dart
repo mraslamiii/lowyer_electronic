@@ -2,23 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
+import 'package:kanoon_dadgostari/utilites/app_logger.dart';
 import '../../../../app/app_exeption.dart';
 import '../../../../models/base/title_value_model.dart';
-import '../../../../models/sec/lawyer_profile_model.dart';
+import '../../../../models/sec/edit_education_rqm.dart';
+import '../../../../models/sec/info_profile_model.dart';
 import '../../../../repo/sec/lawyer_repo.dart';
 import '../../../../service/connection_service/connection_status.dart';
 import '../../../widgets/custom_snackbar/custom_snackbar.dart';
 
-
-class EditProfileController extends GetxController
-    with StateMixin<LawyerProfileModel> {
+class EditProfileController extends GetxController with StateMixin<InfoProfileModel>{
   final LocalStorageService pref = Get.find<LocalStorageService>();
 
   RxBool isBusyProfile = false.obs;
-
+  RxBool isBusyGetEd = false.obs;
+ bool isFirstLunch = true;
   @override
   void onInit() {
     super.onInit();
+  }
+  @override
+  void onClose() {
+    nameTxtController.dispose();
+    lastNameTxtController.dispose();
+    fatherNameTxtController.dispose();
+
+
+    super.onClose();
   }
 
   TextEditingController nameTxtController = TextEditingController();
@@ -28,11 +38,11 @@ class EditProfileController extends GetxController
   TextEditingController eduMajorTxtController = TextEditingController();
   TextEditingController educationTxtController = TextEditingController();
   TextEditingController eduLocationTxtController = TextEditingController();
-  TextEditingController phoneTxtController = TextEditingController();
+  // TextEditingController phoneTxtController = TextEditingController();
   TextEditingController addressTxtController = TextEditingController();
   TextEditingController zipCodeTxtController = TextEditingController();
 
-  RxInt educationSelected = RxInt(-1);
+  int educationSelected = -1;
   List<String> educations = [
     "دیپلم",
     "فوق دیپلم",
@@ -48,43 +58,59 @@ class EditProfileController extends GetxController
     return true;
   }
 
-  LawyerProfileModel? result;
+  InfoProfileModel? result;
 
   LawyersRepository repo = LawyersRepository();
   final ConnectionStatusController connectionStatusController =
       Get.put(ConnectionStatusController());
 
-  Future<void> fetchData() async {
-    if (!isBusyProfile.value) {
-      try {
-        isBusyProfile.value = true;
-        change(null, status: RxStatus.loading());
-        result = await repo.getLawyer('1');
-        change(result, status: RxStatus.success());
-        isBusyProfile.value = false;
-        nameTxtController.text = '${result?.user?.firstName?.trim() ?? ' '} ';
-        lastNameTxtController.text = '${result?.user?.lastName?.trim() ?? ' '} ';
-        fatherNameTxtController.text = '${result?.user?.fatherName?.trim() ?? ''} ';
-        nationalCodeTxtController.text =
-            result?.user?.national_code?.trim() ?? '';
-        addressTxtController.text = '${result?.user?.address?.trim() ?? ''} ';
-        zipCodeTxtController.text = result?.user?.zipCode?.trim() ?? '';
+  Future changeProfileData() async {
 
-        // Get.offAllNamed(Routes.homePage);
+    try {
+      if (isBusyProfile.value == false) {
+        isBusyProfile.value = true;
+update();
+        result = await repo.changeUserData(
+            EditEducationRQM(
+              firstName: nameTxtController.text ,
+              lastName: lastNameTxtController.text,
+              fatherName: fatherNameTxtController.text,
+              nationalCode: nationalCodeTxtController.text,
+              address: addressTxtController.text,
+              postalCode: zipCodeTxtController.text,
+              academicDiscipline: eduMajorTxtController.text,
+              education: educations[educationSelected],
+              educationPlace: eduLocationTxtController.text,
+            ));
+        isBusyProfile.value = false;
+        update();
+      Get.back(result: 'result');
+    }} catch (e) {
+      isBusyProfile.value = false;
+
+      AppLogger.e('$e');
+    }
+  }
+
+  Future<void> fetchData() async {
+    if (!isBusyGetEd.value) {
+      try {
+        isBusyGetEd.value = true;
+        change(null, status: RxStatus.loading());
+        result = await repo.getLawyer('${pref.user.lawyerProfile}');
+        change(result, status: RxStatus.success());
+        isBusyGetEd.value = false;
+        update();
       } on TitleValueException catch (exp) {
         for (TitleValueModel error in exp.errors) {
-          isBusyProfile.value = false;
           exeptionSnackBar(error.value![0]);
         }
       } catch (e) {
-        isBusyProfile.value = false;
         change(null, status: RxStatus.error('e'));
 
         rethrow;
       }
-    } else {
-      change(null, status: RxStatus.error('e'));
-      isBusyProfile.value = false;
-    }
+
   }
+}
 }

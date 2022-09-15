@@ -16,10 +16,10 @@ class EditSocialInfoPage extends GetView<EditSocialInfoController> {
   Widget build(BuildContext context) {
     return GetBuilder<EditSocialInfoController>(
       init: controller,
-      initState: (state) {
-        controller.fetchData();
-        // print();
-      },
+      // initState: (state) {
+      //   controller.fetchData();
+      //   print();
+      // },
       builder: (_) {
         return customScaffold(
           bottomAppBar: BottomAppBar(

@@ -279,7 +279,7 @@ class APIProvider extends GetxService {
         var body = response?.data;
 
         BaseResponse baseResponse = BaseResponse.fromJson(body, null);
-        throw TitleValueException(baseResponse.exception ?? []);
+        // throw TitleValueException(baseResponse.exception ?? []);
       // throw FetchDataException(
       //     'Error occured while communication with server' +
       //         ' with status code : ${response?.statusCode}');
