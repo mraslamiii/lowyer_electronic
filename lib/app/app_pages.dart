@@ -132,7 +132,7 @@ class AppPages {
 
     GetPage(
       name: Routes.editSocialInfoPage,
-      page: () => const EditSocialInfoPage(),
+      page: () =>  EditSocialInfoPage(),
       binding: EditSocialInfoBinding()
     ),
   ];

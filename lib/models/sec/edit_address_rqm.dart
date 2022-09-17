@@ -1,4 +1,4 @@
-class EditAddressRQM{
+class EditAddressRQM {
   String? cityName;
   String? addressOffice;
   String? tellOffice;
@@ -6,6 +6,7 @@ class EditAddressRQM{
   String? long;
   String? licenseNumber;
   String? licenseCreateDate;
+  String? _method;
   String? licenseExpiredDate;
 
   EditAddressRQM({
@@ -24,8 +25,9 @@ class EditAddressRQM{
     data['address_office'] = addressOffice;
     data['Tell_office'] = tellOffice;
     data['lat'] = lat;
-    data['long'] = long;
+    data['long'] =long;
     data['license_number'] = licenseNumber;
+    data['_method'] = 'patch';
     data['license_create_date'] = licenseCreateDate;
     data['license_expire_date'] = licenseExpiredDate;
     return data;

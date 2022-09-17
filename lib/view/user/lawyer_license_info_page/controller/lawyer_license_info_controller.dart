@@ -5,14 +5,11 @@ import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
-import '../../../../app/app_exeption.dart';
-import '../../../../models/base/title_value_model.dart';
+import '../../../../models/sec/edit_address_rqm.dart';
 import '../../../../models/sec/info_profile_model.dart';
-import '../../../../models/sec/lawyer_profile_model.dart';
-import '../../../../models/sec/profile_vakil_model.dart';
 import '../../../../repo/sec/lawyer_repo.dart';
 import '../../../../service/connection_service/connection_status.dart';
-import '../../../widgets/custom_snackbar/custom_snackbar.dart';
+import '../../../../utilites/app_logger.dart';
 
 class LawyerLicenseInfoController extends GetxController with StateMixin<InfoProfileModel> {
   final LocalStorageService pref = Get.find<LocalStorageService>();
@@ -25,6 +22,16 @@ class LawyerLicenseInfoController extends GetxController with StateMixin<InfoPro
         MapController(initMapWithUserPosition: false, initPosition: _geoPoint);
     super.onInit();
   }
+  @override
+  void onClose() {
+    licenceNumberTxtController.dispose();
+    createDateLicenceTxtController.dispose();
+    expirationDateTxtController.dispose();
+    cityTxtController.dispose();
+    officeAddressTxtController.dispose();
+    officeTelephoneTxtController.dispose();
+    super.onClose();
+  }
   RxBool isBusyProfile = false.obs;
   InfoProfileModel? result;
 
@@ -35,8 +42,8 @@ class LawyerLicenseInfoController extends GetxController with StateMixin<InfoPro
   Rx<Jalali>? receivedDate = Jalali.now().obs;
   Rx<Jalali>? expirationDate = Jalali.now().obs;
 
-  TextEditingController lawyerNumberTxtController = TextEditingController();
-  TextEditingController dateReceivedTxtController = TextEditingController();
+  TextEditingController licenceNumberTxtController = TextEditingController();
+  TextEditingController createDateLicenceTxtController = TextEditingController();
   TextEditingController expirationDateTxtController = TextEditingController();
   TextEditingController cityTxtController = TextEditingController();
   TextEditingController officeAddressTxtController = TextEditingController();
@@ -60,7 +67,7 @@ class LawyerLicenseInfoController extends GetxController with StateMixin<InfoPro
     );
     if (picked != null) {
       receivedDate!.value = picked;
-      dateReceivedTxtController.text =
+      createDateLicenceTxtController.text =
           "${receivedDate?.value.formatter.yyyy}/${receivedDate?.value.formatter.mm}/${receivedDate?.value.formatter.dd}";
     }
   }
@@ -85,6 +92,34 @@ class LawyerLicenseInfoController extends GetxController with StateMixin<InfoPro
     printInfo(info: 'back');
     SystemNavigator.pop();
     return true;
+  }
+  Future editAddressProfile() async {
+
+    try {
+      if (isBusyProfile.value == false) {
+        var profile = pref.lawyer.data?.profile;
+        isBusyProfile.value = true;
+        update();
+        result = await repo.editAddress(
+            EditAddressRQM(
+            cityName: cityTxtController.text,
+            addressOffice: officeAddressTxtController.text,
+            tellOffice: officeTelephoneTxtController.text,
+            lat: profile?.lat,
+            long: profile?.long,
+            licenseNumber:licenceNumberTxtController.text ,
+            licenseCreateDate: createDateLicenceTxtController.text,
+           licenseExpiredDate: expirationDateTxtController.text,
+          )
+        );
+        isBusyProfile.value = false;
+        update();
+        Get.back(result: 'result');
+      }} catch (e) {
+      isBusyProfile.value = false;
+      update();
+      AppLogger.e('$e');
+    }
   }
 
 /*

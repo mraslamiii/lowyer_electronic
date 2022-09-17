@@ -2,9 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:kanoon_dadgostari/models/entity/lawyer_profile_entity.dart';
 import 'package:kanoon_dadgostari/models/sec/info_profile_model.dart';
-import 'package:kanoon_dadgostari/models/sec/profile_vakil_model.dart';
 
 import '../models/entity/infoProfileEntity.dart';
 import '../utilites/app_logger.dart';
@@ -95,13 +93,20 @@ class LocalStorageService extends GetxService {
   }
 
   Profile get profile {
-    var userJson = _box.read(userKey);
+    var userJson = _box.read(profileKey);
     if (userJson == null) {
       return Profile();
     }
-    Profile userModel = Profile.fromJson(json.decode(userJson));
-    return userModel;
+    Profile profileModel = Profile.fromJson(json.decode(userJson));
+    return profileModel;
   }
+  // set profile(Profile item) {
+  //   try {
+  //     _box.write(profileKey, json.encode(Profile.fromEntity(item).toJson()));
+  //   } catch (e) {
+  //     AppLogger.e('$e');
+  //   }
+  // }
 
   //
   set lawyer(InfoProfileEntity item) {

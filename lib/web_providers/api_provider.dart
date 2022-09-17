@@ -49,7 +49,7 @@ class APIProvider extends GetxService {
       }
       return _returnResponse(response);
     } on DioError catch (dioError) {
-      debugPrint("dioError url:$url getRequest: $dioError");
+      debugPrint("dioError url:$url postRequest: $dioError");
 
       return _returnResponse(dioError.response);
     } catch (e) {

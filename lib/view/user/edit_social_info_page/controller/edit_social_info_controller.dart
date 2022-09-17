@@ -3,25 +3,32 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
 
+import '../../../../models/sec/edit_social_rqm.dart';
 import '../../../../models/sec/info_profile_model.dart';
 import '../../../../repo/sec/lawyer_repo.dart';
 import '../../../../service/connection_service/connection_status.dart';
+import '../../../../utilites/app_logger.dart';
 
-class EditSocialInfoController extends GetxController
-    with StateMixin<InfoProfileModel> {
+class EditSocialInfoController extends GetxController {
   final LocalStorageService pref = Get.find<LocalStorageService>();
 
-  RxBool isBusyProfile = false.obs;
+  RxBool isBusySocial = false.obs;
 
   @override
   void onInit() {
     super.onInit();
   }
+  @override
+  void onClose() {
+    websiteTxtController.dispose();
+    instagramTxtController.dispose();
+    whatsAppTxtController.dispose();
+    super.onClose();
+  }
 
   TextEditingController instagramTxtController = TextEditingController();
   TextEditingController whatsAppTxtController = TextEditingController();
   TextEditingController websiteTxtController = TextEditingController();
-  TextEditingController officeAddressTxtController = TextEditingController();
 
   Future<bool> back() async {
     printInfo(info: 'back');
@@ -34,6 +41,26 @@ class EditSocialInfoController extends GetxController
   LawyersRepository repo = LawyersRepository();
   final ConnectionStatusController connectionStatusController =
       Get.put(ConnectionStatusController());
+
+  Future editSocialMedia() async {
+    try {
+      if (isBusySocial.value == false) {
+        isBusySocial.value = true;
+        update();
+        result = await repo.editSocial(EditSocialRQM(
+            webSite: websiteTxtController.text,
+            instagram: instagramTxtController.text,
+            whatsApp: whatsAppTxtController.text));
+        isBusySocial.value = false;
+        update();
+        Get.back(result: 'result');
+      }
+    } catch (e) {
+      isBusySocial.value = false;
+      update();
+      AppLogger.e('$e');
+    }
+  }
 
 /*
   Future<void> fetchData() async {
@@ -70,12 +97,12 @@ class EditSocialInfoController extends GetxController
     }
   }
 */
-  // Future changeSocialData()async {
-  // try{
-  //   result = await repo.getLawyer(id);
-  //
-  // }catch(e){
-  //   AppLogger.e('$e');
-  // }
-  // }
+// Future changeSocialData()async {
+// try{
+//   result = await repo.getLawyer(id);
+//
+// }catch(e){
+//   AppLogger.e('$e');
+// }
+// }
 }

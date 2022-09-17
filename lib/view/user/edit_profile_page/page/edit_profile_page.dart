@@ -30,19 +30,17 @@ class EditProfilePage extends GetView<EditProfileController> {
       controller.nationalCodeTxtController.text = controller.pref.lawyer.data?.user?.nationalCode ?? '';
       controller.educationTxtController.text = controller.pref.lawyer.data?.profile?.education ?? '';
       controller.eduLocationTxtController.text = controller.pref.lawyer.data?.profile?.educationPlace ?? '';
-      // controller.phoneTxtController.text = controller.pref.lawyer.data?.user?.phoneNumber ?? '';
       controller.addressTxtController.text = controller.pref.lawyer.data?.user?.address ?? '';
       controller.zipCodeTxtController.text = controller.pref.lawyer.data?.user?.postalCode ?? '';
       controller.eduMajorTxtController.text = controller.pref.lawyer.data?.profile?.academicDiscipline ?? '';
       controller.educationSelected =controller.educations.indexOf( controller.pref.lawyer.data?.profile?.education ??'');
-
-      controller.isFirstLunch = false;
+      isFirstLunch = false;
       controller.update();
     }
     return GetBuilder<EditProfileController>(
       init: controller,
       initState: (state) {
-        controller.fetchData();
+        // controller.fetchData();
       },
       builder: (_) {
 
@@ -56,7 +54,7 @@ class EditProfilePage extends GetView<EditProfileController> {
                 child: progressButton(
                   isProgress: controller.isBusyProfile.value,
                   onTap: () {
-                     controller.changeProfileData();
+                     controller.editProfileEducation();
                   },
                   text: "ثبت اطلاعات",
                 ),
@@ -68,8 +66,8 @@ class EditProfilePage extends GetView<EditProfileController> {
             leading: backIcon(),
           ),
           body:
-          controller.obx(
-            (state) =>
+          // controller.obx(
+          //   (state) =>
                 ListView(
               physics: const BouncingScrollPhysics(),
               children: <Widget>[
@@ -316,15 +314,15 @@ class EditProfilePage extends GetView<EditProfileController> {
                 ),
               ],
             ),
-            onEmpty: Container(),
-            onError: (error) => Text(
-              'خطا در ارتباط با سرور',
-              style: Get.theme.textTheme.subtitle1,
-            ),
-            onLoading: const Center(
-              child: CupertinoActivityIndicator(),
-            ),
-          ),
+            // onEmpty: Container(),
+            // onError: (error) => Text(
+            //   'خطا در ارتباط با سرور',
+            //   style: Get.theme.textTheme.subtitle1,
+            // ),
+            // onLoading: const Center(
+            //   child: CupertinoActivityIndicator(),
+            // ),
+          // ),
           context: context,
         );
       }

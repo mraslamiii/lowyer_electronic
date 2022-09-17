@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
+import 'package:kanoon_dadgostari/models/sec/edit_social_rqm.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
 import 'package:kanoon_dadgostari/web_providers/api_endpoints.dart';
 import '../../../models/base/base_response.dart';
+import '../../models/sec/edit_address_rqm.dart';
 import '../../models/sec/edit_education_rqm.dart';
 import '../../models/sec/info_profile_model.dart';
 import '../../models/sec/lawyer_profile_model.dart';
@@ -25,7 +27,7 @@ class LawyersAPI {
     }
   }
 
-  Future changeEducation(EditEducationRQM rqm) async {
+  Future editProfileEd(EditEducationRQM rqm) async {
     LocalStorageService pref = Get.find();
     try {
       Map<String, dynamic> inputs = rqm.toJson();
@@ -39,8 +41,37 @@ class LawyersAPI {
       rethrow;
     }
   }
+  Future editAddress(EditAddressRQM rqm) async {
+    LocalStorageService pref = Get.find();
+    try {
+      Map<String, dynamic> inputs = rqm.toJson();
 
-  /// Login request ///
+      String url = APIEndpoint.urlCreator(
+          APIControllers.lawyers, APIEndpoint.address,
+          id: pref.user.lawyerProfile.toString());
+      var response = await _provider.postRequest(url, inputs);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+  Future editSocialMedia(EditSocialRQM rqm) async {
+    LocalStorageService pref = Get.find();
+    try {
+      Map<String, dynamic> inputs = rqm.toJson();
+
+      String url = APIEndpoint.urlCreator(
+          APIControllers.lawyers, APIEndpoint.social,
+          id: pref.user.lawyerProfile.toString());
+      var response = await _provider.postRequest(url, inputs);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+
+/// Login request ///
 
 // Future<BaseResponse> login(String phone) async {
 //   try {

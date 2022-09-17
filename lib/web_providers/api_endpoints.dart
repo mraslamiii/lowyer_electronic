@@ -16,6 +16,7 @@ class APIEndpoint {
   static const String skills = "skills";
   static const String code = "code";
   static const String address = "address";
+  static const String social = "social";
   static const String education = "education";
 
 

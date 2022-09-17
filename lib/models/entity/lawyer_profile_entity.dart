@@ -1,4 +1,4 @@
-class LawyerEntity {
+class ProfileEntity {
   int id;
   String userId;
   String education;
@@ -24,7 +24,7 @@ class LawyerEntity {
   String createdAt;
   String updatedAt;
 
-  LawyerEntity({
+  ProfileEntity({
     this.id = 0,
     this.userId = '',
     this.education = '',

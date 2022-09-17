@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
-import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
 import 'package:kanoon_dadgostari/view/widgets/customScaffold/customScaffold.dart';
@@ -8,14 +8,23 @@ import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import '../../../widgets/back_widget/back_widget.dart';
 import '../../../widgets/progress_button/progress_button.dart';
 import '../../../widgets/text_form_field/text_form_field_widget.dart';
-import '../binding/lawyer_license_info_binding.dart';
 import '../controller/lawyer_license_info_controller.dart';
 
 class LawyerLicenseInfoPage extends GetView<LawyerLicenseInfoController> {
-  const LawyerLicenseInfoPage({Key? key}) : super(key: key);
-
+   LawyerLicenseInfoPage({Key? key}) : super(key: key);
+bool isFirstLunch = true;
   @override
   Widget build(BuildContext context) {
+    if (isFirstLunch) {
+      controller.licenceNumberTxtController.text = controller.pref.lawyer.data?.profile?.licenseNumber ?? '';
+      controller.createDateLicenceTxtController.text = controller.pref.lawyer.data?.profile?.licenseCreateDate ?? '';
+      controller.expirationDateTxtController.text = controller.pref.lawyer.data?.profile?.licenseExpireDate ?? '';
+      controller.cityTxtController.text = controller.pref.lawyer.data?.profile?.cityName ?? '';
+      controller.officeAddressTxtController.text = controller.pref.lawyer.data?.profile?.addressOffice ?? '';
+      controller.officeTelephoneTxtController.text = controller.pref.lawyer.data?.profile?.TellOffice ?? '';
+      isFirstLunch = false;
+      controller.update();
+    }
     return GetBuilder<LawyerLicenseInfoController>(
         init: controller,
         // initState: (state) {
@@ -30,7 +39,11 @@ class LawyerLicenseInfoPage extends GetView<LawyerLicenseInfoController> {
                   margin: EdgeInsets.all(standardSize),
                   child: SizedBox(
                     width: fullWidth,
-                    child: progressButton(onTap: () {}, text: "ثبت اطلاعات"),
+                    child: progressButton(onTap: () {
+                      controller.editAddressProfile();
+                    },
+                    isProgress: controller.isBusyProfile.value,
+                     text: "ثبت اطلاعات"),
                   ),
                 )),
             appBar: AppBar(
@@ -40,8 +53,8 @@ class LawyerLicenseInfoPage extends GetView<LawyerLicenseInfoController> {
               leading: backIcon(),
             ),
             body:
-    controller.obx((_) {
-                return
+    // controller.obx((_) {
+    //             return
                   SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child:
@@ -62,7 +75,7 @@ class LawyerLicenseInfoPage extends GetView<LawyerLicenseInfoController> {
                         label: "شماره پروانه وکالت",
                         // onChange: controller.valueChanged,
                         hint: "78654230",
-                        textEditingController: controller.lawyerNumberTxtController,
+                        textEditingController: controller.licenceNumberTxtController,
                       ),
                     ),
                     Container(
@@ -83,7 +96,7 @@ class LawyerLicenseInfoPage extends GetView<LawyerLicenseInfoController> {
                         label: "تاریخ اخذ پروانه وکالت",
                         // onChange: controller.valueChanged,
                         hint: "${Jalali.now().formatter.yyyy}/${Jalali.now().formatter.mm}/${Jalali.now().formatter.dd}",
-                        textEditingController: controller.dateReceivedTxtController,
+                        textEditingController: controller.createDateLicenceTxtController,
                       ),
                     ),
                     Container(
@@ -169,12 +182,13 @@ class LawyerLicenseInfoPage extends GetView<LawyerLicenseInfoController> {
                       ),
                     ),
                   ],
-                      ));
-              },
-        onEmpty: Container(),
-        onError: (error) => Text('خطا در ارتباط با سرور',style: Get.theme.textTheme.subtitle1),
-        onLoading: const Center(child: CupertinoActivityIndicator())
-            ),
+                      )
+                  ),
+              // },
+        // onEmpty: Container(),
+        // onError: (error) => Text('خطا در ارتباط با سرور',style: Get.theme.textTheme.subtitle1),
+        // onLoading: const Center(child: CupertinoActivityIndicator())
+        //     ),
             context: context,
           );
         });

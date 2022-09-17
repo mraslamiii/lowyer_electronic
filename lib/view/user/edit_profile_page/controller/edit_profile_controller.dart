@@ -11,23 +11,29 @@ import '../../../../repo/sec/lawyer_repo.dart';
 import '../../../../service/connection_service/connection_status.dart';
 import '../../../widgets/custom_snackbar/custom_snackbar.dart';
 
-class EditProfileController extends GetxController with StateMixin<InfoProfileModel>{
+class EditProfileController extends GetxController {
   final LocalStorageService pref = Get.find<LocalStorageService>();
 
   RxBool isBusyProfile = false.obs;
   RxBool isBusyGetEd = false.obs;
- bool isFirstLunch = true;
+
+  // bool isFirstLunch = true;
   @override
   void onInit() {
     super.onInit();
   }
+
   @override
   void onClose() {
     nameTxtController.dispose();
     lastNameTxtController.dispose();
     fatherNameTxtController.dispose();
-
-
+    nationalCodeTxtController.dispose();
+    eduMajorTxtController.dispose();
+    educationTxtController.dispose();
+    eduLocationTxtController.dispose();
+    addressTxtController.dispose();
+    zipCodeTxtController.dispose();
     super.onClose();
   }
 
@@ -38,6 +44,7 @@ class EditProfileController extends GetxController with StateMixin<InfoProfileMo
   TextEditingController eduMajorTxtController = TextEditingController();
   TextEditingController educationTxtController = TextEditingController();
   TextEditingController eduLocationTxtController = TextEditingController();
+
   // TextEditingController phoneTxtController = TextEditingController();
   TextEditingController addressTxtController = TextEditingController();
   TextEditingController zipCodeTxtController = TextEditingController();
@@ -64,34 +71,34 @@ class EditProfileController extends GetxController with StateMixin<InfoProfileMo
   final ConnectionStatusController connectionStatusController =
       Get.put(ConnectionStatusController());
 
-  Future changeProfileData() async {
-
+  Future editProfileEducation() async {
     try {
       if (isBusyProfile.value == false) {
         isBusyProfile.value = true;
-update();
-        result = await repo.changeUserData(
-            EditEducationRQM(
-              firstName: nameTxtController.text ,
-              lastName: lastNameTxtController.text,
-              fatherName: fatherNameTxtController.text,
-              nationalCode: nationalCodeTxtController.text,
-              address: addressTxtController.text,
-              postalCode: zipCodeTxtController.text,
-              academicDiscipline: eduMajorTxtController.text,
-              education: educations[educationSelected],
-              educationPlace: eduLocationTxtController.text,
-            ));
+        update();
+        result = await repo.editProfile(EditEducationRQM(
+          firstName: nameTxtController.text,
+          lastName: lastNameTxtController.text,
+          fatherName: fatherNameTxtController.text,
+          nationalCode: nationalCodeTxtController.text,
+          address: addressTxtController.text,
+          postalCode: zipCodeTxtController.text,
+          academicDiscipline: eduMajorTxtController.text,
+          education: educations[educationSelected],
+          educationPlace: eduLocationTxtController.text,
+        ));
         isBusyProfile.value = false;
         update();
-      Get.back(result: 'result');
-    }} catch (e) {
+        Get.back(result: 'result');
+      }
+    } catch (e) {
       isBusyProfile.value = false;
-
+      update();
       AppLogger.e('$e');
     }
   }
 
+/*
   Future<void> fetchData() async {
     if (!isBusyGetEd.value) {
       try {
@@ -113,4 +120,5 @@ update();
 
   }
 }
+*/
 }
