@@ -15,13 +15,14 @@ class EditSocialInfoPage extends GetView<EditSocialInfoController> {
 
   @override
   Widget build(BuildContext context) {
+    var profile = controller.pref.lawyer.profile;
     if (isFirstLunch) {
       controller.instagramTxtController.text =
-          controller.pref.lawyer.data?.profile?.instagram ?? '';
+          profile?.instagram ?? '';
       controller.whatsAppTxtController.text =
-          controller.pref.lawyer.data?.profile?.whatsApp ?? '';
+          profile?.whatsApp ?? '';
       controller.websiteTxtController.text =
-          controller.pref.lawyer.data?.profile?.webSite ?? '';
+          profile?.webSite ?? '';
       isFirstLunch = false;
       controller.update();
     }

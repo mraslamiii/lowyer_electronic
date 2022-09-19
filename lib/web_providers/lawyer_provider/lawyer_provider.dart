@@ -1,12 +1,9 @@
 import 'package:get/get.dart';
-import 'package:kanoon_dadgostari/models/sec/edit_social_rqm.dart';
+import 'package:kanoon_dadgostari/models/lawyer/lawyer_rqm/edit_social_rqm.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
 import 'package:kanoon_dadgostari/web_providers/api_endpoints.dart';
-import '../../../models/base/base_response.dart';
-import '../../models/sec/edit_address_rqm.dart';
-import '../../models/sec/edit_education_rqm.dart';
-import '../../models/sec/info_profile_model.dart';
-import '../../models/sec/lawyer_profile_model.dart';
+import '../../models/lawyer/lawyer_rqm/edit_address_rqm.dart';
+import '../../models/lawyer/lawyer_rqm/edit_education_rqm.dart';
 import '../api_provider.dart';
 
 class LawyersAPI {
@@ -36,7 +33,7 @@ class LawyersAPI {
           APIControllers.lawyers, APIEndpoint.education,
           id: pref.user.lawyerProfile.toString());
       var response = await _provider.postRequest(url, inputs);
-      return response;
+      return response["data"];
     } catch (e) {
       rethrow;
     }
@@ -50,7 +47,7 @@ class LawyersAPI {
           APIControllers.lawyers, APIEndpoint.address,
           id: pref.user.lawyerProfile.toString());
       var response = await _provider.postRequest(url, inputs);
-      return response;
+      return response["data"];
     } catch (e) {
       rethrow;
     }
@@ -64,7 +61,7 @@ class LawyersAPI {
           APIControllers.lawyers, APIEndpoint.social,
           id: pref.user.lawyerProfile.toString());
       var response = await _provider.postRequest(url, inputs);
-      return response;
+      return response["data"];
     } catch (e) {
       rethrow;
     }

@@ -7,6 +7,10 @@ String getDate(DateTime time) {
   final DateFormat formatter = DateFormat('yyyy-MM-dd');
   return formatter.format(time);
 }
+String numberFormatter(int number){
+  var formatter = NumberFormat('#,#### 0000');
+return formatter.format(number).replaceAll(',', ' ');
+}
 
 String getTime(DateTime time) {
   final DateFormat formatter = DateFormat('hh:mm');
@@ -26,3 +30,5 @@ extension ToJson on DateTime {
     return _dateFormatter.format(this);
   }
 }
+
+

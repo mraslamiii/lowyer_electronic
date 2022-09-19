@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 
-import '../../models/sec/info_profile_model.dart';
+import '../../models/lawyer/info_profile_model.dart';
 import '../../service/preferences_service.dart';
-import '../../web_providers/sec/lawyer_provider.dart';
+import '../../web_providers/lawyer_provider/lawyer_provider.dart';
 
 class SplashRepository {
   Future<bool> syncApp() async {
@@ -13,15 +13,18 @@ class SplashRepository {
 
     return Future.value(true);
   }
-  Future<InfoProfileModel> fetchUser() async {
+
+  Future<bool> fetchUser() async {
     final LocalStorageService pref = Get.find<LocalStorageService>();
     try {
-      var response = await LawyersAPI().getProfile(pref.user.lawyerProfile.toString());
-      InfoProfileModel result =  InfoProfileModel.fromJson(response);
-      pref.setLawyer(response);
-      return  result ;
+      var response =
+          await LawyersAPI().getProfile(pref.user.lawyerProfile.toString());
+      pref.setLawyer(response["data"]);
+
+      return true;
     } catch (e) {
       rethrow;
     }
   }
 }
+

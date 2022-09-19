@@ -2,18 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:get/get.dart';
+import 'package:kanoon_dadgostari/enums/snackbar_type.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
+import 'package:kanoon_dadgostari/utilites/enum.dart';
+import 'package:kanoon_dadgostari/utilites/show_result.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
-import '../../../../models/sec/edit_address_rqm.dart';
-import '../../../../models/sec/info_profile_model.dart';
-import '../../../../repo/sec/lawyer_repo.dart';
+import '../../../../models/lawyer/lawyer_rqm/edit_address_rqm.dart';
+import '../../../../models/lawyer/info_profile_model.dart';
+import '../../../../repo/lawyer/lawyer_repo.dart';
 import '../../../../service/connection_service/connection_status.dart';
 import '../../../../utilites/app_logger.dart';
 
-class LawyerLicenseInfoController extends GetxController with StateMixin<InfoProfileModel> {
+class LawyerLicenseInfoController extends GetxController
+    with StateMixin<InfoProfileModel> {
   final LocalStorageService pref = Get.find<LocalStorageService>();
-  final GeoPoint _geoPoint = GeoPoint(latitude: 36.2972, longitude: 59.6067); //todo //get from server f
+  final GeoPoint _geoPoint = GeoPoint(
+      latitude: 36.2972, longitude: 59.6067); //todo //get from server f
   late MapController controller;
 
   @override
@@ -22,6 +27,7 @@ class LawyerLicenseInfoController extends GetxController with StateMixin<InfoPro
         MapController(initMapWithUserPosition: false, initPosition: _geoPoint);
     super.onInit();
   }
+
   @override
   void onClose() {
     licenceNumberTxtController.dispose();
@@ -32,18 +38,23 @@ class LawyerLicenseInfoController extends GetxController with StateMixin<InfoPro
     officeTelephoneTxtController.dispose();
     super.onClose();
   }
+
   RxBool isBusyProfile = false.obs;
-  InfoProfileModel? result;
 
   LawyersRepository repo = LawyersRepository();
   final ConnectionStatusController connectionStatusController =
   Get.put(ConnectionStatusController());
 
-  Rx<Jalali>? receivedDate = Jalali.now().obs;
-  Rx<Jalali>? expirationDate = Jalali.now().obs;
+  Rx<Jalali>? receivedDate = Jalali
+      .now()
+      .obs;
+  Rx<Jalali>? expirationDate = Jalali
+      .now()
+      .obs;
 
   TextEditingController licenceNumberTxtController = TextEditingController();
-  TextEditingController createDateLicenceTxtController = TextEditingController();
+  TextEditingController createDateLicenceTxtController =
+  TextEditingController();
   TextEditingController expirationDateTxtController = TextEditingController();
   TextEditingController cityTxtController = TextEditingController();
   TextEditingController officeAddressTxtController = TextEditingController();
@@ -68,7 +79,8 @@ class LawyerLicenseInfoController extends GetxController with StateMixin<InfoPro
     if (picked != null) {
       receivedDate!.value = picked;
       createDateLicenceTxtController.text =
-          "${receivedDate?.value.formatter.yyyy}/${receivedDate?.value.formatter.mm}/${receivedDate?.value.formatter.dd}";
+      "${receivedDate?.value.formatter.yyyy}/${receivedDate?.value.formatter
+          .mm}/${receivedDate?.value.formatter.dd}";
     }
   }
 
@@ -77,14 +89,17 @@ class LawyerLicenseInfoController extends GetxController with StateMixin<InfoPro
       context: context,
       initialDate: Jalali.now(),
       firstDate: Jalali.now(),
-      lastDate: Jalali(DateTime.now().year + 20, 12, 29),
+      lastDate: Jalali(DateTime
+          .now()
+          .year + 20, 12, 29),
       textDirection: TextDirection.rtl,
       initialDatePickerMode: PDatePickerMode.day,
     );
     if (picked != null) {
       expirationDate!.value = picked;
       expirationDateTxtController.text =
-          "${expirationDate?.value.formatter.yyyy}/${expirationDate?.value.formatter.mm}/${expirationDate?.value.formatter.dd}";
+      "${expirationDate?.value.formatter.yyyy}/${expirationDate?.value.formatter
+          .mm}/${expirationDate?.value.formatter.dd}";
     }
   }
 
@@ -93,31 +108,42 @@ class LawyerLicenseInfoController extends GetxController with StateMixin<InfoPro
     SystemNavigator.pop();
     return true;
   }
-  Future editAddressProfile() async {
 
+  Future editAddressProfile() async {
     try {
       if (isBusyProfile.value == false) {
-        var profile = pref.lawyer.data?.profile;
+        var profile = pref.lawyer.profile;
         isBusyProfile.value = true;
         update();
-        result = await repo.editAddress(
-            EditAddressRQM(
-            cityName: cityTxtController.text,
-            addressOffice: officeAddressTxtController.text,
-            tellOffice: officeTelephoneTxtController.text,
-            lat: profile?.lat,
-            long: profile?.long,
-            licenseNumber:licenceNumberTxtController.text ,
-            licenseCreateDate: createDateLicenceTxtController.text,
-           licenseExpiredDate: expirationDateTxtController.text,
-          )
-        );
+        bool result = await repo.editAddress(EditAddressRQM(
+          cityName: cityTxtController.text,
+          addressOffice: officeAddressTxtController.text,
+          tellOffice: officeTelephoneTxtController.text,
+          lat: profile?.lat,
+          long: profile?.long,
+          licenseNumber: licenceNumberTxtController.text,
+          licenseCreateDate: createDateLicenceTxtController.text,
+          licenseExpiredDate: expirationDateTxtController.text,
+        ));
         isBusyProfile.value = false;
         update();
-        Get.back(result: 'result');
-      }} catch (e) {
+        if (result) {
+          Get.back(result: 'result');
+        } else {
+          showTheResult(resultType: SnackbarType.error,
+              showTheResultType: ShowTheResultType.snackBar,
+              title: 'Error',
+              message: 'Something wrong');
+          //todo fix error
+        }
+      }
+    } catch (e) {
       isBusyProfile.value = false;
       update();
+      showTheResult(resultType: SnackbarType.error,
+          showTheResultType: ShowTheResultType.snackBar,
+          title: 'Error',
+          message: '$e');
       AppLogger.e('$e');
     }
   }

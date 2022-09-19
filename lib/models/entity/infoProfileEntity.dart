@@ -1,4 +1,4 @@
-import '../sec/info_profile_model.dart';
+import '../lawyer/info_profile_model.dart';
 
 class InfoProfileEntity{
    int? statusCode;

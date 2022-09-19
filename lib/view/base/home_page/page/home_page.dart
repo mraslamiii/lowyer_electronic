@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -135,7 +137,7 @@ class HomePage extends StatelessWidget {
                               children: [
                                 Flexible(
                                   child: titleWidget(
-                                    '${pref.user.firstName} ${pref.user.lastName ?? ''}',
+                                    '${pref.user.firstName} ${pref.user.lastName}',
                                   ),
                                 ),
                                 SvgPicture.asset(
@@ -143,8 +145,10 @@ class HomePage extends StatelessWidget {
                                 )
                               ],
                             ),
-                            titleWidget("شماره فعالیت : 31553231"),
-                            titleWidget("شهر محل فعالیت : مشهد"),
+                            titleWidget(pref.lawyer.user?.code.isEmpty ?? false
+                                ? 'فعالیت شما تایید نشده است'
+                                : 'کد فعالیت :${pref.lawyer.user!.code}'),
+                            titleWidget("شهر محل فعالیت : ${pref.lawyer.profile!.cityName}"),
                           ],
                         ),
                       ),

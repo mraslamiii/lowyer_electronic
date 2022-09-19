@@ -1,7 +1,4 @@
-import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/res/colors/colors.dart';
 import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
@@ -10,7 +7,6 @@ import 'package:kanoon_dadgostari/view/auth/success_signup_page/succses_signup_p
 import 'package:kanoon_dadgostari/view/auth/verification_page/controller/verify_controller.dart';
 import 'package:kanoon_dadgostari/view/widgets/customScaffold/customScaffold.dart';
 
-import '../../../../app/app_pages.dart';
 
 class VerifyDetailsPage extends StatelessWidget {
   final LocalStorageService pref = Get.find<LocalStorageService>();
@@ -47,11 +43,9 @@ class VerifyDetailsPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(standardRadius)),
                   child: Column(
                     children: [
-                      infoWidget("نام", pref.user.firstName ?? ""),
-                      infoWidget("نام خانوادگی", pref.user.lastName ?? ""),
-                      // infoWidget("نام پدر", "${pref.user.firstName}"),
-                      // infoWidget("کد ملی", "${pref.user.firstName}"),
-                      infoWidget("شماره شناسنامه", pref.user.nationalCode ?? "", isLast: true),
+                      infoWidget("نام", pref.user.firstName ),
+                      infoWidget("نام خانوادگی", pref.user.lastName ),
+                      infoWidget("شماره شناسنامه", pref.user.nationalCode , isLast: true),
                     ],
                   ),
                 ),
@@ -86,16 +80,16 @@ class VerifyDetailsPage extends StatelessWidget {
                 child:
                     Icon(Icons.circle, color: Colors.black, size: xxSmallSize),
               ),
-              Text("${title} : ",style: Get.textTheme.subtitle1),
+              Text("$title : ",style: Get.textTheme.subtitle1),
               Text(value,style: Get.textTheme.subtitle1),
             ],
           ),
         ),
         isLast
-            ? SizedBox()
+            ? const SizedBox()
             : Padding(
                 padding: EdgeInsets.symmetric(horizontal: mediumSize),
-                child: Divider(thickness: 1.2),
+                child: const Divider(thickness: 1.2),
               )
       ],
     );

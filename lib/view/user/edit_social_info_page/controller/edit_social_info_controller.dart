@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
 
-import '../../../../models/sec/edit_social_rqm.dart';
-import '../../../../models/sec/info_profile_model.dart';
-import '../../../../repo/sec/lawyer_repo.dart';
+import '../../../../models/lawyer/lawyer_rqm/edit_social_rqm.dart';
+import '../../../../models/lawyer/info_profile_model.dart';
+import '../../../../repo/lawyer/lawyer_repo.dart';
 import '../../../../service/connection_service/connection_status.dart';
 import '../../../../utilites/app_logger.dart';
 
@@ -36,7 +36,6 @@ class EditSocialInfoController extends GetxController {
     return true;
   }
 
-  InfoProfileModel? result;
 
   LawyersRepository repo = LawyersRepository();
   final ConnectionStatusController connectionStatusController =
@@ -47,13 +46,17 @@ class EditSocialInfoController extends GetxController {
       if (isBusySocial.value == false) {
         isBusySocial.value = true;
         update();
-        result = await repo.editSocial(EditSocialRQM(
+      bool  result = await repo.editSocial(EditSocialRQM(
             webSite: websiteTxtController.text,
             instagram: instagramTxtController.text,
             whatsApp: whatsAppTxtController.text));
         isBusySocial.value = false;
         update();
-        Get.back(result: 'result');
+        if (result ) {
+          Get.back(result: 'result');
+        }  else{
+          //todo fix error
+        }
       }
     } catch (e) {
       isBusySocial.value = false;

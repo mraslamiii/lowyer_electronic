@@ -2,12 +2,10 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:kanoon_dadgostari/models/sec/info_profile_model.dart';
+import 'package:kanoon_dadgostari/models/lawyer/info_profile_model.dart';
 
 import '../models/entity/infoProfileEntity.dart';
 import '../utilites/app_logger.dart';
-
-
 
 class LocalStorageService extends GetxService {
   static final _box = GetStorage();
@@ -16,6 +14,7 @@ class LocalStorageService extends GetxService {
   static const String phoneNumberKey = "phoneNumberKey";
   static const String userKey = "UserKey";
   static const String profileKey = "ProfileKey";
+  static const String cardsKey = "CardsKey";
   static const String lawyerKey = "LawyerKey";
   static const String homeKey = "homeKey";
   static const String isFirstTimeLaunchKey = "IsFirstTimeLaunch";
@@ -77,11 +76,10 @@ class LocalStorageService extends GetxService {
 
   set firebaseToken(String key) => _box.write(firebaseKey, key);
 
-
-
   String get phoneNumber => _box.read<String>(phoneNumberKey) ?? "";
 
   set phoneNumber(String key) => _box.write(phoneNumberKey, key);
+
   //
   User get user {
     var userJson = _box.read(userKey);
@@ -100,54 +98,64 @@ class LocalStorageService extends GetxService {
     Profile profileModel = Profile.fromJson(json.decode(userJson));
     return profileModel;
   }
-  // set profile(Profile item) {
+
+  // CardsItem get cards {
+  //   var userJson = _box.read(cardsKey);
+  //   if (userJson == null) {
+  //     return CardsItem();
+  //   }
+  //   CardsItem cardsModel = CardsItem.fromJson(json.decode(userJson));
+  //   return cardsModel;
+  // }
+
+  List<CardsItem> get cards {
+    List<dynamic>? items = _box.read(cardsKey);
+    if (items == null) {
+      return [];
+    }
+    return List.from(items.map((e) => e));
+  }
+
+  //***********************************
+
+  // set lawyer(Map<String, dynamic> lawyer) {
   //   try {
-  //     _box.write(profileKey, json.encode(Profile.fromEntity(item).toJson()));
+  //     _box.write(lawyerKey, lawyer);
   //   } catch (e) {
   //     AppLogger.e('$e');
   //   }
   // }
+  LawyerData get lawyer {
+    var userJson = _box.read(lawyerKey);
+    if (userJson == null) {
+      return LawyerData(
+          user: user, profile: profile, cards: cards);
+    }
+    LawyerData lawyerData =
+    LawyerData.fromJson(json.decode(userJson));
+    return lawyerData;
+  }
 
-  //
-  set lawyer(InfoProfileEntity item) {
+  setLawyer(Map<String, dynamic> _json) async {
     try {
-      _box.write(lawyerKey, json.encode(InfoProfileModel.fromEntity(item).toJson()));
+      await _box.write(lawyerKey, json.encode(_json));
     } catch (e) {
-      AppLogger.e('$e');
+      debugPrint("$e");
     }
   }
+
+  //***********************************
+
   bool isLogin() {
     if (token != LocalStorageService.defaultTokenValue) {
       return true;
     }
     return false;
   }
+
   setUser(Map<String, dynamic> _json) async {
     try {
       await _box.write(userKey, json.encode(_json));
-    } catch (e) {
-      debugPrint("$e");
-    }
-  }
-  setProfile(Map<String, dynamic> _json) async {
-    try {
-      await _box.write(profileKey, json.encode(_json));
-    } catch (e) {
-      debugPrint("$e");
-    }
-  }
-
-  InfoProfileModel get lawyer {
-    var userJson = _box.read(lawyerKey);
-    if (userJson == null) {
-      return InfoProfileModel(data: LawyerData(user: user, profile: profile, cards: Cards()));
-    }
-    InfoProfileModel infoProfileModel = InfoProfileModel.fromJson(json.decode(userJson));
-    return infoProfileModel;
-  }
-  setLawyer(Map<String, dynamic> _json) async {
-    try {
-      await _box.write(lawyerKey, json.encode(_json));
     } catch (e) {
       debugPrint("$e");
     }
@@ -179,7 +187,6 @@ class LocalStorageService extends GetxService {
   }
 
   //*********************
-
 
   // List<List<ProductSectionModel>> get getHome {
   //   var json = _box.read(homeKey);
@@ -242,7 +249,9 @@ class LocalStorageService extends GetxService {
       //todo amin alizadeh
       'tenant': 'root',
       'Authorization':
-      token == defaultTokenValue ? defaultTokenValue : 'Bearer $token'
+          // token = 'Bearer 24|gP8MOKb7zAVMBqWeqf1akr2md20mIdP1l5Uum88I'
+          // 24|gP8MOKb7zAVMBqWeqf1akr2md20mIdP1l5Uum88I
+          token == defaultTokenValue ? defaultTokenValue : 'Bearer $token'
       // defaultTokenValue ? defaultTokenValue :
       // 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjY4YTVjODhlLTY3OTEtNGVjNy05MDI3LTFiYzk3M2UwOTM0NiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL21vYmlsZXBob25lIjoiMDkwMzI5OTIwNjkiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc3VybmFtZSI6IiIsImlwQWRkcmVzcyI6IjUuMTI2LjIzNy4yMTMiLCJ0ZW5hbnQiOiJyb290IiwiaW1hZ2VfdXJsIjoiIiwiZXhwIjoxNjUxNjU5OTE5fQ.SKhNKBbd1Sb9f83RT5E7-FOczNBdZrb1mA2Ikv9oiYg',//todo
       // 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjYzMjQ4YjYyLWQzNGItNGUxYy04YzQzLWVlOTE4YzVkNzliYyIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImFkbWluQHJvb3QuY29tIiwiZnVsbE5hbWUiOiJyb290IEFkbWluIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6InJvb3QiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdXJuYW1lIjoiQWRtaW4iLCJpcEFkZHJlc3MiOiIxNzguMTc1LjEzNC4xMjQiLCJ0ZW5hbnQiOiJyb290IiwiaW1hZ2VfdXJsIjoiIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbW9iaWxlcGhvbmUiOiIiLCJleHAiOjE2NDk1MDAxODl9.Ba9fgVN85FNhr09MG0sHOYaqne5L9qU-ISmET-Wsb8g' //todo

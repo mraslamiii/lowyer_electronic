@@ -13,7 +13,6 @@ import '../controller/edit_profile_controller.dart';
 
 class EditProfilePage extends GetView<EditProfileController> {
   EditProfilePage({
-    // required this.controller,
     Key? key,
   }) : super(key: key);
   bool isFirstLunch = true;
@@ -23,17 +22,19 @@ class EditProfilePage extends GetView<EditProfileController> {
 
   @override
   Widget build(BuildContext context) {
+    var profile = controller.lawyer.profile;
+    var user = controller.lawyer.user;
     if (isFirstLunch) {
-      controller.nameTxtController.text = controller.pref.lawyer.data?.user?.firstName ?? '';
-      controller.lastNameTxtController.text = controller.pref.lawyer.data?.user?.lastName ?? '';
-      controller.fatherNameTxtController.text = controller.pref.lawyer.data?.user?.fatherName ?? '';
-      controller.nationalCodeTxtController.text = controller.pref.lawyer.data?.user?.nationalCode ?? '';
-      controller.educationTxtController.text = controller.pref.lawyer.data?.profile?.education ?? '';
-      controller.eduLocationTxtController.text = controller.pref.lawyer.data?.profile?.educationPlace ?? '';
-      controller.addressTxtController.text = controller.pref.lawyer.data?.user?.address ?? '';
-      controller.zipCodeTxtController.text = controller.pref.lawyer.data?.user?.postalCode ?? '';
-      controller.eduMajorTxtController.text = controller.pref.lawyer.data?.profile?.academicDiscipline ?? '';
-      controller.educationSelected =controller.educations.indexOf( controller.pref.lawyer.data?.profile?.education ??'');
+      controller.nameTxtController.text = user?.firstName ?? '';
+      controller.lastNameTxtController.text = user?.lastName ?? '';
+      controller.fatherNameTxtController.text =user?.fatherName ?? '';
+      controller.nationalCodeTxtController.text = user?.nationalCode ?? '';
+      controller.educationTxtController.text = profile?.education ?? '';
+      controller.eduLocationTxtController.text = profile?.educationPlace ?? '';
+      controller.addressTxtController.text = user?.address ?? '';
+      controller.zipCodeTxtController.text = user?.postalCode ?? '';
+      controller.eduMajorTxtController.text = profile?.academicDiscipline ?? '';
+      controller.educationSelected =controller.educations.indexOf(profile?.education ??'');
       isFirstLunch = false;
       controller.update();
     }
@@ -143,7 +144,7 @@ class EditProfilePage extends GetView<EditProfileController> {
                     textDirection: TextDirection.ltr,
                     label: "کد ملی",
                     // onChange: controller.valueChanged,
-                    hint: "0923456789",
+                    hint: "کد ملی",
                     textEditingController: controller.nationalCodeTxtController,
                   ),
                 ),

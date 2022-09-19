@@ -19,7 +19,6 @@ class APIProvider extends GetxService {
       {bool hasBaseResponse = true}) async {
     Map<String, String> _headers = Get.find<LocalStorageService>().headers;
 
-
     BaseOptions _postOptions = BaseOptions(
         baseUrl: APIEndpoint.apiBaseURL,
         contentType: ContentType.json.value,
@@ -261,12 +260,19 @@ class APIProvider extends GetxService {
       case 200:
         try {
           return response?.data;
+        } catch (e) {
+          throw jsonDecode(response?.data);
+        }
+      case 201:
+        try {
+          return response?.data;
 
           // var responseJson = jsonDecode(response?.data);
           // return responseJson;
         } catch (e) {
           throw jsonDecode(response?.data);
         }
+
       case 400:
       // throw BadRequestException(response?.toString());
       case 401:
@@ -279,8 +285,8 @@ class APIProvider extends GetxService {
         var body = response?.data;
 
         BaseResponse baseResponse = BaseResponse.fromJson(body, null);
-        // throw TitleValueException(baseResponse.exception ?? []);
-      // throw FetchDataException(
+      throw baseResponse.data.toString();
+      // throw FetchDataException(FetchDataException
       //     'Error occured while communication with server' +
       //         ' with status code : ${response?.statusCode}');
     }

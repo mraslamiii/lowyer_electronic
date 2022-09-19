@@ -44,8 +44,6 @@ class MyApp extends StatelessWidget {
       ],
       locale: const Locale("fa", "IR"),
       // OR Locale('ar', 'AE') OR Other RTL locales,
-
-      home: const LawyerCardPage(),
       theme: AppThemes.lightThemeMobile(context),
       initialBinding: ConnectionStatusBinding(),
       builder: (context, widget) {

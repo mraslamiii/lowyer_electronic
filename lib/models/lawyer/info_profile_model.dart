@@ -1,7 +1,6 @@
 import 'package:kanoon_dadgostari/models/entity/infoProfileEntity.dart';
 
 import '../base/safe_convert.dart';
-import '../entity/lawyer_profile_entity.dart';
 
 class InfoProfileModel extends InfoProfileEntity {
   InfoProfileModel({
@@ -17,7 +16,8 @@ class InfoProfileModel extends InfoProfileEntity {
         data: LawyerData.fromJson(asT<Map<String, dynamic>>(json, 'data')),
       );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         'statusCode': statusCode,
         'success': success,
         'data': data!.toJson(),
@@ -32,7 +32,7 @@ class InfoProfileModel extends InfoProfileEntity {
 class LawyerData {
   final User? user;
   final Profile? profile;
-  final Cards? cards;
+  final List<CardsItem>? cards;
 
   LawyerData({
     this.user,
@@ -40,16 +40,20 @@ class LawyerData {
     this.cards,
   });
 
-  factory LawyerData.fromJson(Map<String, dynamic>? json) => LawyerData(
-        user: User.fromJson(asT<Map<String, dynamic>>(json, 'user')),
-        profile: Profile.fromJson(asT<Map<String, dynamic>>(json, 'profile')),
-        cards: Cards.fromJson(asT<Map<String, dynamic>>(json, 'cards')),
-      );
+  factory LawyerData.fromJson(Map<String, dynamic>? json) =>
+      LawyerData(
+          user: User.fromJson(asT<Map<String, dynamic>>(json, 'user')),
+          profile: Profile.fromJson(asT<Map<String, dynamic>>(json, 'profile')),
+          cards: CardsItem.fromJsonList(asT<List>(json, 'cards'))
 
-  Map<String, dynamic> toJson() => {
+  // cards: asT<List>(json, 'cards').map((e) => CardsItem.fromJson(e)).toList(),
+  );
+
+  Map<String, dynamic> toJson() =>
+      {
         'user': user?.toJson(),
         'profile': profile?.toJson(),
-        'cards': cards?.toJson(),
+        'cards': cards?.map((e) => e),
       };
 }
 
@@ -100,7 +104,8 @@ class User {
     this.lawyerProfile,
   });
 
-  factory User.fromJson(Map<String, dynamic>? json) => User(
+  factory User.fromJson(Map<String, dynamic>? json) =>
+      User(
         id: asT<int>(json, 'id'),
         firstName: asT<String>(json, 'first_name'),
         lastName: asT<String>(json, 'last_name'),
@@ -124,7 +129,8 @@ class User {
         lawyerProfile: asT<int>(json, 'lawyer_profile'),
       );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         'id': id,
         'first_name': firstName,
         'last_name': lastName,
@@ -287,30 +293,30 @@ class Profile extends ProfileEntity {
 }
 */
 class Profile {
-  final int id;
-  final String userId;
-  final String education;
-  final String academicDiscipline;
-  final String educationPlace;
-  final String licenseNumber;
-  final String licenseCreateDate;
-  final String licenseExpireDate;
-  final String cityName;
-  final String addressOffice;
-  final String TellOffice;
-  final String lat;
-  final String long;
-  final String isIntern;
-  final String instagram;
-  final String whatsApp;
-  final String webSite;
-  final String nationalCardPicFront;
-  final String nationalCardPicBack;
-  final String birthCertificatePic;
-  final String licensePic;
-  final String status;
-  final String createdAt;
-  final String updatedAt;
+  int id;
+  String userId;
+  String education;
+  String academicDiscipline;
+  String educationPlace;
+  String licenseNumber;
+  String licenseCreateDate;
+  String licenseExpireDate;
+  String cityName;
+  String addressOffice;
+  String TellOffice;
+  String lat;
+  String long;
+  String isIntern;
+  String instagram;
+  String whatsApp;
+  String webSite;
+  String nationalCardPicFront;
+  String nationalCardPicBack;
+  String birthCertificatePic;
+  String licensePic;
+  String status;
+  String createdAt;
+  String updatedAt;
 
   Profile({
     this.id = 0,
@@ -339,59 +345,157 @@ class Profile {
     this.updatedAt = "",
   });
 
-  factory Profile.fromJson(Map<String, dynamic>? json) => Profile(
-    id: asT<int>(json, 'id'),
-    userId: asT<String>(json, 'user_id'),
-    education: asT<String>(json, 'education'),
-    academicDiscipline: asT<String>(json, 'academic_discipline'),
-    educationPlace: asT<String>(json, 'education_place'),
-    licenseNumber: asT<String>(json, 'license_number'),
-    licenseCreateDate: asT<String>(json, 'license_create_date'),
-    licenseExpireDate: asT<String>(json, 'license_expire_date'),
-    cityName: asT<String>(json, 'city_name'),
-    addressOffice: asT<String>(json, 'address_office'),
-    TellOffice: asT<String>(json, 'Tell_office'),
-    lat: asT<String>(json, 'lat'),
-    long: asT<String>(json, 'long'),
-    isIntern: asT<String>(json, 'is_intern'),
-    instagram: asT<String>(json, 'instagram'),
-    whatsApp: asT<String>(json, 'whats_app'),
-    webSite: asT<String>(json, 'web_site'),
-    nationalCardPicFront: asT<String>(json, 'national_card_pic_front'),
-    nationalCardPicBack: asT<String>(json, 'national_card_pic_back'),
-    birthCertificatePic: asT<String>(json, 'birth_certificate_pic'),
-    licensePic: asT<String>(json, 'license_pic'),
-    status: asT<String>(json, 'status'),
-    createdAt: asT<String>(json, 'created_at'),
-    updatedAt: asT<String>(json, 'updated_at'),
-  );
+  factory Profile.fromJson(Map<String, dynamic>? json) =>
+      Profile(
+        id: asT<int>(json, 'id'),
+        userId: asT<String>(json, 'user_id'),
+        education: asT<String>(json, 'education'),
+        academicDiscipline: asT<String>(json, 'academic_discipline'),
+        educationPlace: asT<String>(json, 'education_place'),
+        licenseNumber: asT<String>(json, 'license_number'),
+        licenseCreateDate: asT<String>(json, 'license_create_date'),
+        licenseExpireDate: asT<String>(json, 'license_expire_date'),
+        cityName: asT<String>(json, 'city_name'),
+        addressOffice: asT<String>(json, 'address_office'),
+        TellOffice: asT<String>(json, 'Tell_office'),
+        lat: asT<String>(json, 'lat'),
+        long: asT<String>(json, 'long'),
+        isIntern: asT<String>(json, 'is_intern'),
+        instagram: asT<String>(json, 'instagram'),
+        whatsApp: asT<String>(json, 'whats_app'),
+        webSite: asT<String>(json, 'web_site'),
+        nationalCardPicFront: asT<String>(json, 'national_card_pic_front'),
+        nationalCardPicBack: asT<String>(json, 'national_card_pic_back'),
+        birthCertificatePic: asT<String>(json, 'birth_certificate_pic'),
+        licensePic: asT<String>(json, 'license_pic'),
+        status: asT<String>(json, 'status'),
+        createdAt: asT<String>(json, 'created_at'),
+        updatedAt: asT<String>(json, 'updated_at'),
+      );
 
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'user_id': userId,
-    'education': education,
-    'academic_discipline': academicDiscipline,
-    'education_place': educationPlace,
-    'license_number': licenseNumber,
-    'license_create_date': licenseCreateDate,
-    'license_expire_date': licenseExpireDate,
-    'city_name': cityName,
-    'address_office': addressOffice,
-    'Tell_office': TellOffice,
-    'lat': lat,
-    'long': long,
-    'is_intern': isIntern,
-    'instagram': instagram,
-    'whats_app': whatsApp,
-    'web_site': webSite,
-    'national_card_pic_front': nationalCardPicFront,
-    'national_card_pic_back': nationalCardPicBack,
-    'birth_certificate_pic': birthCertificatePic,
-    'license_pic': licensePic,
-    'status': status,
-    'created_at': createdAt,
-    'updated_at': updatedAt,
-  };
+  Map<String, dynamic> toJson() =>
+      {
+        'id': id,
+        'user_id': userId,
+        'education': education,
+        'academic_discipline': academicDiscipline,
+        'education_place': educationPlace,
+        'license_number': licenseNumber,
+        'license_create_date': licenseCreateDate,
+        'license_expire_date': licenseExpireDate,
+        'city_name': cityName,
+        'address_office': addressOffice,
+        'Tell_office': TellOffice,
+        'lat': lat,
+        'long': long,
+        'is_intern': isIntern,
+        'instagram': instagram,
+        'whats_app': whatsApp,
+        'web_site': webSite,
+        'national_card_pic_front': nationalCardPicFront,
+        'national_card_pic_back': nationalCardPicBack,
+        'birth_certificate_pic': birthCertificatePic,
+        'license_pic': licensePic,
+        'status': status,
+        'created_at': createdAt,
+        'updated_at': updatedAt,
+      };
+}
+
+class CardsModel {
+  List<CardsItem>? cards;
+
+  CardsModel({
+    this.cards,
+  });
+
+  factory CardsModel.fromJson(Map<String, dynamic>? json) =>
+      CardsModel(
+        cards:
+        asT<List>(json, 'cards').map((e) => CardsItem.fromJson(e)).toList(),
+      );
+
+  Map<String, dynamic> toJson() =>
+      {
+        'cards': cards?.map((e) => e.toJson()),
+      };
+}
+
+class CardsItem {
+  int id;
+  String lawyerProfileId;
+  String cardNumber;
+  String issueDate;
+  String expirationDate;
+  dynamic deliverDate;
+  dynamic delivery;
+  String status;
+  dynamic comment;
+  dynamic deliverFile;
+  String createUserId;
+  dynamic updateUserId;
+  String createdAt;
+  String updatedAt;
+
+  CardsItem({
+    this.id = 0,
+    this.lawyerProfileId = "",
+    this.cardNumber = "",
+    this.issueDate = "",
+    this.expirationDate = "",
+    this.deliverDate,
+    this.delivery,
+    this.status = "",
+    this.comment,
+    this.deliverFile,
+    this.createUserId = "",
+    this.updateUserId,
+    this.createdAt = "",
+    this.updatedAt = "",
+  });
+
+  factory CardsItem.fromJson(Map<String, dynamic>? json) =>
+      CardsItem(
+        id: asT<int>(json, 'id'),
+        lawyerProfileId: asT<String>(json, 'lawyer_profile_id'),
+        cardNumber: asT<String>(json, 'card_number'),
+        issueDate: asT<String>(json, 'issue_date'),
+        expirationDate: asT<String>(json, 'expiration_date'),
+        deliverDate: asT<dynamic>(json, 'deliver_date'),
+        delivery: asT<dynamic>(json, 'delivery'),
+        status: asT<String>(json, 'status'),
+        comment: asT<dynamic>(json, 'comment'),
+        deliverFile: asT<dynamic>(json, 'deliver_file'),
+        createUserId: asT<String>(json, 'create_user_id'),
+        updateUserId: asT<dynamic>(json, 'update_user_id'),
+        createdAt: asT<String>(json, 'created_at'),
+        updatedAt: asT<String>(json, 'updated_at'),
+      );
+
+  static List<CardsItem> fromJsonList(List<dynamic> jsonList) =>
+      jsonList.map((_json) {
+        var a = CardsItem.fromJson(_json);
+
+        return a;
+      }).toList();
+
+  Map<String, dynamic> toJson() =>
+      {
+        'id': id,
+        'lawyer_profile_id': lawyerProfileId,
+        'card_number': cardNumber,
+        'issue_date': issueDate,
+        'expiration_date': expirationDate,
+        'deliver_date': deliverDate,
+        'delivery': delivery,
+        'status': status,
+        'comment': comment,
+        'deliver_file': deliverFile,
+        'create_user_id': createUserId,
+        'update_user_id': updateUserId,
+        'created_at': createdAt,
+        'updated_at': updatedAt,
+      };
 }
 
 class Cards {

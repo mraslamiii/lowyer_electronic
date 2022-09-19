@@ -27,7 +27,7 @@ class SplashPage extends StatelessWidget {
             pageTransitionType: PageTransitionType.fade,
             backgroundColor: Colors.white,
             duration: 3000,
-            animationDuration: Duration(milliseconds: 1000),
+            animationDuration: const Duration(milliseconds: 1000),
             splash: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -52,7 +52,7 @@ class SplashPage extends StatelessWidget {
                         ?.copyWith(color: AppColors.primaryColor)),
                 AnimatedOpacity(
                   opacity: controller.isProgress.value ? 1 : 0,
-                  duration: Duration(milliseconds: 500),
+                  duration: const Duration(milliseconds: 500),
                   child: Padding(
                       padding: EdgeInsets.only(top: standardSize),
                       child: const CircularProgressIndicator()),
