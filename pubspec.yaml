@@ -53,15 +53,7 @@ dependencies:
 #  flutter_osm_plugin:
 #    path: edit/flutter_osm_plugin-0.39.1
   adaptive_dialog: ^1.8.0+1
-
-
-
-
-
   #  flutter_map_marker_cluster: any # or the latest version on Pub
-
-
-
   get_storage: ^2.0.3
   image_picker: ^0.8.4+8
   image_cropper: ^1.4.1
@@ -70,24 +62,9 @@ dependencies:
   lottie: ^1.4.2
   google_fonts: ^3.0.1
   readmore: ^2.1.0
-
-
   persian_datetime_picker:
     path: edit/persian-datetime-picker
-
-
-
   logger: ^1.1.0
-
-
-
-
-
-
-
-
-
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

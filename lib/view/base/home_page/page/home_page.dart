@@ -19,12 +19,18 @@ class HomePage extends StatelessWidget {
   DraggableScrollableController draggableScrollableController =
       DraggableScrollableController();
 
+  final HomeController controller = Get.put(HomeController());
   final LocalStorageService pref = Get.find<LocalStorageService>();
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
-      init: HomeController(),
+      init: controller,
+      initState: (state) {
+        if (controller.pref.lawyer.user!.lawyerProfile == null) {
+          controller.fetchHomeData();
+        }
+      },
       builder: (controller) => customScaffold(
         // appBar: AppBar(
         //     toolbarHeight: 0,
@@ -148,7 +154,8 @@ class HomePage extends StatelessWidget {
                             titleWidget(pref.lawyer.user?.code.isEmpty ?? false
                                 ? 'فعالیت شما تایید نشده است'
                                 : 'کد فعالیت :${pref.lawyer.user!.code}'),
-                            titleWidget("شهر محل فعالیت : ${pref.lawyer.profile!.cityName}"),
+                            titleWidget(
+                                "شهر محل فعالیت : ${pref.lawyer.profile!.cityName}"),
                           ],
                         ),
                       ),

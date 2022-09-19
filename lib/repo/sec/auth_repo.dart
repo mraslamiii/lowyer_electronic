@@ -1,7 +1,10 @@
+import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/web_models/auth/auth_web_model.dart';
 import 'package:kanoon_dadgostari/web_providers/sec/auth_provider.dart';
 
+import '../../service/preferences_service.dart';
 import '../../utilites/app_logger.dart';
+import '../../web_providers/lawyer_provider/lawyer_provider.dart';
 
 class AuthRepository {
 
@@ -13,6 +16,18 @@ class AuthRepository {
       return response.success ? response.data : throw response.data;
     } catch (e) {
       AppLogger.catchLog(e);
+      rethrow;
+    }
+  }
+  Future<bool> fetchUser() async {
+    final LocalStorageService pref = Get.find<LocalStorageService>();
+    try {
+      var response =
+      await LawyersAPI().getProfile(pref.user.lawyerProfile.toString());
+      pref.setLawyer(response["data"]);
+
+      return true;
+    } catch (e) {
       rethrow;
     }
   }
