@@ -18,7 +18,7 @@ class EditProfilePage extends GetView<EditProfileController> {
   bool isFirstLunch = true;
 
   @override
-  EditProfileController controller  =Get.put(EditProfileController());
+  EditProfileController controller = Get.put(EditProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -27,48 +27,48 @@ class EditProfilePage extends GetView<EditProfileController> {
     if (isFirstLunch) {
       controller.nameTxtController.text = user?.firstName ?? '';
       controller.lastNameTxtController.text = user?.lastName ?? '';
-      controller.fatherNameTxtController.text =user?.fatherName ?? '';
+      controller.fatherNameTxtController.text = user?.fatherName ?? '';
       controller.nationalCodeTxtController.text = user?.nationalCode ?? '';
       controller.educationTxtController.text = profile?.education ?? '';
       controller.eduLocationTxtController.text = profile?.educationPlace ?? '';
       controller.addressTxtController.text = user?.address ?? '';
       controller.zipCodeTxtController.text = user?.postalCode ?? '';
       controller.eduMajorTxtController.text = profile?.academicDiscipline ?? '';
-      controller.educationSelected =controller.educations.indexOf(profile?.education ??'');
+      controller.educationSelected =
+          controller.educations.indexOf(profile?.education ?? '') ;
       isFirstLunch = false;
       controller.update();
     }
     return GetBuilder<EditProfileController>(
-      init: controller,
-      initState: (state) {
-        // controller.fetchData();
-      },
-      builder: (_) {
-
-        return customScaffold(
-          bottomAppBar: BottomAppBar(
-            elevation: 0,
-            child: Container(
-              margin: EdgeInsets.all(standardSize),
-              child: SizedBox(
-                width: fullWidth,
-                child: progressButton(
-                  isProgress: controller.isBusyProfile.value,
-                  onTap: () {
-                     controller.editProfileEducation();
-                  },
-                  text: "ثبت اطلاعات",
+        init: controller,
+        initState: (state) {
+          // controller.fetchData();
+        },
+        builder: (_) {
+          return customScaffold(
+            bottomAppBar: BottomAppBar(
+              elevation: 0,
+              child: Container(
+                margin: EdgeInsets.all(standardSize),
+                child: SizedBox(
+                  width: fullWidth,
+                  child: progressButton(
+                    isProgress: controller.isBusyProfile.value,
+                    onTap: () {
+                      controller.editProfileEducation();
+                    },
+                    text: "ثبت اطلاعات",
+                  ),
                 ),
               ),
             ),
-          ),
-          appBar: AppBar(
-            title: const Text("ویـرایش پروفایل"),
-            leading: backIcon(),
-          ),
-          body:
-          // controller.obx(
-          //   (state) =>
+            appBar: AppBar(
+              title: const Text("ویـرایش پروفایل"),
+              leading: backIcon(),
+            ),
+            body:
+                // controller.obx(
+                //   (state) =>
                 ListView(
               physics: const BouncingScrollPhysics(),
               children: <Widget>[
@@ -175,10 +175,10 @@ class EditProfilePage extends GetView<EditProfileController> {
                         physics: const BouncingScrollPhysics(),
                         itemCount: controller.educations.length,
                         itemBuilder: (context, index) {
-                          return  sheetItem(
-                              context: context,
-                              title: controller.educations[index],
-                              index: index,
+                          return sheetItem(
+                            context: context,
+                            title: controller.educations[index] ?? '',
+                            index: index,
                           );
                         },
                       ),
@@ -197,15 +197,14 @@ class EditProfilePage extends GetView<EditProfileController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                      Text(
-                            controller.educationSelected != -1
-                                ? controller.educations[controller.educationSelected]
-                                : "تحصیلات",
-                            style: Get.theme.textTheme.bodyText1?.copyWith(
-                              color: controller.educationSelected != -1
-                                  ? Colors.black
-                                  : AppColors.hintColor,
-
+                        Text(
+                          controller.educationSelected !=-1 ?
+                          controller
+                                  .educations[controller.educationSelected ] : 'تحصیلات',
+                          style: Get.theme.textTheme.bodyText1?.copyWith(
+                            color: controller.educationSelected != -1
+                                ? Colors.black
+                                : AppColors.hintColor,
                           ),
                         ),
                         SvgPicture.asset(
@@ -323,11 +322,10 @@ class EditProfilePage extends GetView<EditProfileController> {
             // onLoading: const Center(
             //   child: CupertinoActivityIndicator(),
             // ),
-          // ),
-          context: context,
-        );
-      }
-    );
+            // ),
+            context: context,
+          );
+        });
   }
 
   Widget sheetItem({
@@ -340,7 +338,6 @@ class EditProfilePage extends GetView<EditProfileController> {
         Navigator.pop(context);
         controller.educationSelected = index;
         controller.update();
-
       },
       child: Container(
         margin: EdgeInsetsDirectional.only(bottom: smallSize),
@@ -375,7 +372,7 @@ class EditProfilePage extends GetView<EditProfileController> {
             Visibility(
               visible: false,
               child: Radio(
-                value: controller.educationSelected,
+                value: controller.educationSelected ?? 0,
                 groupValue: index,
                 onChanged: (val) {
                   controller.educationSelected == val;

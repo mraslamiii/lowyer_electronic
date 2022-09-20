@@ -3,11 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
 
+import '../../../../enums/snackbar_type.dart';
 import '../../../../models/lawyer/lawyer_rqm/edit_social_rqm.dart';
 import '../../../../models/lawyer/info_profile_model.dart';
 import '../../../../repo/lawyer/lawyer_repo.dart';
 import '../../../../service/connection_service/connection_status.dart';
 import '../../../../utilites/app_logger.dart';
+import '../../../../utilites/enum.dart';
+import '../../../../utilites/show_result.dart';
 
 class EditSocialInfoController extends GetxController {
   final LocalStorageService pref = Get.find<LocalStorageService>();
@@ -54,6 +57,10 @@ class EditSocialInfoController extends GetxController {
         update();
         if (result ) {
           Get.back(result: 'result');
+          showTheResult(resultType: SnackbarType.success,
+              showTheResultType: ShowTheResultType.snackBar,
+              title: 'موفقیت',
+              message: 'تغییرات با موفقیت اعمال شد');
         }  else{
           //todo fix error
         }

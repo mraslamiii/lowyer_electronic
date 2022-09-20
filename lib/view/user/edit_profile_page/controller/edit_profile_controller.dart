@@ -3,10 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
 import 'package:kanoon_dadgostari/utilites/app_logger.dart';
+import 'package:kanoon_dadgostari/utilites/show_result.dart';
+import '../../../../enums/snackbar_type.dart';
 import '../../../../models/lawyer/lawyer_rqm/edit_education_rqm.dart';
 import '../../../../models/lawyer/info_profile_model.dart';
 import '../../../../repo/lawyer/lawyer_repo.dart';
 import '../../../../service/connection_service/connection_status.dart';
+import '../../../../utilites/enum.dart';
 import '../../../widgets/custom_snackbar/custom_snackbar.dart';
 
 class EditProfileController extends GetxController {
@@ -31,7 +34,7 @@ class EditProfileController extends GetxController {
 
   LawyersRepository repo = LawyersRepository();
   final ConnectionStatusController connectionStatusController =
-      Get.put(ConnectionStatusController());
+  Get.put(ConnectionStatusController());
 
   TextEditingController nameTxtController = TextEditingController();
   TextEditingController lastNameTxtController = TextEditingController();
@@ -85,13 +88,17 @@ class EditProfileController extends GetxController {
           address: addressTxtController.text,
           postalCode: zipCodeTxtController.text,
           academicDiscipline: eduMajorTxtController.text,
-          education: educations[educationSelected],
+          education: educationSelected !=-1 ? educations[educationSelected] :'',
           educationPlace: eduLocationTxtController.text,
         ));
         isBusyProfile.value = false;
         update();
         if (result) {
           Get.back(result: 'result');
+          showTheResult(resultType: SnackbarType.success,
+              showTheResultType: ShowTheResultType.snackBar,
+              title: 'موفقیت',
+              message: 'تغییرات با موفقیت اعمال شد');
         } else {
           //todo handle error
         }

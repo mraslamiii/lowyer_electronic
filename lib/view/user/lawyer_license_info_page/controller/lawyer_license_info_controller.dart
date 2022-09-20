@@ -129,6 +129,10 @@ class LawyerLicenseInfoController extends GetxController
         update();
         if (result) {
           Get.back(result: 'result');
+          showTheResult(resultType: SnackbarType.success,
+              showTheResultType: ShowTheResultType.snackBar,
+              title: 'موفقیت',
+              message: 'تغییرات با موفقیت اعمال شد');
         } else {
           showTheResult(resultType: SnackbarType.error,
               showTheResultType: ShowTheResultType.snackBar,

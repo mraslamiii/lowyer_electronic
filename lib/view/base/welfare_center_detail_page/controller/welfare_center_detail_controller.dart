@@ -5,23 +5,25 @@ import 'package:kanoon_dadgostari/repo/acceptor/category/category_repo.dart';
 
 import '../../../../utilites/app_logger.dart';
 
-class WelfareCenterDetailController extends GetxController with StateMixin<DetailCategoryModel>{
-   final CategoryRepo _repo = CategoryRepo();
-   late BaseResponse<DetailCategoryModel> rpm;
+class WelfareCenterDetailController extends GetxController
+    // with StateMixin<DetailCategoryModel>
+{
+   // final CategoryRepo _repo = CategoryRepo();
+   // late BaseResponse<DetailCategoryModel> rpm;
 
-  Future getDetailCategory()async{
-    try{
-      change(null,status: RxStatus.loading());
-      rpm = await _repo.getDetailCategory();
-      if (rpm !=null) {
-        change(rpm.data,status: RxStatus.success());
-      }  else{
-        change(null,status: RxStatus.empty());
-      }
-
-    }catch(e){
-      AppLogger.e('$e');
-    }
-  }
+  // Future getDetailCategory()async{
+  //   try{
+  //     change(null,status: RxStatus.loading());
+  //     rpm = await _repo.getDetailCategory();
+  //     if (rpm !=null) {
+  //       change(rpm.data,status: RxStatus.success());
+  //     }  else{
+  //       change(null,status: RxStatus.empty());
+  //     }
+  //
+  //   }catch(e){
+  //     AppLogger.e('$e');
+  //   }
+  // }
   RxInt counter = 0.obs;
 }

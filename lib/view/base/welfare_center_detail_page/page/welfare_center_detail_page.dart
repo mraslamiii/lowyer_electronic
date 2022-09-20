@@ -25,7 +25,9 @@ final WelfareCenterDetailController controller = WelfareCenterDetailController()
           automaticallyImplyLeading: false,
           leading: backIcon(),
         ),
-        body:controller.obx((state) =>  SingleChildScrollView(
+        body:
+        // controller.obx((state) =>
+            SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
@@ -64,7 +66,8 @@ final WelfareCenterDetailController controller = WelfareCenterDetailController()
               _serviceCard(),
             ],
           ),
-        ),onLoading: const Center(child: CupertinoActivityIndicator())),
+        ),
+          // onLoading: const Center(child: CupertinoActivityIndicator())),
         bottomNavigationBar: Padding(
           padding: EdgeInsetsDirectional.all(standardSize),
           child: progressButton(
