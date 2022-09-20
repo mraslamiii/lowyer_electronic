@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kanoon_dadgostari/res/colors/colors.dart';
 import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
@@ -9,12 +10,12 @@ import '../../../widgets/back_widget/back_widget.dart';
 import '../controller/welfare_center_detail_controller.dart';
 
 class WelfareCenterDetailPage extends StatelessWidget {
-  const WelfareCenterDetailPage({Key? key}) : super(key: key);
-
+ WelfareCenterDetailPage({Key? key}) : super(key: key);
+final WelfareCenterDetailController controller = WelfareCenterDetailController();
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WelfareCenterDetailController>(
-      init: WelfareCenterDetailController(),
+      init:controller,
       builder: (controller) => Scaffold(
         appBar: AppBar(
           title: const Text(
@@ -24,7 +25,7 @@ class WelfareCenterDetailPage extends StatelessWidget {
           automaticallyImplyLeading: false,
           leading: backIcon(),
         ),
-        body: SingleChildScrollView(
+        body:controller.obx((state) =>  SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
@@ -63,7 +64,7 @@ class WelfareCenterDetailPage extends StatelessWidget {
               _serviceCard(),
             ],
           ),
-        ),
+        ),onLoading: const Center(child: CupertinoActivityIndicator())),
         bottomNavigationBar: Padding(
           padding: EdgeInsetsDirectional.all(standardSize),
           child: progressButton(

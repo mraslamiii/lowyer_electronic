@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/enums/snackbar_type.dart';
 import 'package:kanoon_dadgostari/models/lawyer/info_profile_model.dart';
-import 'package:kanoon_dadgostari/models/lawyer/lawyer_rqm/ban_request_card_rqm.dart';
+import 'package:kanoon_dadgostari/models/card/ban_rqm/ban_request_card_rqm.dart';
 import 'package:kanoon_dadgostari/repo/lawyer/card_repo.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
 import 'package:kanoon_dadgostari/utilites/enum.dart';
@@ -23,7 +23,7 @@ class LawyerController extends GetxController {
     lawyer = pref.lawyer;
     changeSize();
   }
-
+  RxBool hasActiveCard=true.obs;
   CardRepo repo = CardRepo();
 
   Future banCardRequest() async {
@@ -31,10 +31,11 @@ class LawyerController extends GetxController {
       BanRequestCardRQM rqm = BanRequestCardRQM(description: 'desc');
       var result = await repo.cardBanRequest(rqm);
       if (result!=null) {
+        hasActiveCard.value = false;
         showTheResult(
             resultType: SnackbarType.success,
             showTheResultType: ShowTheResultType.snackBar,
-            title: 'Success',
+            title: 'موفقیت',
             message: 'درخواست شما با موفقیت ثبت شد');
         update();
       } else {
@@ -49,7 +50,7 @@ class LawyerController extends GetxController {
       showTheResult(
           resultType: SnackbarType.error,
           showTheResultType: ShowTheResultType.snackBar,
-          title: 'Error',
+          title: 'خطا',
           message: '$e');
 
       AppLogger.e('$e');
@@ -63,20 +64,20 @@ class LawyerController extends GetxController {
         showTheResult(
             resultType: SnackbarType.success,
             showTheResultType: ShowTheResultType.snackBar,
-            title: 'Success',
+            title: 'موفقیت',
             message: 'درخواست شما با موفقیت ثبت شد');
       } else {
         showTheResult(
             resultType: SnackbarType.error,
             showTheResultType: ShowTheResultType.snackBar,
-            title: 'Error',
+            title: 'خطا',
             message: result.toString()); //todo fix error
       }
     } catch (e) {
       showTheResult(
           resultType: SnackbarType.error,
           showTheResultType: ShowTheResultType.snackBar,
-          title: 'Error',
+          title: 'خطا',
           message: '$e');
       AppLogger.e('$e');
     }

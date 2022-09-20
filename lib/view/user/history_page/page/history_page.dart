@@ -1,18 +1,24 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kanoon_dadgostari/res/colors/colors.dart';
 import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:kanoon_dadgostari/utilites/datetime_extentions.dart';
+import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import '../../../widgets/back_widget/back_widget.dart';
 import '../controller/history_controller.dart';
 
 class HistoryPage extends StatelessWidget {
-  const HistoryPage({Key? key}) : super(key: key);
-
+   HistoryPage({Key? key}) : super(key: key);
+  final HistoryController controller = Get.put(HistoryController());
   @override
   Widget build(BuildContext context) {
+    // var card = controller.pref.lawyer.cards;
+
     return GetBuilder<HistoryController>(
-      init: HistoryController(),
+      init: controller,
+      initState: (state) => controller.fetchCardHistory(),
       builder: (controller) => Scaffold(
           appBar: AppBar(
             title: const Text(
@@ -21,16 +27,17 @@ class HistoryPage extends StatelessWidget {
             automaticallyImplyLeading: false,
             leading: backIcon(),
           ),
-          body: ListView.builder(
+          body: controller.obx((state) => ListView.builder(
             physics: const BouncingScrollPhysics(),
             padding: EdgeInsets.only(top: standardSize,left: standardSize,right: standardSize),
             shrinkWrap: true,
-            itemCount: 5,
-            itemBuilder: (context, index) => _historyCard(),
-          )),
-    );
+            itemCount: controller.rpm.length,
+            itemBuilder: (context, index) => _historyCard(index),
+          ),onLoading: const Center(child: CupertinoActivityIndicator(),)),
+    ),);
   }
-  Widget _historyCard() {
+  Widget _historyCard(int index) {
+
     return Container(
       margin: EdgeInsets.only(bottom: standardSize),
       decoration: BoxDecoration(
@@ -40,13 +47,13 @@ class HistoryPage extends StatelessWidget {
       child: Column(
         children: [
           _historyWidgetItem(
-              'assets/icons/ic_paper.svg', "نوع درخواست", "صدور کارت جدید"),
+              'assets/icons/ic_paper.svg', "نوع درخواست", controller.rpm[index].requestType ),
           const Divider(),
           _historyWidgetItem(
-              'assets/icons/stickynote.svg', " تاریخ", "28/8/1401"),
+              'assets/icons/stickynote.svg', " تاریخ", getDate(DateTime.parse(controller.rpm[index].createdAt).toJalali())),
           const Divider(),
           _historyWidgetItem(
-              'assets/icons/clipboard-tick.svg', "وضعیت", "در حال بررسی"),
+              'assets/icons/clipboard-tick.svg', "وضعیت", controller.rpm[index].status),
         ],
       ),
     );

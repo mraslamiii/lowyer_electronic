@@ -63,7 +63,7 @@ class AppPages {
 
     GetPage(
       name: Routes.welfareCenterPageDetail,
-      page: () =>  const WelfareCenterDetailPage(),
+      page: () =>   WelfareCenterDetailPage(),
     ),
     GetPage(
       name: Routes.splashPage,

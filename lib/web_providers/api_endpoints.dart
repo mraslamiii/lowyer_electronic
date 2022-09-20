@@ -18,6 +18,8 @@ class APIEndpoint {
   static const String address = "address";
   static const String banCardRequest = "lawyers/cards/ban";
   static const String makeCardRequest = "lawyers/cards/make";
+  static const String getCardListHistory = "lawyers/cards/request";
+  static const String category = "category/list";
   static const String social = "social";
   static const String education = "education";
 
@@ -44,4 +46,4 @@ class APIEndpoint {
   }
 }
 
-enum APIControllers { lawyers, register, login ,admin}
+enum APIControllers { lawyers, register, login ,admin,acceptor}

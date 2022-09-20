@@ -1,15 +1,17 @@
 import 'package:intl/intl.dart';
+import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 const String dateFormat = "yyyy-MM-dd HH:mm:ss";
 const String serverDateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 
-String getDate(DateTime time) {
-  final DateFormat formatter = DateFormat('yyyy-MM-dd');
-  return formatter.format(time);
+String getDate(Jalali time) {
+  final DateFormatter formatter = time.formatter;
+  return '${formatter.yyyy}/${formatter.mm}/${formatter.dd}';
 }
-String numberFormatter(int number){
+
+String numberFormatter(int number) {
   var formatter = NumberFormat('#,#### 0000');
-return formatter.format(number).replaceAll(',', ' ');
+  return formatter.format(number).replaceAll(',', ' ');
 }
 
 String getTime(DateTime time) {
@@ -17,18 +19,14 @@ String getTime(DateTime time) {
   return formatter.format(time);
 }
 
- getTimeFromDate(DateTime time) {
+getTimeFromDate(DateTime time) {
   return DateFormat.MEd().format(time);
 }
 
 extension ToJson on DateTime {
-
-
   String toJson() {
-    final DateFormat _dateFormatter = DateFormat(serverDateFormat);
+    final DateFormat dateFormatter = DateFormat(serverDateFormat);
 
-    return _dateFormatter.format(this);
+    return dateFormatter.format(this);
   }
 }
-
-

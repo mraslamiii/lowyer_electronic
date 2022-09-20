@@ -1,9 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/app/app_pages.dart';
 import 'package:kanoon_dadgostari/res/colors/colors.dart';
-import 'package:kanoon_dadgostari/view/base/scan_search_page/page/scan_search_page.dart';
 import 'package:kanoon_dadgostari/view/widgets/customScaffold/customScaffold.dart';
 import '../../../../res/dimens/dimens.dart';
 import '../../../widgets/back_widget/back_widget.dart';
@@ -12,11 +12,13 @@ import '../controller/welfare_center_controller.dart';
 
 class WelfareCenterPage extends StatelessWidget {
   WelfareCenterPage({Key? key}) : super(key: key);
-
+final WelfareCenterController controller = Get.put(WelfareCenterController());
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WelfareCenterController>(
-      init: WelfareCenterController(),
+      init: controller,
+      initState: (state) => controller.getCategory(),
+
       builder: (controller) => customScaffold(
         appBar: AppBar(
           title: const Text(
@@ -35,7 +37,7 @@ class WelfareCenterPage extends StatelessWidget {
           ],
         ),
         context: context,
-        body: SingleChildScrollView(
+        body: controller.obx((state) => SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -61,7 +63,7 @@ class WelfareCenterPage extends StatelessWidget {
                   ),
                   child: ListView.builder(
                     shrinkWrap: true,
-                    itemCount: controller.titles.length,
+                    itemCount: controller.rpm.data?.categories.length,
                     scrollDirection: Axis.horizontal,
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
@@ -71,8 +73,9 @@ class WelfareCenterPage extends StatelessWidget {
                           start: index == 0 ? standardSize : 0,
                         ),
                         child: categoryWidget(
-                          controller.images[index],
-                          controller.titles[index],
+                          controller.images[index],//todo fix this images
+                          controller.rpm.data?.categories[index].title ?? '',
+
                         ),
                       );
                     },
@@ -100,7 +103,7 @@ class WelfareCenterPage extends StatelessWidget {
                   bottom: mediumSize,
                 ),
                 child: ListView.builder(
-                  itemCount: 2,
+                  itemCount: controller.rpm.data?.acceptors.length,
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
                   shrinkWrap: true,
@@ -111,10 +114,10 @@ class WelfareCenterPage extends StatelessWidget {
                         start: index == 0 ? standardSize : 0,
                       ),
                       child: shoppingCenterWidget(
-                        controller.shoppingImages[index],
-                        'مرکز خرید پروما',
+                        controller.rpm.data?.acceptors[index].headerPic ?? '',
+                        controller.rpm.data?.acceptors[index].bussinesTitle ?? '',
                         '4.8',
-                        'لورم ایپسوم لورم ایپسوم لورم ایپسوم',
+                        controller.rpm.data?.acceptors[index].acceptorAbout ?? '',
                       ),
                     );
                   },
@@ -122,9 +125,9 @@ class WelfareCenterPage extends StatelessWidget {
               ),
             ],
           ),
-        ),
+        ),onLoading: const Center(child: CupertinoActivityIndicator(),)
       ),
-    );
+      ));
   }
 
   Widget categoryWidget(String picture, String title) {

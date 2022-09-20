@@ -84,7 +84,7 @@ class LawyerCardPage extends StatelessWidget {
                   color: Get.theme.iconTheme.color,
                 ),
                 onPressed: () {
-                  Get.to(const HistoryPage(), binding: HistoryBinding());
+                  Get.to( HistoryPage());
                 },
               )
             ],
@@ -113,11 +113,12 @@ class _BankCard extends GetView<LawyerController> {
         itemCount: controller.lawyer.cards?.length,
         itemBuilder: (context, index) {
           var card = controller.lawyer.cards?[index];
+          return Obx(
+          () => controller.hasActiveCard.value == false||
+              card?.status == 'ban'
+              ? const SizedBox() :
+               AnimatedContainer(
 
-          return card?.status == 'ban'
-              ? const SizedBox()
-              : Obx(
-                  () => AnimatedContainer(
                     clipBehavior: Clip.antiAlias,
                     alignment: Alignment.center,
                     duration: const Duration(milliseconds: 1000),
