@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kanoon_dadgostari/models/category_model/detail_category_model.dart';
 import 'package:kanoon_dadgostari/res/colors/colors.dart';
 import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
 import 'package:get/get.dart';
@@ -10,24 +13,25 @@ import '../../../widgets/back_widget/back_widget.dart';
 import '../controller/welfare_center_detail_controller.dart';
 
 class WelfareCenterDetailPage extends StatelessWidget {
- WelfareCenterDetailPage({Key? key}) : super(key: key);
+
+ WelfareCenterDetailPage({Key? key,required this.title}) : super(key: key);
 final WelfareCenterDetailController controller = WelfareCenterDetailController();
+String title ;
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WelfareCenterDetailController>(
       init:controller,
+      initState: (state) => controller.getDetailCategory(),
       builder: (controller) => Scaffold(
         appBar: AppBar(
-          title: const Text(
-            "مرکز خرید پروما",
+          title: Text(
+            title,
           ),
           elevation: 0,
           automaticallyImplyLeading: false,
           leading: backIcon(),
         ),
-        body:
-        // controller.obx((state) =>
-            SingleChildScrollView(
+        body:controller.obx((state) =>  SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
@@ -45,13 +49,13 @@ final WelfareCenterDetailController controller = WelfareCenterDetailController()
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _descWidget(title: 'تعـداد خدمـت', count: '4'),
+                  _descWidget(title: 'تعـداد خدمـت', count: controller.rpm.services.length),
                   Container(
                     height: xxLargeSize,
                     width: 1,
                     color: AppColors.dividerColor,
                   ),
-                  _descWidget(title: 'تعـداد خریـد', count: '2'),
+                  _descWidget(title: 'تعـداد خریـد', count: 2),
                 ],
               ),
               SizedBox(height: standardSize),
@@ -63,11 +67,17 @@ final WelfareCenterDetailController controller = WelfareCenterDetailController()
                 ),
                 child: const Divider(),
               ),
-              _serviceCard(),
+    ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: controller.rpm.services.length,
+      itemBuilder: (context, index) =>
+        _serviceCard(controller.rpm.services[index]),
+
+        )
             ],
           ),
-        ),
-          // onLoading: const Center(child: CupertinoActivityIndicator())),
+        ),onLoading: const Center(child: CupertinoActivityIndicator())),
         bottomNavigationBar: Padding(
           padding: EdgeInsetsDirectional.all(standardSize),
           child: progressButton(
@@ -118,7 +128,7 @@ final WelfareCenterDetailController controller = WelfareCenterDetailController()
     );
   }
 
-  Widget _descWidget({required String title, required String count}) {
+  Widget _descWidget({required String title, required int count}) {
     return Expanded(
       flex: 2,
       child: Column(
@@ -133,13 +143,13 @@ final WelfareCenterDetailController controller = WelfareCenterDetailController()
             ),
           ),
           SizedBox(height: xSmallSize),
-          Text(count, style: Get.theme.textTheme.headline6),
+          Text('$count', style: Get.theme.textTheme.headline6),
         ],
       ),
     );
   }
 
-  Widget _serviceCard() {
+  Widget _serviceCard(ServicesItem rpm) {
     WelfareCenterDetailController controller =
         Get.find<WelfareCenterDetailController>();
     return AnimatedContainer(
@@ -168,7 +178,7 @@ final WelfareCenterDetailController controller = WelfareCenterDetailController()
                 Expanded(
                   child: _itemServiceCard(
                     "نـام خدمـت",
-                    "فـروشگــاه",
+                    rpm.serviceName,
                   ),
                 ),
                 Container(
@@ -178,7 +188,7 @@ final WelfareCenterDetailController controller = WelfareCenterDetailController()
                     borderRadius: BorderRadius.circular(xxSmallRadius / 1.5),
                   ),
                   child: Text(
-                    "50%",
+                    rpm.discount,
                     style: Get.theme.textTheme.subtitle2!.copyWith(
                       color: const Color(0xFFC62828),
                     ),
@@ -192,7 +202,7 @@ final WelfareCenterDetailController controller = WelfareCenterDetailController()
             padding: EdgeInsets.only(left: standardSize),
             child: _itemServiceCard(
               "تــوضیحــات",
-              "با فروشگـاه رفـاه تخفیـف بگیـریـد با فروگـاه رفـاه تخفیـف بگیـریـد با فروشگـاه رفـاه تخفیـف بگیـریـد با فروشگـاه رفـاه تخفیـف بگیـریـد",
+             rpm.description,
               hasDesc: true,
             ),
           ),
@@ -201,7 +211,7 @@ final WelfareCenterDetailController controller = WelfareCenterDetailController()
             padding: EdgeInsets.only(left: xxSmallSize),
             child: Row(
               children: [
-                Expanded(child: _itemServiceCard("قیمت", "200,000 تومان")),
+                Expanded(child: _itemServiceCard("قیمت", "${rpm.price} تومان")),
                 Obx(
                   () => controller.counter.value == 0
                       ? SizedBox(

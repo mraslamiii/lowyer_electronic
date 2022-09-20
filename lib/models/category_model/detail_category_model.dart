@@ -1,7 +1,6 @@
 
 
 import '../base/safe_convert.dart';
-import 'category_model.dart';
 
 /*
 class DetailCategoryModel {
@@ -30,7 +29,7 @@ class DetailCategoryModel {
 */
 
 class DetailCategoryModel {
-  final List<AcceptorsItem> profile;
+  final List<ProfileItem> profile;
   final List<ServicesItem> services;
   final List<ServiceCategoriesItem> serviceCategories;
   final List<dynamic> options;
@@ -43,7 +42,7 @@ class DetailCategoryModel {
   });
 
   factory DetailCategoryModel.fromJson(Map<String, dynamic>? json) => DetailCategoryModel(
-    profile: asT<List>(json, 'profile').map((e) => AcceptorsItem.fromJson(e)).toList(),
+    profile: asT<List>(json, 'profile').map((e) => ProfileItem.fromJson(e)).toList(),
     services: asT<List>(json, 'services').map((e) => ServicesItem.fromJson(e)).toList(),
     serviceCategories: asT<List>(json, 'service_categories').map((e) => ServiceCategoriesItem.fromJson(e)).toList(),
     options: asT<List>(json, 'options').map((e) => e.toString()).toList(),
@@ -57,7 +56,6 @@ class DetailCategoryModel {
   };
 }
 
-/*
 class ProfileItem {
   final String bussinesTitle;
   final dynamic logo;
@@ -89,7 +87,6 @@ class ProfileItem {
     'status': status,
   };
 }
-*/
 
 
 class ServicesItem {

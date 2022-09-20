@@ -19,7 +19,7 @@ class CategoryRepo {
       Map<String, dynamic> response = await CategoryAPI().getDetailCategoryApi();
       BaseResponse<DetailCategoryModel> result =
       BaseResponse.fromJson(response, DetailCategoryModel.fromJson);
-      return result;
+      return result.data;
     } catch (e) {
       rethrow;
     }

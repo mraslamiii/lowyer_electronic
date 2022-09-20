@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/app/app_pages.dart';
 import 'package:kanoon_dadgostari/res/colors/colors.dart';
+import 'package:kanoon_dadgostari/view/base/welfare_center_detail_page/page/welfare_center_detail_page.dart';
 import 'package:kanoon_dadgostari/view/widgets/customScaffold/customScaffold.dart';
 import '../../../../res/dimens/dimens.dart';
 import '../../../widgets/back_widget/back_widget.dart';
@@ -114,6 +115,7 @@ final WelfareCenterController controller = Get.put(WelfareCenterController());
                         start: index == 0 ? standardSize : 0,
                       ),
                       child: shoppingCenterWidget(
+                        index,
                         controller.rpm.data?.acceptors[index].headerPic ?? '',
                         controller.rpm.data?.acceptors[index].bussinesTitle ?? '',
                         '4.8',
@@ -163,13 +165,14 @@ final WelfareCenterController controller = Get.put(WelfareCenterController());
   }
 
   Widget shoppingCenterWidget(
+      int index,
     String picture,
     String shoppingName,
     String rating,
     String subTitle,
   ) {
     return GestureDetector(
-      onTap: () => Get.toNamed(Routes.welfareCenterPageDetail),
+      onTap: () => Get.to(WelfareCenterDetailPage(title: controller.rpm.data?.acceptors[index].bussinesTitle ?? '')),
       child: Container(
         width: fullWidth / 1.35,
         margin: EdgeInsets.only(bottom: smallSize),

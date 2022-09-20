@@ -11,7 +11,17 @@ import 'package:kanoon_dadgostari/utilites/show_result.dart';
 
 import '../../../../utilites/app_logger.dart';
 
-class LawyerController extends GetxController {
+class LawyerController extends GetxController with GetSingleTickerProviderStateMixin {
+  @override
+  void onClose() {
+    animationController.dispose();
+    super.onClose();
+  }
+
+  late final AnimationController animationController ;
+  late final Animation<double> animation ;
+
+
   Rx<double> heightCard = 200.0.obs;
   ScrollController controller = ScrollController();
   LocalStorageService pref = Get.find();
@@ -20,6 +30,16 @@ class LawyerController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    animationController = AnimationController(
+      duration: const Duration(seconds: 3),
+      vsync: this,
+    )..repeat();
+    animation = CurvedAnimation(
+      parent: animationController,
+      curve: Curves.fastOutSlowIn,
+    );
+
+
     lawyer = pref.lawyer;
     changeSize();
   }
@@ -32,18 +52,19 @@ class LawyerController extends GetxController {
       var result = await repo.cardBanRequest(rqm);
       if (result!=null) {
         hasActiveCard.value = false;
+        update();
         showTheResult(
             resultType: SnackbarType.success,
             showTheResultType: ShowTheResultType.snackBar,
             title: 'موفقیت',
             message: 'درخواست شما با موفقیت ثبت شد');
-        update();
       } else {
         showTheResult(
             resultType: SnackbarType.error,
             showTheResultType: ShowTheResultType.snackBar,
             title: 'Error',
             message: 'خطایی رخ داده است');
+
         update();
       }
     } catch (e) {

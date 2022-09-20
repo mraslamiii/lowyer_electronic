@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:kanoon_dadgostari/res/colors/colors.dart';
 import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
 import 'package:kanoon_dadgostari/utilites/datetime_extentions.dart';
@@ -44,6 +45,8 @@ class LawyerCardPage extends StatelessWidget {
                           width: fullWidth,
                           child: progressButton(
                               onTap: () {
+                                // controller.hasActiveCard.value = !controller.hasActiveCard.value;
+                                // controller.update();
                                 controller.banCardRequest();
                               },
                               text: "مسدود کردن",
@@ -103,99 +106,107 @@ class LawyerCardPage extends StatelessWidget {
   }
 }
 
-class _BankCard extends GetView<LawyerController> {
-  const _BankCard();
+class _BankCard extends GetView<LawyerController>  {
 
+  const _BankCard();
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      physics:const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: controller.lawyer.cards?.length,
         itemBuilder: (context, index) {
           var card = controller.lawyer.cards?[index];
-          return Obx(
-          () => controller.hasActiveCard.value == false||
-              card?.status == 'ban'
-              ? const SizedBox() :
-               AnimatedContainer(
+          return
+            Obx(
+          () =>
+               AnimatedCrossFade(
+                 crossFadeState: controller.hasActiveCard.value == false ||
+                 controller.lawyer.cards?[index].status == 'ban'
+                     ?  CrossFadeState.showSecond : CrossFadeState.showFirst,
+                duration: const Duration(milliseconds: 750),
+                secondChild: const SizedBox(height: 0,width: 0),
+                 firstChild: AnimatedContainer(
 
-                    clipBehavior: Clip.antiAlias,
-                    alignment: Alignment.center,
-                    duration: const Duration(milliseconds: 1000),
-                    width: fullWidth,
-                    decoration: BoxDecoration(
-                        color: AppColors.primaryColor,
-                        boxShadow: [
-                          BoxShadow(
-                              color: AppColors.primaryColor.withOpacity(0.5),
-                              spreadRadius: 2,
-                              offset: const Offset(0, 4),
-                              blurRadius: 10)
-                        ],
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(smallRadius))),
-                    height: controller.heightCard.value,
-                    child: Stack(children: [
-                      Positioned(
-                          top: -xLargeSize / 1.4,
-                          right: -standardSize,
-                          child: SvgPicture.asset('assets/icons/dots_btm.svg')),
-                      Positioned(
-                          bottom: -xLargeSize / 1.4,
-                          left: -standardSize,
-                          child: SvgPicture.asset('assets/icons/dots_btm.svg')),
-                      Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                              numberFormatter(
-                                  int.parse(card?.cardNumber ?? '')),
-                              textDirection: TextDirection.ltr,
-                              style: Get.theme.textTheme.headline5!
-                                  .copyWith(color: Colors.white))),
-                      Positioned(
-                          top: standardSize,
-                          left: standardSize,
-                          right: standardSize,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/icons/ic_bank.png',
-                                scale: 2.5,
-                              ),
-                              const Expanded(child: SizedBox()),
-                              Text(
-                                "وضعیت : فعال",
-                                style: Get.theme.textTheme.subtitle2!
-                                    .copyWith(color: Colors.white),
-                              )
-                            ],
-                          )),
-                      Positioned(
-                          bottom: standardSize,
-                          left: standardSize,
-                          right: standardSize,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "تاریخ انقضا :${card?.expirationDate}",
-                                style: Get.theme.textTheme.subtitle2!
-                                    .copyWith(color: Colors.white),
-                              ),
-                              const Expanded(child: SizedBox()),
-                              Text(
-                                "**** : CVV2",
-                                style: Get.theme.textTheme.subtitle2!
-                                    .copyWith(color: Colors.white),
-                              )
-                            ],
-                          )),
-                    ]),
+                   duration: const Duration(microseconds: 750),
+                      clipBehavior: Clip.antiAlias,
+                      alignment: Alignment.center,
+                      // duration: const Duration(milliseconds: 1000),
+                      width: fullWidth,
+                      decoration: BoxDecoration(
+                          color: AppColors.primaryColor,
+                          boxShadow: [
+                            BoxShadow(
+                                color: AppColors.primaryColor.withOpacity(0.5),
+                                spreadRadius: 2,
+                                offset: const Offset(0, 4),
+                                blurRadius: 10)
+                          ],
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(smallRadius))),
+                      height: controller.heightCard.value,
+                      child: Stack(children: [
+                        Positioned(
+                            top: -xLargeSize / 1.4,
+                            right: -standardSize,
+                            child: SvgPicture.asset('assets/icons/dots_btm.svg')),
+                        Positioned(
+                            bottom: -xLargeSize / 1.4,
+                            left: -standardSize,
+                            child: SvgPicture.asset('assets/icons/dots_btm.svg')),
+                        Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                                numberFormatter(
+                                    int.parse(card?.cardNumber ?? '')),
+                                textDirection: TextDirection.ltr,
+                                style: Get.theme.textTheme.headline5!
+                                    .copyWith(color: Colors.white))),
+                        Positioned(
+                            top: standardSize,
+                            left: standardSize,
+                            right: standardSize,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/icons/ic_bank.png',
+                                  scale: 2.5,
+                                ),
+                                const Expanded(child: SizedBox()),
+                                Text(
+                                  "وضعیت : فعال",
+                                  style: Get.theme.textTheme.subtitle2!
+                                      .copyWith(color: Colors.white),
+                                )
+                              ],
+                            )),
+                        Positioned(
+                            bottom: standardSize,
+                            left: standardSize,
+                            right: standardSize,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "تاریخ انقضا :${card?.expirationDate}",
+                                  style: Get.theme.textTheme.subtitle2!
+                                      .copyWith(color: Colors.white),
+                                ),
+                                const Expanded(child: SizedBox()),
+                                Text(
+                                  "**** : CVV2",
+                                  style: Get.theme.textTheme.subtitle2!
+                                      .copyWith(color: Colors.white),
+                                )
+                              ],
+                            )),
+                      ]),
+
                   ),
-                );
+               ));
         });
   }
 }

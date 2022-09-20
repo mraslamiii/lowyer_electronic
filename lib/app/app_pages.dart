@@ -61,10 +61,10 @@ class AppPages {
       binding: LawyerLicenseInfoBinding(),
     ),
 
-    GetPage(
-      name: Routes.welfareCenterPageDetail,
-      page: () =>   WelfareCenterDetailPage(),
-    ),
+    // GetPage(
+    //   name: Routes.welfareCenterPageDetail,
+    //   page: () =>   WelfareCenterDetailPage(),
+    // ),
     GetPage(
       name: Routes.splashPage,
       page: () => const SplashPage(),
