@@ -14,10 +14,6 @@ import '../../../widgets/custom_bottom_sheet.dart';
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
   var theme = Get.theme;
-  RxDouble sheetHeight = 0.79.obs;
-  RxDouble sheetMinHeight = 0.79.obs;
-  DraggableScrollableController draggableScrollableController =
-      DraggableScrollableController();
 
   final HomeController controller = Get.put(HomeController());
   final LocalStorageService pref = Get.find<LocalStorageService>();
@@ -48,119 +44,123 @@ class HomePage extends StatelessWidget {
             //   ),
             // ),
             Container(
-              alignment: Alignment.center,
-              height: fullWidth / 1.95,
-              padding: EdgeInsets.only(
-                right: standardSize,
-                left: standardSize,
-              ),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/images/pic_bg_home.jpg"),
-                  fit: BoxFit.fill,
+                  image: AssetImage("assets/images/pic_bg_home.jpg",),
+                  fit: BoxFit.cover,
                   scale: 2.4,
-                ),
+                )
               ),
-              child: Center(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: fullWidth / 5.5,
-                      height: fullWidth / 5.5,
-                      child: Stack(
-                        children: [
-                          Positioned.fill(
-                            child: GestureDetector(
-                              onTap: () => homeSheet(context),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurRadius: 6,
-                                      spreadRadius: 0,
-                                      offset: const Offset(0, 3),
-                                      color:
-                                          const Color(0xff000000).withOpacity(
-                                        0.2,
+              height: fullHeight,
+              alignment: Alignment.topCenter,
+              child: Container(
+                alignment: Alignment.center,
+                height: fullWidth / 1.95,
+                padding: EdgeInsets.only(
+                  right: standardSize,
+                  left: standardSize,
+                ),
+                child: Center(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: fullWidth / 5.5,
+                        height: fullWidth / 5.5,
+                        child: Stack(
+                          children: [
+                            Positioned.fill(
+                              child: GestureDetector(
+                                onTap: () => homeSheet(context),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 6,
+                                        spreadRadius: 0,
+                                        offset: const Offset(0, 3),
+                                        color:
+                                            const Color(0xff000000).withOpacity(
+                                          0.2,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  child: const CircleAvatar(
+                                    backgroundImage: AssetImage(
+                                      'assets/images/avatar.JPG',
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: const AlignmentDirectional(-0.95, -1),
+                              child: SizedBox(
+                                width: fullWidth / 18,
+                                height: fullWidth / 18,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    homeSheet(context);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: AppColors.splashColor,
+                                    padding: EdgeInsets.all(xxSmallSize),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        standardRadius,
+                                      ),
+                                      side: const BorderSide(
+                                        color: AppColors.primaryColor,
+                                        width: 1.5,
                                       ),
                                     ),
-                                  ],
-                                ),
-                                child: const CircleAvatar(
-                                  backgroundImage: AssetImage(
-                                    'assets/images/avatar.JPG',
+                                    backgroundColor: Colors.white,
+                                    elevation: 0,
+                                  ),
+                                  child: SvgPicture.asset(
+                                    'assets/icons/ic_edit_filled.svg',
+                                    color: theme.primaryColor,
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                          Align(
-                            alignment: const AlignmentDirectional(-0.95, -1),
-                            child: SizedBox(
-                              width: fullWidth / 18,
-                              height: fullWidth / 18,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  homeSheet(context);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  foregroundColor: AppColors.splashColor,
-                                  padding: EdgeInsets.all(xxSmallSize),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                      standardRadius,
-                                    ),
-                                    side: const BorderSide(
-                                      color: AppColors.primaryColor,
-                                      width: 1.5,
-                                    ),
-                                  ),
-                                  backgroundColor: Colors.white,
-                                  elevation: 0,
-                                ),
-                                child: SvgPicture.asset(
-                                  'assets/icons/ic_edit_filled.svg',
-                                  color: theme.primaryColor,
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.only(right: xxSmallSize),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Flexible(
-                                  child: titleWidget(
-                                    '${pref.user.firstName} ${pref.user.lastName}',
-                                  ),
-                                ),
-                                SvgPicture.asset(
-                                  'assets/icons/ic_notification.svg',
-                                )
-                              ],
-                            ),
-                            titleWidget(pref.lawyer.user?.code.isEmpty ?? false
-                                ? 'فعالیت شما تایید نشده است'
-                                : 'کد فعالیت :${pref.lawyer.user!.code}'),
-                            titleWidget(
-                                "شهر محل فعالیت : ${pref.lawyer.profile!.cityName}"),
+                            )
                           ],
                         ),
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(right: xxSmallSize),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Flexible(
+                                    child: titleWidget(
+                                      '${pref.user.firstName} ${pref.user.lastName}',
+                                    ),
+                                  ),
+                                  SvgPicture.asset(
+                                    'assets/icons/ic_notification.svg',
+                                  )
+                                ],
+                              ),
+                              titleWidget(pref.lawyer.user?.code.isEmpty ?? false
+                                  ? 'فعالیت شما تایید نشده است'
+                                  : 'کد فعالیت :${pref.lawyer.user!.code}'),
+                              titleWidget(
+                                  "شهر محل فعالیت : ${pref.lawyer.profile!.cityName}"),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
