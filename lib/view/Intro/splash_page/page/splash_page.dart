@@ -54,8 +54,13 @@ class SplashPage extends StatelessWidget {
                   opacity: controller.isProgress.value ? 1 : 0,
                   duration: const Duration(milliseconds: 500),
                   child: Padding(
-                      padding: EdgeInsets.only(top: standardSize),
-                      child: const CircularProgressIndicator()),
+                    padding: EdgeInsets.only(top: xxLargeSize),
+                    child: SizedBox(
+                      width: fullWidth / 13,
+                      height: fullWidth / 13,
+                      child: const CircularProgressIndicator(),
+                    ),
+                  ),
                 )
               ],
             ),
