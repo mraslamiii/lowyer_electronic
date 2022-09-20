@@ -11,7 +11,7 @@ import 'package:kanoon_dadgostari/utilites/show_result.dart';
 
 import '../../../../utilites/app_logger.dart';
 
-class LawyerController extends GetxController with GetSingleTickerProviderStateMixin {
+class LawyerController extends GetxController  {
   @override
   void onClose() {
     animationController.dispose();
@@ -30,14 +30,7 @@ class LawyerController extends GetxController with GetSingleTickerProviderStateM
   @override
   void onInit() {
     super.onInit();
-    animationController = AnimationController(
-      duration: const Duration(seconds: 3),
-      vsync: this,
-    )..repeat();
-    animation = CurvedAnimation(
-      parent: animationController,
-      curve: Curves.fastOutSlowIn,
-    );
+
 
 
     lawyer = pref.lawyer;
