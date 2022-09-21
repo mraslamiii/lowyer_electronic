@@ -50,11 +50,13 @@ class AcceptorsItem {
   final String bussinesTitle;
   final dynamic logo;
   final String headerPic;
+  int? id;
   final String acceptorAbout;
   final String status;
 
   AcceptorsItem({
     this.bussinesTitle = "",
+    this.id,
     this.logo,
     this.headerPic = "",
     this.acceptorAbout = "",
@@ -64,6 +66,7 @@ class AcceptorsItem {
   factory AcceptorsItem.fromJson(Map<String, dynamic>? json) => AcceptorsItem(
     bussinesTitle: asT<String>(json, 'bussines_title'),
     logo: asT<dynamic>(json, 'logo'),
+    id: asT<int>(json, 'id'),
     headerPic: asT<String>(json, 'header_pic'),
     acceptorAbout: asT<String>(json, 'acceptor_about'),
     status: asT<String>(json, 'status'),
@@ -72,6 +75,7 @@ class AcceptorsItem {
   Map<String, dynamic> toJson() => {
     'bussines_title': bussinesTitle,
     'logo': logo,
+    'id':id,
     'header_pic': headerPic,
     'acceptor_about': acceptorAbout,
     'status': status,

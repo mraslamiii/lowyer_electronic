@@ -14,12 +14,8 @@ import '../../../../utilites/app_logger.dart';
 class LawyerController extends GetxController  {
   @override
   void onClose() {
-    animationController.dispose();
     super.onClose();
   }
-
-  late final AnimationController animationController ;
-  late final Animation<double> animation ;
 
 
   Rx<double> heightCard = 200.0.obs;

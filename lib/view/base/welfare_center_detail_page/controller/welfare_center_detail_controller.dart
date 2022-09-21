@@ -9,10 +9,10 @@ class WelfareCenterDetailController extends GetxController with StateMixin<Detai
    final CategoryRepo _repo = CategoryRepo();
    late DetailCategoryModel rpm;
 
-  Future getDetailCategory()async{
+  Future getDetailCategory(String id)async{
     try{
       change(null,status: RxStatus.loading());
-      rpm = await _repo.getDetailCategory();
+      rpm = await _repo.getDetailCategory(id);
       if (rpm !=null) {
         change(rpm,status: RxStatus.success());
       }  else{

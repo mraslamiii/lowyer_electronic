@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:kanoon_dadgostari/app/app_pages.dart';
 import 'package:kanoon_dadgostari/repo/sec/auth_repo.dart';
 import 'package:kanoon_dadgostari/service/connection_service/connection_status.dart';
-import 'package:lottie/lottie.dart';
 
-import '../../../../res/colors/colors.dart';
-import '../../../../res/dimens/dimens.dart';
 import '../../../../service/preferences_service.dart';
 
 class VerifyController extends GetxController {
@@ -46,7 +42,6 @@ class VerifyController extends GetxController {
         isBusyLogin.value = false;
         _pref.token = result.token;
         _pref.setUser(result.user!.toJson());
-        _pref.isFirstTimeLaunch = false;
 
 
         Get.offAllNamed(Routes.homePage);

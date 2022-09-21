@@ -16,11 +16,11 @@ class CategoryAPI {
       rethrow;
     }
   }
-  Future getDetailCategoryApi() async {
+  Future getDetailCategoryApi(String id) async {
     Map<String, dynamic> input = {};
     try {
       String url =
-      APIEndpoint.urlCreator(APIControllers.acceptor,'2');
+      APIEndpoint.urlCreator(APIControllers.acceptor,id);
       var response = await _provider.getRequest(url, input);
       return response;
     } catch (e) {

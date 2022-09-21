@@ -16,7 +16,7 @@ Widget imageWidget(String image, {BoxFit fit = BoxFit.cover,double? radius,}) {
     fadeOutDuration: const Duration(seconds: 1),
     imageUrl: imageUrlChecker(image),
     placeholder: (context, url) =>Container(color: AppColors.cardColor,child: const CupertinoActivityIndicator()),
-    errorWidget: (context, url, error) => Container(color: AppColors.cardColor,child: Icon(Icons.error_outline)),
+    errorWidget: (context, url, error) => Container(color: AppColors.cardColor,child: const Icon(Icons.error_outline)),
   );
 }
 
@@ -24,6 +24,6 @@ String imageUrlChecker(String url) {
   if (url.startsWith("https")) {
     return url;
   } else {
-    return APIEndpoint.mediaURL + url;
+    return '${APIEndpoint.mediaURL}/$url';
   }
 }

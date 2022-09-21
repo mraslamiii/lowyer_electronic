@@ -1,4 +1,5 @@
-import 'dart:io';
+
+// ignore_for_file: must_be_immutable
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,15 +14,19 @@ import '../../../widgets/back_widget/back_widget.dart';
 import '../controller/welfare_center_detail_controller.dart';
 
 class WelfareCenterDetailPage extends StatelessWidget {
+  WelfareCenterDetailPage({Key? key, required this.title, required this.id})
+      : super(key: key);
+  final WelfareCenterDetailController controller =
+      WelfareCenterDetailController();
+  String title;
 
- WelfareCenterDetailPage({Key? key,required this.title}) : super(key: key);
-final WelfareCenterDetailController controller = WelfareCenterDetailController();
-String title ;
+  String id;
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WelfareCenterDetailController>(
-      init:controller,
-      initState: (state) => controller.getDetailCategory(),
+      init: controller,
+      initState: (state) => controller.getDetailCategory(id),
       builder: (controller) => Scaffold(
         appBar: AppBar(
           title: Text(
@@ -31,53 +36,56 @@ String title ;
           automaticallyImplyLeading: false,
           leading: backIcon(),
         ),
-        body:controller.obx((state) =>  SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              SizedBox(
-                height: fullHeight / 4,
-                child: Stack(
-                  children: [
-                    _bannerImage(),
-                    _avatarImage(),
-                  ],
-                ),
-              ),
-              SizedBox(height: standardSize),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _descWidget(title: 'تعـداد خدمـت', count: controller.rpm.services.length),
-                  Container(
-                    height: xxLargeSize,
-                    width: 1,
-                    color: AppColors.dividerColor,
+        body: controller.obx(
+            (state) => SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: fullHeight / 4,
+                        child: Stack(
+                          children: [
+                            _bannerImage(),
+                            _avatarImage(),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: standardSize),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _descWidget(
+                              title: 'تعـداد خدمـت',
+                              count: controller.rpm.services.length),
+                          Container(
+                            height: xxLargeSize,
+                            width: 1,
+                            color: AppColors.dividerColor,
+                          ),
+                          _descWidget(title: 'تعـداد خریـد', count: controller.rpm.profile.id ?? 0),//todo fix this part from server
+                        ],
+                      ),
+                      SizedBox(height: standardSize),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: standardSize,
+                          right: standardSize,
+                          bottom: standardSize,
+                        ),
+                        child: const Divider(),
+                      ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: controller.rpm.services.length,
+                        itemBuilder: (context, index) =>
+                            _serviceCard(controller.rpm.services[index]),
+                      )
+                    ],
                   ),
-                  _descWidget(title: 'تعـداد خریـد', count: 2),
-                ],
-              ),
-              SizedBox(height: standardSize),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: standardSize,
-                  right: standardSize,
-                  bottom: standardSize,
                 ),
-                child: const Divider(),
-              ),
-    ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: controller.rpm.services.length,
-      itemBuilder: (context, index) =>
-        _serviceCard(controller.rpm.services[index]),
-
-        )
-            ],
-          ),
-        ),onLoading: const Center(child: CupertinoActivityIndicator())),
+            onLoading: const Center(child: CupertinoActivityIndicator())),
         bottomNavigationBar: Padding(
           padding: EdgeInsetsDirectional.all(standardSize),
           child: progressButton(
@@ -99,7 +107,8 @@ String title ;
         width: fullWidth,
         height: fullHeight / 5,
         child: imageWidget(
-          "https://m3.healio.com/~/media/slack-news/stock-images/fm_im/u/ultraprocessed-foods.jpg",
+          controller.rpm.profile.headerPic
+          // "https://m3.healio.com/~/media/slack-news/stock-images/fm_im/u/ultraprocessed-foods.jpg",
         ),
       ),
     );
@@ -120,7 +129,9 @@ String title ;
           child: ClipRRect(
             borderRadius: BorderRadius.circular(xxSmallRadius),
             child: imageWidget(
-              "https://qph.cf2.quoracdn.net/main-qimg-1cf247a96715fe142b6ff10da03e3bb0-pjlq",
+                controller.rpm.profile.headerPic
+
+              // "https://qph.cf2.quoracdn.net/main-qimg-1cf247a96715fe142b6ff10da03e3bb0-pjlq",
             ),
           ),
         ),
@@ -202,7 +213,7 @@ String title ;
             padding: EdgeInsets.only(left: standardSize),
             child: _itemServiceCard(
               "تــوضیحــات",
-             rpm.description,
+              rpm.description,
               hasDesc: true,
             ),
           ),
@@ -230,13 +241,13 @@ String title ;
                                 minimumSize: Size.zero,
                                 padding: EdgeInsets.zero,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(xSmallRadius),
+                                  borderRadius:
+                                      BorderRadius.circular(xSmallRadius),
                                 ),
                               ),
                               child: Text(
                                 "افزودن",
-                                style:
-                                    Get.theme.textTheme.bodyText1!.copyWith(
+                                style: Get.theme.textTheme.bodyText1!.copyWith(
                                   fontWeight: FontWeight.w700,
                                   color: Colors.white,
                                 ),
@@ -354,50 +365,4 @@ String title ;
     );
   }
 
-  Widget _counterBoxWidget(RxInt count) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        IconButton(
-          icon: const Icon(Icons.add),
-          onPressed: count.value != 0
-              ? () {
-                  count.value++;
-                }
-              : () {},
-          color: Get.theme.primaryColor,
-        ),
-        Container(
-          alignment: Alignment.center,
-          width: xLargeSize,
-          height: xLargeSize,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(xSmallRadius),
-            color: AppColors.primaryColor.withOpacity(0.1),
-            border: Border.all(
-              color: AppColors.primaryColor.withOpacity(0.18),
-              width: 1,
-            ),
-          ),
-          child: Text(
-            count.value.toString(),
-            style: Get.theme.textTheme.bodyText1,
-          ),
-        ),
-        IconButton(
-          icon: const Icon(Icons.remove),
-          onPressed: count.value != 0
-              ? () {
-                  if (count.value != 0) {
-                    count.value--;
-                  }
-                }
-              : () {},
-          color: count.value == 0
-              ? const Color(0xFF787171).withOpacity(0.8)
-              : Get.theme.primaryColor,
-        ),
-      ],
-    );
-  }
 }

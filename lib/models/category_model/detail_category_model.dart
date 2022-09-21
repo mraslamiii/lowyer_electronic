@@ -29,7 +29,7 @@ class DetailCategoryModel {
 */
 
 class DetailCategoryModel {
-  final List<ProfileItem> profile;
+  final ProfileItem profile;
   final List<ServicesItem> services;
   final List<ServiceCategoriesItem> serviceCategories;
   final List<dynamic> options;
@@ -42,14 +42,14 @@ class DetailCategoryModel {
   });
 
   factory DetailCategoryModel.fromJson(Map<String, dynamic>? json) => DetailCategoryModel(
-    profile: asT<List>(json, 'profile').map((e) => ProfileItem.fromJson(e)).toList(),
+    profile: ProfileItem.fromJson(asT<Map<String, dynamic>>(json, 'profile')),
     services: asT<List>(json, 'services').map((e) => ServicesItem.fromJson(e)).toList(),
     serviceCategories: asT<List>(json, 'service_categories').map((e) => ServiceCategoriesItem.fromJson(e)).toList(),
     options: asT<List>(json, 'options').map((e) => e.toString()).toList(),
   );
 
   Map<String, dynamic> toJson() => {
-    'profile': profile.map((e) => e.toJson()),
+    'profile': profile,
     'services': services.map((e) => e.toJson()),
     'service_categories': serviceCategories.map((e) => e.toJson()),
     'options': options.map((e) => e),
@@ -59,12 +59,14 @@ class DetailCategoryModel {
 class ProfileItem {
   final String bussinesTitle;
   final dynamic logo;
+  int? id;
   final String headerPic;
   final String acceptorAbout;
   final String status;
 
   ProfileItem({
     this.bussinesTitle = "",
+    this.id ,
     this.logo,
     this.headerPic = "",
     this.acceptorAbout = "",
@@ -74,6 +76,7 @@ class ProfileItem {
   factory ProfileItem.fromJson(Map<String, dynamic>? json) => ProfileItem(
     bussinesTitle: asT<String>(json, 'bussines_title'),
     logo: asT<dynamic>(json, 'logo'),
+    id: asT<int>(json, 'id'),
     headerPic: asT<String>(json, 'header_pic'),
     acceptorAbout: asT<String>(json, 'acceptor_about'),
     status: asT<String>(json, 'status'),
@@ -82,6 +85,7 @@ class ProfileItem {
   Map<String, dynamic> toJson() => {
     'bussines_title': bussinesTitle,
     'logo': logo,
+    'id': id,
     'header_pic': headerPic,
     'acceptor_about': acceptorAbout,
     'status': status,

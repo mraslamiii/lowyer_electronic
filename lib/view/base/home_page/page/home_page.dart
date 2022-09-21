@@ -23,8 +23,11 @@ class HomePage extends StatelessWidget {
     return GetBuilder<HomeController>(
       init: controller,
       initState: (state) {
-        if (controller.pref.lawyer.user!.lawyerProfile == null) {
+        if (pref.isFirstTimeLaunch) {
+
           controller.fetchHomeData();
+          pref.isFirstTimeLaunch = false;
+
         }
       },
       builder: (controller) => customScaffold(

@@ -14,9 +14,9 @@ class CategoryRepo {
       rethrow;
     }
   }
-  Future getDetailCategory() async {
+  Future getDetailCategory(String id) async {
     try {
-      Map<String, dynamic> response = await CategoryAPI().getDetailCategoryApi();
+      Map<String, dynamic> response = await CategoryAPI().getDetailCategoryApi(id);
       BaseResponse<DetailCategoryModel> result =
       BaseResponse.fromJson(response, DetailCategoryModel.fromJson);
       return result.data;

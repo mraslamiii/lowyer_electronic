@@ -172,7 +172,10 @@ final WelfareCenterController controller = Get.put(WelfareCenterController());
     String subTitle,
   ) {
     return GestureDetector(
-      onTap: () => Get.to(WelfareCenterDetailPage(title: controller.rpm.data?.acceptors[index].bussinesTitle ?? '')),
+      onTap: () => Get.to(WelfareCenterDetailPage(title: controller.rpm.data?.acceptors[index].bussinesTitle ?? '',
+      id: controller.rpm.data?.acceptors[index].id.toString() ?? '',
+
+      )),
       child: Container(
         width: fullWidth / 1.35,
         margin: EdgeInsets.only(bottom: smallSize),

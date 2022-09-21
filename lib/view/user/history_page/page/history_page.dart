@@ -53,7 +53,7 @@ class HistoryPage extends StatelessWidget {
               'assets/icons/stickynote.svg', " تاریخ", getDate(DateTime.parse(controller.rpm[index].createdAt).toJalali())),
           const Divider(),
           _historyWidgetItem(
-              'assets/icons/clipboard-tick.svg', "وضعیت", controller.rpm[index].status),
+              'assets/icons/clipboard_tick.svg', "وضعیت", controller.rpm[index].status),
         ],
       ),
     );
