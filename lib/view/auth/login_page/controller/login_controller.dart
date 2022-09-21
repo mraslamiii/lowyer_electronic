@@ -4,9 +4,12 @@ import 'package:kanoon_dadgostari/app/app_exeption.dart';
 import 'package:kanoon_dadgostari/models/base/title_value_model.dart';
 import 'package:kanoon_dadgostari/repo/sec/auth_repo.dart';
 import 'package:kanoon_dadgostari/service/connection_service/connection_status.dart';
+import 'package:kanoon_dadgostari/utilites/enum.dart';
+import 'package:kanoon_dadgostari/utilites/show_result.dart';
 import 'package:kanoon_dadgostari/view/widgets/custom_snackbar/custom_snackbar.dart';
 
 import '../../../../app/app_pages.dart';
+import '../../../../enums/snackbar_type.dart';
 import '../../../../service/preferences_service.dart';
 
 class LoginController extends GetxController {
@@ -44,20 +47,33 @@ class LoginController extends GetxController {
 
         var result = await repo.loginRequest(phoneNumber.value);
         isBusyLogin.value = false;
-
-        Get.offAllNamed(Routes.verificationPage, arguments: phoneNumber.value);
-
-        print(result);
-      } on TitleValueException catch (exp) {
-
-        for (TitleValueModel error in exp.errors){
-          isBusyLogin.value = false;
-          Get.toNamed(Routes.signupPage, arguments: phoneNumber.value);
-
-
+        if (result != null) {
+          Get.offAllNamed(Routes.verificationPage,
+              arguments: phoneNumber.value);
+          showTheResult(
+              resultType: SnackbarType.success,
+              showTheResultType: ShowTheResultType.snackBar,
+              title: 'موفقیت',
+              message: 'کد به شماره $result ارسال شد');
+        } else {
+          showTheResult(
+              resultType: SnackbarType.error,
+              showTheResultType: ShowTheResultType.snackBar,
+              title: 'خطا',
+              message: result);
         }
-
-      } catch (e) {
+      }
+      // on TitleValueException catch (exp) {
+      //
+      //   for (TitleValueModel error in exp.errors){
+      //     isBusyLogin.value = false;
+      //     Get.toNamed(Routes.signupPage, arguments: phoneNumber.value);
+      //
+      //
+      //   }
+      //
+      // }
+      catch (e) {
         isBusyLogin.value = false;
 
         rethrow;

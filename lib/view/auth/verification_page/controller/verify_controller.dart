@@ -4,10 +4,15 @@ import 'package:kanoon_dadgostari/app/app_pages.dart';
 import 'package:kanoon_dadgostari/repo/sec/auth_repo.dart';
 import 'package:kanoon_dadgostari/service/connection_service/connection_status.dart';
 
+import '../../../../enums/snackbar_type.dart';
 import '../../../../service/preferences_service.dart';
+import '../../../../utilites/enum.dart';
+import '../../../../utilites/show_result.dart';
 
 class VerifyController extends GetxController {
   TextEditingController pinController = TextEditingController();
+
+  var result ;
   RxString value = RxString('');
   RxBool isValid = RxBool(false);
   RxBool isBusyLogin = false.obs;
@@ -38,15 +43,22 @@ class VerifyController extends GetxController {
       try {
         isBusyLogin.value = true;
 
-        var result = await repo.loginCodeRequest(phone, pinController.text);
+        result = await repo.loginCodeRequest(phone, pinController.text);
         isBusyLogin.value = false;
         _pref.token = result.token;
         _pref.setUser(result.user!.toJson());
-
+        showTheResult(resultType: SnackbarType.success,
+            showTheResultType: ShowTheResultType.snackBar,
+            title: 'موفقیت',
+            message: 'با موفقیت وارد شدید');
 
         Get.offAllNamed(Routes.homePage);
       } catch (e) {
         isBusyLogin.value = false;
+        showTheResult(resultType: SnackbarType.error,
+            showTheResultType: ShowTheResultType.snackBar,
+            title: 'خطا',
+            message: '$e');
 
         rethrow;
       }
