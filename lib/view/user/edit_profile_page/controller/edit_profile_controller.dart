@@ -11,6 +11,7 @@ import '../../../../repo/lawyer/lawyer_repo.dart';
 import '../../../../service/connection_service/connection_status.dart';
 import '../../../../utilites/enum.dart';
 import '../../../widgets/custom_snackbar/custom_snackbar.dart';
+// import 'package:keyboard_visibility/keyboard_visibility.dart';
 
 class EditProfileController extends GetxController {
   late LawyerData lawyer;
@@ -47,11 +48,23 @@ class EditProfileController extends GetxController {
   // TextEditingController phoneTxtController = TextEditingController();
   TextEditingController addressTxtController = TextEditingController();
   TextEditingController zipCodeTxtController = TextEditingController();
-
+  double keyBoardHeight =0.0;
 //********************************************************************************************************************************************
   @override
   void onInit() {
     super.onInit();
+    // KeyboardVisibilityNotification().addNewListener(onChange: (visible) {
+    //   if (visible) {
+    //     Future.delayed(const Duration(milliseconds: 300),(){
+    //       keyBoardHeight = MediaQuery.of(Get.context!).viewInsets.bottom;
+    //     });
+    //
+    //   }else{
+    //     keyBoardHeight=0;
+    //   }
+    // }
+
+      // ,);
     lawyer = pref.lawyer;
   }
 

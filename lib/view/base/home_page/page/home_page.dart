@@ -125,6 +125,8 @@ class HomePage extends StatelessWidget {
                                   child: SvgPicture.asset(
                                     'assets/icons/ic_edit_filled.svg',
                                     color: theme.primaryColor,
+                                    width: iconSizeLarge,
+                                    height: iconSizeLarge,
                                   ),
                                 ),
                               ),

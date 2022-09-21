@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 double xxSmallSize = Get.width/92;//todo 4.01
@@ -15,7 +16,10 @@ double largeSize = Get.width/15.6; //todo 24
 double xLargeSize = Get.width/11.71; //todo 32
 
 double xxLargeSize = Get.width/7.81;//todo 48.07
+fullWidths(BuildContext context){
+  double fullWidth = MediaQuery.of(context).size.width;
 
+}
 double fullWidth = Get.width;
 
 double fullHeight = Get.height;

@@ -17,12 +17,12 @@ bool isFirstLunch = true;
   Widget build(BuildContext context) {
     var profile = controller.pref.lawyer.profile;
     if (isFirstLunch) {
-      controller.licenceNumberTxtController.text =profile ?.licenseNumber ?? '';
-      controller.createDateLicenceTxtController.text = profile?.licenseCreateDate ?? '';
-      controller.expirationDateTxtController.text =profile?.licenseExpireDate ?? '';
-      controller.cityTxtController.text = profile?.cityName ?? '';
-      controller.officeAddressTxtController.text = profile?.addressOffice ?? '';
-      controller.officeTelephoneTxtController.text = profile?.TellOffice ?? '';
+      controller.licenceNumberTxtController.text ='${profile ?.licenseNumber}' ?? '';
+      controller.createDateLicenceTxtController.text = '${profile?.licenseCreateDate} ' ?? '';
+      controller.expirationDateTxtController.text ='${profile?.licenseExpireDate} ' ?? '';
+      controller.cityTxtController.text = '${profile?.cityName} ' ?? '';
+      controller.officeAddressTxtController.text = '${profile?.addressOffice} ' ?? '';
+      controller.officeTelephoneTxtController.text = '${profile?.TellOffice}' ?? '';
       isFirstLunch = false;
       controller.update();
     }

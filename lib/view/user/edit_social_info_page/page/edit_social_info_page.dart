@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
@@ -18,11 +17,11 @@ class EditSocialInfoPage extends GetView<EditSocialInfoController> {
     var profile = controller.pref.lawyer.profile;
     if (isFirstLunch) {
       controller.instagramTxtController.text =
-          profile?.instagram ?? '';
+          '${profile?.instagram}' ?? '';
       controller.whatsAppTxtController.text =
-          profile?.whatsApp ?? '';
+          '${profile?.whatsApp}' ?? '';
       controller.websiteTxtController.text =
-          profile?.webSite ?? '';
+          '${profile?.webSite}' ?? '';
       isFirstLunch = false;
       controller.update();
     }

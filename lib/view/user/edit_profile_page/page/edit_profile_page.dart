@@ -22,18 +22,20 @@ class EditProfilePage extends GetView<EditProfileController> {
 
   @override
   Widget build(BuildContext context) {
+    var isOpenKeyBoard = MediaQuery.of(context).viewInsets.bottom !=0;
+    // debugPrint('${} salam');
     var profile = controller.lawyer.profile;
     var user = controller.lawyer.user;
     if (isFirstLunch) {
-      controller.nameTxtController.text = user?.firstName ?? '';
-      controller.lastNameTxtController.text = user?.lastName ?? '';
-      controller.fatherNameTxtController.text = user?.fatherName ?? '';
-      controller.nationalCodeTxtController.text = user?.nationalCode ?? '';
-      controller.educationTxtController.text = profile?.education ?? '';
-      controller.eduLocationTxtController.text = profile?.educationPlace ?? '';
-      controller.addressTxtController.text = user?.address ?? '';
-      controller.zipCodeTxtController.text = user?.postalCode ?? '';
-      controller.eduMajorTxtController.text = profile?.academicDiscipline ?? '';
+      controller.nameTxtController.text = '${user?.firstName} ' ?? '';
+      controller.lastNameTxtController.text = '${user?.lastName} ' ?? '';
+      controller.fatherNameTxtController.text = '${user?.fatherName} ' ?? '';
+      controller.nationalCodeTxtController.text ='${user?.nationalCode}'?? '';
+      controller.educationTxtController.text = '${profile?.education}' ?? '';
+      controller.eduLocationTxtController.text = '${profile?.educationPlace} ' ?? '';
+      controller.addressTxtController.text = '${user?.address} ' ?? '';
+      controller.zipCodeTxtController.text = '${user?.postalCode}' ?? '';
+      controller.eduMajorTxtController.text = '${profile?.academicDiscipline} ' ?? '';
       controller.educationSelected =
           controller.educations.indexOf(profile?.education ?? '') ;
       isFirstLunch = false;
@@ -71,188 +73,191 @@ class EditProfilePage extends GetView<EditProfileController> {
                 //   (state) =>
                 ListView(
               physics: const BouncingScrollPhysics(),
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsetsDirectional.only(
-                    start: standardSize,
-                    end: standardSize,
-                    top: standardSize,
-                  ),
-                  child: TextFormFieldWidget(
-                    // inputFormatters: [
-                    //   FilteringTextInputFormatter.digitsOnly
-                    // ],
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    textDirection: TextDirection.rtl,
-                    label: "نـام",
-                    // onChange: controller.valueChanged,
-                    hint: "نام",
-                    textEditingController: controller.nameTxtController,
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsetsDirectional.only(
-                    start: standardSize,
-                    end: standardSize,
-                    top: standardSize,
-                  ),
-                  child: TextFormFieldWidget(
-                    // inputFormatters: [
-                    //   FilteringTextInputFormatter.digitsOnly
-                    // ],
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    textDirection: TextDirection.rtl,
-                    label: "نـام خانوادگی",
-                    // onChange: controller.valueChanged,
-                    hint: "نـام خانوادگی",
-                    textEditingController: controller.lastNameTxtController,
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsetsDirectional.only(
-                    start: standardSize,
-                    end: standardSize,
-                    top: standardSize,
-                  ),
-                  child: TextFormFieldWidget(
-                    // inputFormatters: [
-                    //   FilteringTextInputFormatter.digitsOnly
-                    // ],
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    textDirection: TextDirection.rtl,
-                    label: "نام پدر",
-                    // onChange: controller.valueChanged,
-                    hint: "نـام پدر",
-                    textEditingController: controller.fatherNameTxtController,
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsetsDirectional.only(
-                    start: standardSize,
-                    end: standardSize,
-                    top: standardSize,
-                  ),
-                  child: TextFormFieldWidget(
-                    // inputFormatters: [
-                    //   FilteringTextInputFormatter.digitsOnly
-                    // ],
-                    keyboardType: TextInputType.number,
-                    textInputAction: TextInputAction.next,
-                    textDirection: TextDirection.ltr,
-                    label: "کد ملی",
-                    // onChange: controller.valueChanged,
-                    hint: "کد ملی",
-                    textEditingController: controller.nationalCodeTxtController,
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsetsDirectional.only(
-                    bottom: xSmallSize,
-                    start: standardSize,
-                    top: standardSize,
-                  ),
-                  // alignment: Alignment.c,
-                  child: Text(
-                    "تحصیلات",
-                    style: Get.theme.textTheme.subtitle1!.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    customBottomSheet(
-                      context,
-                      ListView.builder(
-                        padding: EdgeInsetsDirectional.only(
-                          bottom: fullHeight / 18,
-                        ),
-                        shrinkWrap: true,
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: controller.educations.length,
-                        itemBuilder: (context, index) {
-                          return sheetItem(
-                            context: context,
-                            title: controller.educations[index] ?? '',
-                            index: index,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                  child: Container(
+
+                children: [
+                  Container(
                     margin: EdgeInsetsDirectional.only(
                       start: standardSize,
                       end: standardSize,
+                      top: standardSize,
                     ),
-                    padding: EdgeInsets.all(standardSize),
-                    decoration: BoxDecoration(
-                      color: AppColors.formFieldColor,
-                      borderRadius: BorderRadius.circular(smallRadius),
+                    child: TextFormFieldWidget(
+                      // inputFormatters: [
+                      //   FilteringTextInputFormatter.digitsOnly
+                      // ],
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.next,
+                      // textDirection: TextDirection.rtl,
+
+                      label: "نـام",
+
+                      // onChange: controller.valueChanged,
+                      hint: "نام",
+                      textEditingController: controller.nameTxtController,
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          controller.educationSelected !=-1 ?
-                          controller
-                                  .educations[controller.educationSelected ] : 'تحصیلات',
-                          style: Get.theme.textTheme.bodyText1?.copyWith(
-                            color: controller.educationSelected != -1
-                                ? Colors.black
-                                : AppColors.hintColor,
+                  ),
+                  Container(
+                    margin: EdgeInsetsDirectional.only(
+                      start: standardSize,
+                      end: standardSize,
+                      top: standardSize,
+                    ),
+                    child: TextFormFieldWidget(
+                      // inputFormatters: [
+                      //   FilteringTextInputFormatter.digitsOnly
+                      // ],
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.next,
+                      textDirection: TextDirection.rtl,
+                      label: "نـام خانوادگی",
+                      // onChange: controller.valueChanged,
+                      hint: "نـام خانوادگی",
+                      textEditingController: controller.lastNameTxtController,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsetsDirectional.only(
+                      start: standardSize,
+                      end: standardSize,
+                      top: standardSize,
+                    ),
+                    child: TextFormFieldWidget(
+                      // inputFormatters: [
+                      //   FilteringTextInputFormatter.digitsOnly
+                      // ],
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.next,
+                      textDirection: TextDirection.rtl,
+                      label: "نام پدر",
+                      // onChange: controller.valueChanged,
+                      hint: "نـام پدر",
+                      textEditingController: controller.fatherNameTxtController,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsetsDirectional.only(
+                      start: standardSize,
+                      end: standardSize,
+                      top: standardSize,
+                    ),
+                    child: TextFormFieldWidget(
+                      // inputFormatters: [
+                      //   FilteringTextInputFormatter.digitsOnly
+                      // ],
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.next,
+                      textDirection: TextDirection.ltr,
+                      label: "کد ملی",
+                      // onChange: controller.valueChanged,
+                      hint: "کد ملی",
+                      textEditingController: controller.nationalCodeTxtController,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsetsDirectional.only(
+                      bottom: xSmallSize,
+                      start: standardSize,
+                      top: standardSize,
+                    ),
+                    // alignment: Alignment.c,
+                    child: Text(
+                      "تحصیلات",
+                      style: Get.theme.textTheme.subtitle1!.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      customBottomSheet(
+                        context,
+                        ListView.builder(
+                          padding: EdgeInsetsDirectional.only(
+                            bottom: fullHeight / 18,
                           ),
+                          shrinkWrap: true,
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: controller.educations.length,
+                          itemBuilder: (context, index) {
+                            return sheetItem(
+                              context: context,
+                              title: controller.educations[index] ?? '',
+                              index: index,
+                            );
+                          },
                         ),
-                        SvgPicture.asset(
-                          "assets/icons/ic_arrow_down.svg",
-                          color: Colors.black,
-                        ),
-                      ],
+                      );
+                    },
+                    child: Container(
+                      margin: EdgeInsetsDirectional.only(
+                        start: standardSize,
+                        end: standardSize,
+                      ),
+                      padding: EdgeInsets.all(standardSize),
+                      decoration: BoxDecoration(
+                        color: AppColors.formFieldColor,
+                        borderRadius: BorderRadius.circular(smallRadius),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            controller.educationSelected !=-1 ?
+                            controller
+                                .educations[controller.educationSelected ] : 'تحصیلات',
+                            style: Get.theme.textTheme.bodyText1?.copyWith(
+                              color: controller.educationSelected != -1
+                                  ? Colors.black
+                                  : AppColors.hintColor,
+                            ),
+                          ),
+                          SvgPicture.asset(
+                            "assets/icons/ic_arrow_down.svg",
+                            color: Colors.black,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  margin: EdgeInsetsDirectional.only(
-                    start: standardSize,
-                    end: standardSize,
-                    top: standardSize,
+                  Container(
+                    margin: EdgeInsetsDirectional.only(
+                      start: standardSize,
+                      end: standardSize,
+                      top: standardSize,
+                    ),
+                    child: TextFormFieldWidget(
+                      // inputFormatters: [
+                      //   FilteringTextInputFormatter.digitsOnly
+                      // ],
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.next,
+                      textDirection: TextDirection.rtl,
+                      label: "رشته تحصیلی",
+                      // onChange: controller.valueChanged,
+                      hint: "رشته تحصیلی",
+                      textEditingController: controller.eduMajorTxtController,
+                    ),
                   ),
-                  child: TextFormFieldWidget(
-                    // inputFormatters: [
-                    //   FilteringTextInputFormatter.digitsOnly
-                    // ],
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    textDirection: TextDirection.rtl,
-                    label: "رشته تحصیلی",
-                    // onChange: controller.valueChanged,
-                    hint: "رشته تحصیلی",
-                    textEditingController: controller.eduMajorTxtController,
+                  Container(
+                    margin: EdgeInsetsDirectional.only(
+                      start: standardSize,
+                      end: standardSize,
+                      top: standardSize,
+                    ),
+                    child: TextFormFieldWidget(
+                      // inputFormatters: [
+                      //   FilteringTextInputFormatter.digitsOnly
+                      // ],
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.next,
+                      textDirection: TextDirection.rtl,
+                      label: "محل تحصیل",
+                      // onChange: controller.valueChanged,
+                      hint: "محل تحصیل",
+                      textEditingController: controller.eduLocationTxtController,
+                    ),
                   ),
-                ),
-                Container(
-                  margin: EdgeInsetsDirectional.only(
-                    start: standardSize,
-                    end: standardSize,
-                    top: standardSize,
-                  ),
-                  child: TextFormFieldWidget(
-                    // inputFormatters: [
-                    //   FilteringTextInputFormatter.digitsOnly
-                    // ],
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    textDirection: TextDirection.rtl,
-                    label: "محل تحصیل",
-                    // onChange: controller.valueChanged,
-                    hint: "محل تحصیل",
-                    textEditingController: controller.eduLocationTxtController,
-                  ),
-                ),
 /*
                 Container(
                   margin: EdgeInsetsDirectional.only(
@@ -274,46 +279,50 @@ class EditProfilePage extends GetView<EditProfileController> {
                   ),
                 ),
 */
-                Container(
-                  margin: EdgeInsetsDirectional.only(
-                    start: standardSize,
-                    end: standardSize,
-                    top: standardSize,
+                  Container(
+                    margin: EdgeInsetsDirectional.only(
+                      start: standardSize,
+                      end: standardSize,
+                      top: standardSize,
+                    ),
+                    child: TextFormFieldWidget(
+                      // inputFormatters: [
+                      //   FilteringTextInputFormatter.digitsOnly
+                      // ],
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.done,
+                      textDirection: TextDirection.ltr,
+                      label: "کد پستی",
+                      // onChange: controller.valueChanged,
+                      hint: "0123456789",
+                      textEditingController: controller.zipCodeTxtController,
+                    ),
                   ),
-                  child: TextFormFieldWidget(
-                    // inputFormatters: [
-                    //   FilteringTextInputFormatter.digitsOnly
-                    // ],
-                    keyboardType: TextInputType.number,
-                    textInputAction: TextInputAction.done,
-                    textDirection: TextDirection.ltr,
-                    label: "کد پستی",
-                    // onChange: controller.valueChanged,
-                    hint: "0123456789",
-                    textEditingController: controller.zipCodeTxtController,
+                  Container(
+                    margin: EdgeInsetsDirectional.only(
+                      start: standardSize,
+                      end: standardSize,
+                      top: standardSize,
+                    ),
+                    child: TextFormFieldWidget(
+                      // inputFormatters: [
+                      //   FilteringTextInputFormatter.digitsOnly
+                      // ],
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.next,
+                      textDirection: TextDirection.rtl,
+                      label: "آدرس",
+                      // onChange: controller.valueChanged,
+                      hint: "آدرس",
+                      textEditingController: controller.addressTxtController,
+                    ),
                   ),
-                ),
-                Container(
-                  margin: EdgeInsetsDirectional.only(
-                    start: standardSize,
-                    end: standardSize,
-                    top: standardSize,
-                  ),
-                  child: TextFormFieldWidget(
-                    // inputFormatters: [
-                    //   FilteringTextInputFormatter.digitsOnly
-                    // ],
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    textDirection: TextDirection.rtl,
-                    label: "آدرس",
-                    // onChange: controller.valueChanged,
-                    hint: "آدرس",
-                    textEditingController: controller.addressTxtController,
-                  ),
-                ),
-              ],
-            ),
+                  // SizedBox(height:controller.keyBoardHeight,)
+
+                ],
+
+              ),
+
             // onEmpty: Container(),
             // onError: (error) => Text(
             //   'خطا در ارتباط با سرور',
