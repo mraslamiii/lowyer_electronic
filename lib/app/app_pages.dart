@@ -47,6 +47,16 @@ class AppPages {
 
   static final routes = [
     GetPage(
+        name: Routes.homePage,
+        page: () => HomePage(),
+    ),
+
+    GetPage(
+        name: Routes.splashPage,
+        page: () =>  SplashPage(),
+        // binding: SplashBinding()
+    ),
+    GetPage(
       name: Routes.mapPage,
       page: () =>  MapPage( ),
     ),
@@ -65,11 +75,7 @@ class AppPages {
     //   name: Routes.welfareCenterPageDetail,
     //   page: () =>   WelfareCenterDetailPage(),
     // ),
-    GetPage(
-      name: Routes.splashPage,
-      page: () => const SplashPage(),
-      binding: SplashBinding()
-    ),
+
 
     GetPage(
         name: Routes.scan_search_page,
@@ -101,11 +107,6 @@ class AppPages {
       binding: LoginBinding()
     ),
 
-    GetPage(
-        name: Routes.homePage,
-        page: () => HomePage(),
-        binding: HomeBinding()
-    ),
 
 
     GetPage(

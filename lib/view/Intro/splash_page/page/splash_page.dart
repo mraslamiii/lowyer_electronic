@@ -10,12 +10,13 @@ import '../../../../res/dimens/dimens.dart';
 import '../../../auth/login_page/page/login_page.dart';
 
 class SplashPage extends StatelessWidget {
-  const SplashPage({Key? key}) : super(key: key);
+   SplashPage({Key? key}) : super(key: key);
+  SplashController controller = Get.put(SplashController());
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SplashController>(
-      init: SplashController(),
+      init: controller,
       builder: (controller) => customScaffold(
         context: context,
         body: SizedBox(

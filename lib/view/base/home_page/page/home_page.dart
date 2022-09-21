@@ -24,7 +24,6 @@ class HomePage extends StatelessWidget {
       init: controller,
       initState: (state) {
         if (pref.isFirstTimeLaunch) {
-
           controller.fetchHomeData();
           pref.isFirstTimeLaunch = false;
 
