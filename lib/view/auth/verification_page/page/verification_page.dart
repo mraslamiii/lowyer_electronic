@@ -12,6 +12,7 @@ import 'package:kanoon_dadgostari/view/widgets/progress_button/progress_button.d
 
 import '../../../../app/app_pages.dart';
 import '../../../widgets/text_form_field/text_form_field_widget.dart';
+import '../../login_page/page/login_page.dart';
 import '../widgets/pin_code_fields.dart';
 
 class VerificationPage extends StatelessWidget {
@@ -48,20 +49,25 @@ class VerificationPage extends StatelessWidget {
                       child: PinCodeField(),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(top: smallSize),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset('assets/icons/ic_edit_underline.svg',
-                            color: AppColors.primaryColor),
-                        Padding(
-                            padding: EdgeInsets.only(right: xSmallSize),
-                            child: Text(
-                              "ویرایش شماره تلفن",
-                              style: Get.theme.textTheme.subtitle2
-                                  ?.copyWith(color: AppColors.primaryColor),
-                            ))
-                      ],
+                  GestureDetector(
+                    onTap: () {
+                      Get.offAll(LoginPage());
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(top: smallSize),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset('assets/icons/ic_edit_underline.svg',
+                              color: AppColors.primaryColor),
+                          Padding(
+                              padding: EdgeInsets.only(right: xSmallSize),
+                              child: Text(
+                                "ویرایش شماره تلفن",
+                                style: Get.theme.textTheme.subtitle2
+                                    ?.copyWith(color: AppColors.primaryColor),
+                              ))
+                        ],
+                      ),
                     ),
                   ),
                   const Expanded(child: SizedBox()),
