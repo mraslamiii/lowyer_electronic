@@ -11,7 +11,7 @@ String getDate(Jalali time) {
 
 String numberFormatter(int number) {
   var formatter = NumberFormat('#,#### 0000');
-  return formatter.format(number).replaceAll(',', ' ');
+  return formatter.format(number).replaceAll(',', '  ');
 }
 
 String getTime(DateTime time) {

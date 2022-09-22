@@ -85,7 +85,7 @@ class AppPages {
 
     GetPage(
         name: Routes.lawyerPage,
-        page: () => const LawyerCardPage(),
+        page: () =>  LawyerCardPage(),
         binding: LawyerBinding()
     ),
     // GetPage(

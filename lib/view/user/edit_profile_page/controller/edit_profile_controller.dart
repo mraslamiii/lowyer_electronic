@@ -9,7 +9,7 @@ import '../../../../models/lawyer/lawyer_rqm/edit_education_rqm.dart';
 import '../../../../models/lawyer/info_profile_model.dart';
 import '../../../../repo/lawyer/lawyer_repo.dart';
 import '../../../../service/connection_service/connection_status.dart';
-import '../../../../utilites/enum.dart';
+import '../../../../enums/result_enum.dart';
 import '../../../widgets/custom_snackbar/custom_snackbar.dart';
 // import 'package:keyboard_visibility/keyboard_visibility.dart';
 

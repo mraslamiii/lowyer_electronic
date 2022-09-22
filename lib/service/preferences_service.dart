@@ -136,6 +136,14 @@ class LocalStorageService extends GetxService {
     return lawyerData;
   }
 
+  setCard(Map<String, dynamic> _json) async {
+    try {
+      await _box.write(cardsKey, json.encode(_json));
+    } catch (e) {
+      debugPrint("$e");
+    }
+  }
+
   setLawyer(Map<String, dynamic> _json) async {
     try {
       await _box.write(lawyerKey, json.encode(_json));

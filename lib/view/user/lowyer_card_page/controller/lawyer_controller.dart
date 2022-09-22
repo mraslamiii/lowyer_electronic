@@ -6,17 +6,16 @@ import 'package:kanoon_dadgostari/models/lawyer/info_profile_model.dart';
 import 'package:kanoon_dadgostari/models/card/ban_rqm/ban_request_card_rqm.dart';
 import 'package:kanoon_dadgostari/repo/lawyer/card_repo.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
-import 'package:kanoon_dadgostari/utilites/enum.dart';
+import 'package:kanoon_dadgostari/enums/result_enum.dart';
 import 'package:kanoon_dadgostari/utilites/show_result.dart';
 
 import '../../../../utilites/app_logger.dart';
 
-class LawyerController extends GetxController  {
+class LawyerController extends GetxController {
   @override
   void onClose() {
     super.onClose();
   }
-
 
   Rx<double> heightCard = 200.0.obs;
   ScrollController controller = ScrollController();
@@ -27,36 +26,47 @@ class LawyerController extends GetxController  {
   void onInit() {
     super.onInit();
 
-
-
     lawyer = pref.lawyer;
     changeSize();
   }
-  RxBool hasActiveCard=true.obs;
+
+  RxBool hasActiveCard = true.obs;
+  RxBool sh = false.obs;
   CardRepo repo = CardRepo();
+  RxBool isBusyBan = false.obs;
+  RxBool requestNewCard = false.obs;
 
   Future banCardRequest() async {
     try {
-      BanRequestCardRQM rqm = BanRequestCardRQM(description: 'desc');
-      var result = await repo.cardBanRequest(rqm);
-      if (result!=null) {
-        hasActiveCard.value = false;
+      if (isBusyBan.value == false) {
+        isBusyBan.value = true;
         update();
-        showTheResult(
-            resultType: SnackbarType.success,
-            showTheResultType: ShowTheResultType.snackBar,
-            title: 'موفقیت',
-            message: 'درخواست شما با موفقیت ثبت شد');
-      } else {
-        showTheResult(
-            resultType: SnackbarType.error,
-            showTheResultType: ShowTheResultType.snackBar,
-            title: 'Error',
-            message: 'خطایی رخ داده است');
+        BanRequestCardRQM rqm = BanRequestCardRQM(description: 'desc');
+        var result = await repo.cardBanRequest(rqm);
+        if (result != null) {
+          hasActiveCard.value = false;
+          isBusyBan.value = false;
+          update();
+          showTheResult(
+              resultType: SnackbarType.success,
+              showTheResultType: ShowTheResultType.snackBar,
+              title: 'موفقیت',
+              message: 'درخواست شما با موفقیت ثبت شد');
+        } else {
+          isBusyBan.value = false;
+          update();
+          showTheResult(
+              resultType: SnackbarType.error,
+              showTheResultType: ShowTheResultType.snackBar,
+              title: 'Error',
+              message: 'خطایی رخ داده است');
 
-        update();
+          update();
+        }
       }
     } catch (e) {
+      isBusyBan.value = false;
+      update();
       showTheResult(
           resultType: SnackbarType.error,
           showTheResultType: ShowTheResultType.snackBar,
@@ -69,25 +79,34 @@ class LawyerController extends GetxController  {
 
   Future makeRequest() async {
     try {
-      var result = await repo.cardMakeRequest();
-      if (result != null) {
-        showTheResult(
-            resultType: SnackbarType.success,
-            showTheResultType: ShowTheResultType.snackBar,
-            title: 'موفقیت',
-            message: 'درخواست شما با موفقیت ثبت شد');
-      } else {
-        showTheResult(
-            resultType: SnackbarType.error,
-            showTheResultType: ShowTheResultType.snackBar,
-            title: 'خطا',
-            message: result.toString()); //todo fix error
+      if (requestNewCard.value == false) {
+        requestNewCard.value = true;
+        update();
+        var result = await repo.cardMakeRequest();
+        if (result != null) {
+          requestNewCard.value = false;
+          update();
+          showTheResult(
+              resultType: SnackbarType.success,
+              showTheResultType: ShowTheResultType.snackBar,
+              title: 'Success',
+              message: 'درخواست شما با موفقیت ثبت شد');
+        } else {
+          requestNewCard.value = false;
+          update();
+
+          showTheResult(
+              resultType: SnackbarType.error,
+              showTheResultType: ShowTheResultType.snackBar,
+              title: 'Error',
+              message: result.toString()); //todo fix error
+        }
       }
     } catch (e) {
       showTheResult(
           resultType: SnackbarType.error,
           showTheResultType: ShowTheResultType.snackBar,
-          title: 'خطا',
+          title: 'Error',
           message: '$e');
       AppLogger.e('$e');
     }

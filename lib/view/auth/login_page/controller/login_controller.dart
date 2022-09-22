@@ -4,7 +4,7 @@ import 'package:kanoon_dadgostari/app/app_exeption.dart';
 import 'package:kanoon_dadgostari/models/base/title_value_model.dart';
 import 'package:kanoon_dadgostari/repo/sec/auth_repo.dart';
 import 'package:kanoon_dadgostari/service/connection_service/connection_status.dart';
-import 'package:kanoon_dadgostari/utilites/enum.dart';
+import 'package:kanoon_dadgostari/enums/result_enum.dart';
 import 'package:kanoon_dadgostari/utilites/show_result.dart';
 import 'package:kanoon_dadgostari/view/widgets/custom_snackbar/custom_snackbar.dart';
 

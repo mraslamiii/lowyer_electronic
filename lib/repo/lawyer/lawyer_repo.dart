@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/enums/snackbar_type.dart';
 import 'package:kanoon_dadgostari/models/lawyer/lawyer_rqm/edit_social_rqm.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
-import 'package:kanoon_dadgostari/utilites/enum.dart';
+import 'package:kanoon_dadgostari/enums/result_enum.dart';
 import 'package:kanoon_dadgostari/utilites/show_result.dart';
 
 import '../../models/lawyer/lawyer_rqm/edit_address_rqm.dart';

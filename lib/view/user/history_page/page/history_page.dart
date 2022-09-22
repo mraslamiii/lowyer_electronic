@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/utilites/datetime_extentions.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
+import '../../../../enums/request_type_enum.dart';
 import '../../../widgets/back_widget/back_widget.dart';
 import '../controller/history_controller.dart';
 
@@ -47,13 +48,26 @@ class HistoryPage extends StatelessWidget {
       child: Column(
         children: [
           _historyWidgetItem(
-              'assets/icons/ic_paper.svg', "نوع درخواست", controller.rpm[index].requestType ),
+              'assets/icons/ic_paper.svg',
+              "نوع درخواست",
+              RequestType.making.name == controller.rpm[index].requestType
+                  ? 'درحال ساخت'
+                  : controller.rpm[index].requestType == RequestType.active.name
+                  ? 'فعال' :
+                  'مسدود شده'
+          ),
           const Divider(),
           _historyWidgetItem(
               'assets/icons/stickynote.svg', " تاریخ", getDate(DateTime.parse(controller.rpm[index].createdAt).toJalali())),
           const Divider(),
           _historyWidgetItem(
-              'assets/icons/clipboard_tick.svg', "وضعیت", controller.rpm[index].status),
+              'assets/icons/clipboard_tick.svg',
+              "وضعیت",
+              controller.rpm[index].status == StatusType.pending.name
+                  ? 'در حال بررسی'
+                  : controller.rpm[index].status == StatusType.accept.name
+                  ? 'تایید شده'
+                  : 'رد شده'),
         ],
       ),
     );

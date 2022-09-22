@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../enums/snackbar_type.dart';
 import '../res/dimens/dimens.dart';
-import 'enum.dart';
+import '../enums/result_enum.dart';
 
 
 void showTheResult(

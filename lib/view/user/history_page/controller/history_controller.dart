@@ -5,6 +5,7 @@ import 'package:kanoon_dadgostari/service/preferences_service.dart';
 import 'package:kanoon_dadgostari/utilites/app_logger.dart';
 
 class HistoryController extends GetxController with StateMixin<List<CardListRequestModel>> {
+
   late List<CardListRequestModel> rpm;
 
   final LocalStorageService pref = Get.find();

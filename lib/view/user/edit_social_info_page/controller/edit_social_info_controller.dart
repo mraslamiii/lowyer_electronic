@@ -9,7 +9,7 @@ import '../../../../models/lawyer/info_profile_model.dart';
 import '../../../../repo/lawyer/lawyer_repo.dart';
 import '../../../../service/connection_service/connection_status.dart';
 import '../../../../utilites/app_logger.dart';
-import '../../../../utilites/enum.dart';
+import '../../../../enums/result_enum.dart';
 import '../../../../utilites/show_result.dart';
 
 class EditSocialInfoController extends GetxController {

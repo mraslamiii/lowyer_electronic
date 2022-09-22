@@ -32,6 +32,7 @@ class LawyerCardPage extends StatelessWidget {
                         child: SizedBox(
                           width: fullWidth,
                           child: progressButton(
+                            isProgress: controller.requestNewCard.value,
                               onTap: () {
                                 controller.makeRequest();
                               }, text: "درخواست جدید"),
@@ -44,6 +45,7 @@ class LawyerCardPage extends StatelessWidget {
                         child: SizedBox(
                           width: fullWidth,
                           child: progressButton(
+                            isProgress: controller.isBusyBan.value,
                               onTap: () {
                                 // controller.hasActiveCard.value = !controller.hasActiveCard.value;
                                 // controller.update();

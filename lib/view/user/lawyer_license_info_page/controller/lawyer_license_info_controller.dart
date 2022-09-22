@@ -4,7 +4,7 @@ import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/enums/snackbar_type.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
-import 'package:kanoon_dadgostari/utilites/enum.dart';
+import 'package:kanoon_dadgostari/enums/result_enum.dart';
 import 'package:kanoon_dadgostari/utilites/show_result.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 

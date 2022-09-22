@@ -3,30 +3,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:kanoon_dadgostari/app/app_pages.dart';
-import 'package:kanoon_dadgostari/res/colors/colors.dart';
-import 'package:kanoon_dadgostari/view/base/home_page/controller/home_controller.dart';
-import 'package:kanoon_dadgostari/view/widgets/customScaffold/customScaffold.dart';
+import 'package:kanoon_dadgostari/widgets/bottom_sheet.dart';
+import 'package:toast/toast.dart';
+import '../../../../app/app_pages.dart';
+import '../../../../res/colors/colors.dart';
 import '../../../../res/dimens/dimens.dart';
 import '../../../../service/preferences_service.dart';
+import '../../../widgets/customScaffold/customScaffold.dart';
 import '../../../widgets/custom_bottom_sheet.dart';
+import '../controller/home_controller.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
   var theme = Get.theme;
-
-  final HomeController controller = Get.put(HomeController());
   final LocalStorageService pref = Get.find<LocalStorageService>();
+  final HomeController controller = Get.put(HomeController());
+
+  void showToast({String? msg, int? duration, int? gravity}) {
+    Toast.show('به زودی فعال میشود', duration: 2, gravity: Toast.bottom);
+  }
 
   @override
   Widget build(BuildContext context) {
+    ToastContext().init(context);
+
     return GetBuilder<HomeController>(
       init: controller,
       initState: (state) {
         if (pref.isFirstTimeLaunch) {
           controller.fetchHomeData();
           pref.isFirstTimeLaunch = false;
-
         }
       },
       builder: (controller) => customScaffold(
@@ -46,125 +52,121 @@ class HomePage extends StatelessWidget {
             //   ),
             // ),
             Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/pic_bg_home.jpg",),
-                  fit: BoxFit.cover,
-                  scale: 2.4,
-                )
+              alignment: Alignment.center,
+              height: fullWidth / 1.6,
+              padding: EdgeInsets.only(
+                right: standardSize,
+                left: standardSize,
               ),
-              height: fullHeight,
-              alignment: Alignment.topCenter,
-              child: Container(
-                alignment: Alignment.center,
-                height: fullWidth / 1.95,
-                padding: EdgeInsets.only(
-                  right: standardSize,
-                  left: standardSize,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/pic_bg_home.jpg"),
+                  fit: BoxFit.fill,
+                  scale: 2.4,
                 ),
-                child: Center(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: fullWidth / 5.5,
-                        height: fullWidth / 5.5,
-                        child: Stack(
-                          children: [
-                            Positioned.fill(
-                              child: GestureDetector(
-                                onTap: () => homeSheet(context),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        blurRadius: 6,
-                                        spreadRadius: 0,
-                                        offset: const Offset(0, 3),
-                                        color:
-                                            const Color(0xff000000).withOpacity(
-                                          0.2,
-                                        ),
+              ),
+              child: Center(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: fullWidth / 5.5,
+                      height: fullWidth / 5.5,
+                      child: Stack(
+                        children: [
+                          Positioned.fill(
+                            child: GestureDetector(
+                              onTap: () => homeSheet(context),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 6,
+                                      spreadRadius: 0,
+                                      offset: const Offset(0, 3),
+                                      color:
+                                          const Color(0xff000000).withOpacity(
+                                        0.2,
                                       ),
-                                    ],
-                                  ),
-                                  child: const CircleAvatar(
-                                    backgroundImage: AssetImage(
-                                      'assets/images/avatar.JPG',
                                     ),
+                                  ],
+                                ),
+                                child: const CircleAvatar(
+                                  backgroundImage: AssetImage(
+                                    'assets/images/avatar.JPG',
                                   ),
                                 ),
                               ),
                             ),
-                            Align(
-                              alignment: const AlignmentDirectional(-0.95, -1),
-                              child: SizedBox(
-                                width: fullWidth / 18,
-                                height: fullWidth / 18,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    homeSheet(context);
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    foregroundColor: AppColors.splashColor,
-                                    padding: EdgeInsets.all(xxSmallSize),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                        standardRadius,
-                                      ),
-                                      side: const BorderSide(
-                                        color: AppColors.primaryColor,
-                                        width: 1.5,
-                                      ),
+                          ),
+                          Align(
+                            alignment: const AlignmentDirectional(-0.95, -1),
+                            child: SizedBox(
+                              width: fullWidth / 18,
+                              height: fullWidth / 18,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  homeSheet(context);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  foregroundColor: AppColors.splashColor,
+                                  padding: EdgeInsets.all(xxSmallSize),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                      standardRadius,
                                     ),
-                                    backgroundColor: Colors.white,
-                                    elevation: 0,
+                                    side: const BorderSide(
+                                      color: AppColors.primaryColor,
+                                      width: 1.5,
+                                    ),
                                   ),
-                                  child: SvgPicture.asset(
-                                    'assets/icons/ic_edit_filled.svg',
-                                    color: theme.primaryColor,
-                                    width: iconSizeLarge,
-                                    height: iconSizeLarge,
-                                  ),
+                                  backgroundColor: Colors.white,
+                                  elevation: 0,
+                                ),
+                                child: SvgPicture.asset(
+                                  'assets/icons/ic_edit_filled.svg',
+                                  color: theme.primaryColor,
                                 ),
                               ),
-                            )
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(right: xxSmallSize),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Flexible(
+                                  child: titleWidget(
+                                    '${controller.pref.user.firstName} ${controller.pref.user.lastName}',
+                                  ),
+                                ),
+                                SvgPicture.asset(
+                                  'assets/icons/ic_notification.svg',
+                                )
+                              ],
+                            ),
+                            titleWidget(controller
+                                        .pref.lawyer.user?.code.isEmpty ??
+                                    false
+                                ? 'فعالیت شما تایید نشده است'
+                                : 'کد فعالیت :${controller.pref.lawyer.user!.code}'),
+                            titleWidget(
+                                "شهر محل فعالیت : ${controller.pref.lawyer.profile?.cityName}"),
                           ],
                         ),
                       ),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.only(right: xxSmallSize),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Flexible(
-                                    child: titleWidget(
-                                      '${pref.user.firstName} ${pref.user.lastName}',
-                                    ),
-                                  ),
-                                  SvgPicture.asset(
-                                    'assets/icons/ic_notification.svg',
-                                  )
-                                ],
-                              ),
-                              titleWidget(pref.lawyer.user?.code.isEmpty ?? false
-                                  ? 'فعالیت شما تایید نشده است'
-                                  : 'کد فعالیت :${pref.lawyer.user!.code}'),
-                              titleWidget(
-                                  "شهر محل فعالیت : ${pref.lawyer.profile!.cityName}"),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -211,36 +213,43 @@ class HomePage extends StatelessWidget {
                     'assets/icons/Ic_home_edu_center.webp',
                     'مرکز آموزش',
                     disabled: true,
+                    action: () => showToast(),
                   ),
                   menuItemWidget(
                     'assets/icons/Ic_home_book_finder.webp',
                     'دفتریاب',
                     disabled: true,
+                    action: () => showToast(),
                   ),
                   menuItemWidget(
                     'assets/icons/Ic_search.webp',
                     'انتخابات',
                     disabled: true,
+                    action: () => showToast(),
                   ),
                   menuItemWidget(
                     'assets/icons/Ic_electronic.webp',
                     'دولت الکترونیک',
                     disabled: true,
+                    action: () => showToast(),
                   ),
                   menuItemWidget(
                     'assets/icons/Ic_home_court.webp',
                     'دادسرا',
                     disabled: true,
+                    action: () => showToast(),
                   ),
                   menuItemWidget(
                     'assets/icons/Ic_home_add_person.webp',
                     'جذب نیرو',
                     disabled: true,
+                    action: () => showToast(),
                   ),
                   menuItemWidget(
                     'assets/icons/Ic_home_peyment.webp',
                     'درگاه خدمات',
                     disabled: true,
+                    action: () => showToast(),
                   ),
                 ],
               ),
@@ -291,15 +300,20 @@ class HomePage extends StatelessWidget {
     String title,
     String icon,
     bool isFirst,
-    String? routeName,
-  ) {
+    String? routeName, {
+    double? width,
+    double? height,
+    VoidCallback? onTap,
+    Color? iconColor,
+  }) {
     return Ink(
       color: Colors.black54,
       child: InkWell(
-        onTap: () {
-          Navigator.pop(context);
-          Get.toNamed(routeName!);
-        },
+        onTap: onTap ??
+            () {
+              Navigator.pop(context);
+              Get.toNamed(routeName!);
+            },
         // splashColor: AppColors.splashColor,
         child: Column(
           children: [
@@ -315,7 +329,12 @@ class HomePage extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(left: smallSize),
-                    child: SvgPicture.asset(icon),
+                    child: SvgPicture.asset(
+                      icon,
+                      width: width,
+                      height: height,
+                      color: iconColor,
+                    ),
                   ),
                   Expanded(
                     child: Text(
@@ -408,6 +427,20 @@ class HomePage extends StatelessWidget {
               'assets/icons/ic_wallet.svg',
               false,
               null,
+            ),
+            sheetItem(
+              context,
+              'خروج',
+              'assets/icons/ic_logout.svg',
+              false,
+              null,
+              width: iconSizeMedium,
+              height: iconSizeMedium,
+              iconColor: const Color(0xffef5350),
+              onTap: () {
+                profileExitSheet(context,
+                    optionalText: 'آیا میخواهید خارج شوید ؟');
+              },
             ),
             // sheetItem('مهارت ها', 'assets/icons/ic_skills.svg', false,
             //     const LawyerSkillsPage()),

@@ -6,7 +6,7 @@ import 'package:kanoon_dadgostari/service/connection_service/connection_status.d
 
 import '../../../../enums/snackbar_type.dart';
 import '../../../../service/preferences_service.dart';
-import '../../../../utilites/enum.dart';
+import '../../../../enums/result_enum.dart';
 import '../../../../utilites/show_result.dart';
 
 class VerifyController extends GetxController {

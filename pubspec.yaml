@@ -49,7 +49,7 @@ dependencies:
   uni_links: ^0.5.1
   permission_handler: ^10.0.0
   flutter_screenutil: ^5.5.2
-
+  toast: ^0.3.0
   #  location: ^4.4.0
   flutter_osm_plugin: ^0.39.1
 #  flutter_osm_plugin:

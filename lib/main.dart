@@ -28,14 +28,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     setupChromeSystem();
 
-    // return ScreenUtilInit(
-    //     minTextAdapt: true,
-    //     splitScreenMode: true,
-    //     designSize: const Size(360, 690),
-    //     builder: (child, contextt) {
-    //       ScreenUtil.init(context);
+    return ScreenUtilInit(
+        minTextAdapt: true,
+        splitScreenMode: true,
+        designSize: const Size(360, 690),
+        useInheritedMediaQuery:false,
+
+        builder: (child, contextt) {
+          ScreenUtil.init(context);
           return GetMaterialApp(
-            
             debugShowCheckedModeBanner: false,
             smartManagement: SmartManagement.onlyBuilder,
 
@@ -68,7 +69,7 @@ class MyApp extends StatelessWidget {
             initialRoute: AppPages.initialRoute,
             getPages: AppPages.routes,
           );
-        // });
+        });
   }
 }
 
