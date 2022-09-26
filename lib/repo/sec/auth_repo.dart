@@ -1,13 +1,25 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/web_models/auth/auth_web_model.dart';
 import 'package:kanoon_dadgostari/web_providers/sec/auth_provider.dart';
 
+import '../../models/base/base_response.dart';
+import '../../models/lawyer/info_profile_model.dart';
 import '../../service/preferences_service.dart';
 import '../../utilites/app_logger.dart';
 import '../../web_providers/lawyer_provider/lawyer_provider.dart';
 
 class AuthRepository {
-
+  Future logoutRepo() async {
+    try {
+      var response = await AuthAPI().logout();
+      return response['data'];
+    } catch (e) {
+      rethrow;
+    }
+  }
   /// Login signup request ///
   Future<String> loginRequest(String phone) async {
     try {
@@ -55,4 +67,36 @@ class AuthRepository {
       rethrow;
     }
   }
+
+
+  Future<String> uploadFile(File file) async {
+    final LocalStorageService pref = Get.find();
+    try {
+      var response = await AuthAPI().uploadImage(file);
+      String imageUrl = response.data;
+      User user = pref.user;
+      user.avatar = imageUrl;
+      pref.user = user;
+      // bool edit = await LawyersAPI().editAddress(
+      //   file
+      //     // UserModel.fromEntity(User(
+      //     // avatar: pref.user.imageUrl,
+      //     // id: pref.user.id,
+      //     // companyName: pref.user.companyName,
+      //     // email: pref.user.email,
+      //     // lastName: pref.user.lastName,
+      //     // firstName: pref.user.firstName,
+      //     // phoneNumber: pref.user.phoneNumber,
+      //     // userName: pref.user.userName,
+      //     // emailConfirmed: pref.user.emailConfirmed,
+      //     // isActive: pref.user.isActive,
+      //     // vatNumber: pref.user.vatNumber)
+      //     ));
+
+      return imageUrl;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 }

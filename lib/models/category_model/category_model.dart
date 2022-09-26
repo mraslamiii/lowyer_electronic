@@ -85,21 +85,29 @@ class AcceptorsItem {
 
 class CategoriesItem {
   final String title;
+  final String image;
+  final int id;
   final dynamic parentId;
 
   CategoriesItem({
     this.title = "",
+    this.image = "",
+    this.id = 0,
     this.parentId,
   });
 
   factory CategoriesItem.fromJson(Map<String, dynamic>? json) => CategoriesItem(
     title: asT<String>(json, 'title'),
+    image: asT<String>(json, 'image'),
+    id: asT<int>(json, 'id'),
     parentId: asT<dynamic>(json, 'parent_id'),
   );
 
   Map<String, dynamic> toJson() => {
     'title': title,
     'parent_id': parentId,
+    'id': id,
+    'image': image,
   };
 }
 

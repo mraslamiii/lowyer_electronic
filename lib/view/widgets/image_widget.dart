@@ -14,7 +14,7 @@ Widget imageWidget(String image, {BoxFit fit = BoxFit.cover,double? radius,}) {
     fadeInDuration: const Duration(seconds: 1),
     placeholderFadeInDuration: const Duration(seconds: 1),
     fadeOutDuration: const Duration(seconds: 1),
-    imageUrl: imageUrlChecker(image),
+    imageUrl:image,
     placeholder: (context, url) =>Container(color: AppColors.cardColor,child: const CupertinoActivityIndicator()),
     errorWidget: (context, url, error) => Container(color: AppColors.cardColor,child: const Icon(Icons.error_outline)),
   );

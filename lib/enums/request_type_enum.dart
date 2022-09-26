@@ -1,2 +1,2 @@
-enum RequestType { making, ban, active }
-enum StatusType { pending, accept, failed }
+enum RequestType { making, ban }
+enum StatusType { pending, accepted, failed }

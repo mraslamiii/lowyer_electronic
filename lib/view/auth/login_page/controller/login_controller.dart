@@ -76,7 +76,11 @@ class LoginController extends GetxController {
       catch (e) {
         isBusyLogin.value = false;
 
-        rethrow;
+        showTheResult(
+            resultType: SnackbarType.error,
+            showTheResultType: ShowTheResultType.snackBar,
+            title: 'خطا',
+            message: '$e');
       }
     } else {
       isBusyLogin.value = false;

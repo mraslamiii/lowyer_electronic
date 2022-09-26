@@ -20,7 +20,7 @@ class LocalStorageService extends GetxService {
   static const String isFirstTimeLaunchKey = "IsFirstTimeLaunch";
   static const String tenantKey = "TokenKey";
   static const String tokenKey = "TokenKey";
-  static const String defaultTokenValue = "anonymous";
+  static const String defaultTokenValue = "";
   static const String refreshTokenKey = "refreshTokenKey";
   static const String refreshTokenExpiryTimeKey = "refreshTokenExpiryTimeKey";
   static const String isPersianModeKey = "isPersianModeKey";
@@ -81,6 +81,14 @@ class LocalStorageService extends GetxService {
   set phoneNumber(String key) => _box.write(phoneNumberKey, key);
 
   //
+  set user(User user) {
+    try {
+      _box.write(userKey, user);
+    } catch (e) {
+      AppLogger.e('$e');
+    }
+  }
+
   User get user {
     var userJson = _box.read(userKey);
     if (userJson == null) {
@@ -241,10 +249,9 @@ class LocalStorageService extends GetxService {
 
     // user = User();
     token = defaultTokenValue;
-    firebaseToken = "";
-    refreshToken = "";
-    refreshTokenExpiryTime = "";
-    setRecentSearch([]);
+    _box.remove(userKey);
+    _box.remove(lawyerKey);
+    isFirstTimeLaunch = !isFirstTimeLaunch;
   }
 
   Map<String, String> get headers {
