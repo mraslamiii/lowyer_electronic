@@ -341,6 +341,7 @@ class APIProvider extends GetxService {
         try {
           return response?.data;
 
+
           // var responseJson = jsonDecode(response?.data);
           // return responseJson;
         } catch (e) {
