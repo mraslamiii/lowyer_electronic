@@ -6,6 +6,7 @@ import 'package:kanoon_dadgostari/web_models/auth/auth_web_model.dart';
 import 'package:kanoon_dadgostari/web_providers/sec/auth_provider.dart';
 
 import '../../models/base/base_response.dart';
+import '../../models/base/upload_model.dart';
 import '../../models/lawyer/info_profile_model.dart';
 import '../../service/preferences_service.dart';
 import '../../utilites/app_logger.dart';
@@ -69,14 +70,16 @@ class AuthRepository {
   }
 
 
-  Future<String> uploadFile(File file) async {
+  Future uploadFile(File file) async {
     final LocalStorageService pref = Get.find();
     try {
       var response = await AuthAPI().uploadImage(file);
-      String imageUrl = response.data;
-      User user = pref.user;
-      user.avatar = imageUrl;
-      pref.user = user;
+
+    // UploadModel result= UploadModel.fromJson(response.data);
+      // String imageUrl = response.data;
+      // User user = pref.user;
+      // user.avatar = imageUrl;
+      // pref.user = user;
       // bool edit = await LawyersAPI().editAddress(
       //   file
       //     // UserModel.fromEntity(User(
@@ -92,8 +95,7 @@ class AuthRepository {
       //     // isActive: pref.user.isActive,
       //     // vatNumber: pref.user.vatNumber)
       //     ));
-
-      return imageUrl;
+      return response['data'];
     } catch (e) {
       rethrow;
     }

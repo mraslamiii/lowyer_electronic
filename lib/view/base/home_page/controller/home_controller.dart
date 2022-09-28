@@ -9,6 +9,7 @@ import 'package:kanoon_dadgostari/enums/snackbar_type.dart';
 import 'package:kanoon_dadgostari/models/base/base_response.dart';
 import 'package:kanoon_dadgostari/utilites/show_result.dart';
 
+import '../../../../models/base/upload_model.dart';
 import '../../../../repo/sec/auth_repo.dart';
 import '../../../../service/preferences_service.dart';
 import '../../../../utilites/app_logger.dart';
@@ -19,6 +20,7 @@ class HomeController extends GetxController {
 
   final AuthRepository repo = AuthRepository();
   final LocalStorageService pref = Get.find();
+  UploadModel? response;
 
   Future<void> openCamera() async {
     final pickedFile = await ImagePicker().pickImage(
@@ -51,10 +53,13 @@ class HomeController extends GetxController {
     // _file?.value = file;
   }
 
+  String? res;
+
   Future upLoadAvatar(File file) async {
     try {
-      var result = await repo.uploadFile(file);
-      return result;
+      res = await repo.uploadFile(file);
+      update();
+      return res;
     } catch (e) {
       AppLogger.e('$e');
     }
@@ -66,6 +71,11 @@ class HomeController extends GetxController {
       update();
       return result;
     } catch (e) {
+      showTheResult(
+          resultType: SnackbarType.error,
+          showTheResultType: ShowTheResultType.snackBar,
+          title: 'خطا',
+          message: '$e');
       AppLogger.e('$e');
     }
   }

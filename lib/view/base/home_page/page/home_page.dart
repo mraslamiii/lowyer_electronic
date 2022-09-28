@@ -90,7 +90,7 @@ class HomePage extends StatelessWidget {
                           child: Stack(
                             children: [
                               Positioned.fill(
-                                child: Obx(()=>GestureDetector(
+                                child:GestureDetector(
                                   onTap: () {
                                     customBottomSheet(
                                       Get.context!,
@@ -212,10 +212,10 @@ class HomePage extends StatelessWidget {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(xxLargeSize*100),
                                     child:
-                                    Image.file(controller.file.value)
-                                    // imageWidget(
-                                    //   controller.file.value.path
-                                    // ),
+                                    // Image.file(controller.file.value)
+                                    imageWidget(
+                                      controller.res ?? ''
+                                    ),
                                   )
 /*
                                   Container(
@@ -244,7 +244,7 @@ class HomePage extends StatelessWidget {
                                     ),
                                   ),
 */
-                                ) ),
+                                 ),
                               ),
                               Align(
                                 alignment: const AlignmentDirectional(-0.95, -1),

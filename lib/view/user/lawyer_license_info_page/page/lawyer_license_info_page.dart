@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
 import 'package:kanoon_dadgostari/view/widgets/customScaffold/customScaffold.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
+import '../../../../map_page.dart';
 import '../../../widgets/back_widget/back_widget.dart';
+import '../../../widgets/custom_bottom_sheet.dart';
 import '../../../widgets/progress_button/progress_button.dart';
 import '../../../widgets/text_form_field/text_form_field_widget.dart';
 import '../controller/lawyer_license_info_controller.dart';
@@ -140,6 +142,55 @@ bool isFirstLunch = true;
                         textEditingController: controller.cityTxtController,
                       ),
                     ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: standardSize),
+                child: Text("موقعیت دفتر کار",
+                    style: Get.theme.textTheme.subtitle1?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    )),
+              ),
+              GestureDetector(
+                onTap: () async {
+                  var result = await customBottomSheet(
+                      context, MapPage(controller: controller.controller),
+                      hasClose: true,
+                      height: fullHeight / 2,
+                      isDismissible: false,
+                      padding: EdgeInsets.only(bottom: standardSize));
+
+                  if (result != null) {
+                    controller.changeLoctaion(result);
+                    //todo get from server
+                  }
+                },
+                behavior: HitTestBehavior.translucent,
+                child: Container(
+                  clipBehavior: Clip.antiAlias,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(standardRadius)),
+                  height: fullWidth / 3,
+                  width: fullWidth,
+                  margin: EdgeInsetsDirectional.only(
+                    start: standardSize,
+                    end: standardSize,
+                    top: standardSize,
+                    bottom: standardSize,
+                  ),
+                  child: TextFormFieldWidget(
+                    // inputFormatters: [
+                    //   FilteringTextInputFormatter.digitsOnly
+                    // ],
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.done,
+                    textDirection: TextDirection.rtl,
+                    label: "آدرس دفتر وکالت",
+                    // onChange: controller.valueChanged,
+                    hint: "آدرس",
+                    textEditingController:
+                    controller.officeAddressTxtController,
+                  ),
+                )),
+/*
                     Container(
                       margin: EdgeInsetsDirectional.only(
                         start: standardSize,
@@ -161,6 +212,7 @@ bool isFirstLunch = true;
                             controller.officeAddressTxtController,
                       ),
                     ),
+*/
                     Container(
                       margin: EdgeInsetsDirectional.only(
                         start: standardSize,
