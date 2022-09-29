@@ -6,11 +6,13 @@ import 'package:kanoon_dadgostari/view/auth/signup_page/controller/signup_contro
 import 'package:kanoon_dadgostari/view/widgets/back_widget/back_widget.dart';
 import 'package:kanoon_dadgostari/view/widgets/progress_button/progress_button.dart';
 
+import '../../../../app/app_pages.dart';
+import '../../../../widgets/avatar_image_circle.dart';
 import '../../../widgets/customScaffold/customScaffold.dart';
 import '../../../widgets/text_form_field/text_form_field_widget.dart';
 
 class SignUpPage extends StatelessWidget {
-  String? phone = "";
+  // String? phone = "";
 
   SignUpPage({Key? key}) : super(key: key);
 
@@ -18,8 +20,8 @@ class SignUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<SignUPController>(
       builder: (controller) {
-        phone = Get.arguments as String;
-        controller.phoneTxtController.text = phone!;
+        // phone = Get.arguments as String;
+        // controller.phoneTxtController.text = phone!;
         return WillPopScope(
           onWillPop: backtoLogin,
           child: customScaffold(
@@ -29,49 +31,18 @@ class SignUpPage extends StatelessWidget {
                 onTap: () => backtoLogin(),
               ),
               title: const Text(
-                "ثبت نام",
+                "ورود اپلیکیشن",
               ),
             ),
             body: ListView(
               physics: const BouncingScrollPhysics(),
               children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: standardSize,
-                    horizontal: standardSize,
+                Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(
+                    top: largeSize
                   ),
-                  child: Text("کد ملی", style: Get.theme.textTheme.subtitle1),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    right: standardSize,
-                    left: standardSize,
-                  ),
-                  child: Directionality(
-                    textDirection: TextDirection.ltr,
-                    child: TextFormFieldWidget(
-                      onEditingComplete: () {
-                        controller.update();
-                      },
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      textDirection: TextDirection.ltr,
-                      maxLength: 10,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (value) {
-                        if (value!.length < 10) {
-                          return "کد ملی حداقل باید 10 رقم باشد";
-                        } else if (value.isEmpty) {
-                          return "این مقدار ضروری میباشد";
-                        } else {
-                          return null;
-                        }
-                      },
-                      hint: "915xxxxxx",
-                      keyboardType: TextInputType.number,
-                      textEditingController: controller.idCodeUserController,
-                    ),
-                  ),
-                ),
+                    child: avatarImageCircle('assets/images/avatar.JPG')),
                 Padding(
                   padding: EdgeInsets.symmetric(
                     vertical: standardSize,
@@ -99,7 +70,7 @@ class SignUpPage extends StatelessWidget {
                         return null;
                       }
                     },
-                    hint: "نام خود را وارد کنید",
+                    hint: "نام",
                     textEditingController: controller.nameTxtController,
                   ),
                 ),
@@ -130,8 +101,45 @@ class SignUpPage extends StatelessWidget {
                         return null;
                       }
                     },
-                    hint: "نام خانوادگی خود را وارد کنید",
+                    hint: "نام خانوادگی",
                     textEditingController: controller.lastNameTxtController,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: standardSize,
+                    horizontal: standardSize,
+                  ),
+                  child: Text("کد ملی", style: Get.theme.textTheme.subtitle1),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    right: standardSize,
+                    left: standardSize,
+                  ),
+                  child: Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: TextFormFieldWidget(
+                      onEditingComplete: () {
+                        controller.update();
+                      },
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      textDirection: TextDirection.rtl,
+                      maxLength: 10,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value!.length < 10) {
+                          return "کد ملی حداقل باید 10 رقم باشد";
+                        } else if (value.isEmpty) {
+                          return "این مقدار ضروری میباشد";
+                        } else {
+                          return null;
+                        }
+                      },
+                      hint: "0923456789",
+                      keyboardType: TextInputType.number,
+                      textEditingController: controller.idCodeUserController,
+                    ),
                   ),
                 ),
                 Padding(
@@ -149,15 +157,20 @@ class SignUpPage extends StatelessWidget {
                     right: standardSize,
                     left: standardSize,
                   ),
-                  child: TextFormFieldWidget(
-                    textDirection: TextDirection.rtl,
-                    hint: "0903xxxxxxx",
-                    maxLine: 1,
-                    onEditingComplete: () {
-                      controller.update();
-                    },
-                    keyboardType: TextInputType.number,
-                    textEditingController: controller.phoneTxtController,
+                  child: Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: TextFormFieldWidget(
+                      onEditingComplete: () {
+                        controller.update();
+                      },
+                      // onChange: (value) => phone = value,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      textDirection: TextDirection.rtl,
+                      // autovalidateMode: AutovalidateMode.onUserInteraction,
+                      hint: "09012345678",
+                      keyboardType: TextInputType.number,
+                      textEditingController: controller.phoneTxtController,
+                    ),
                   ),
                 ),
               ],
@@ -177,10 +190,10 @@ class SignUpPage extends StatelessWidget {
                             controller
                                 .idCodeUserController.value.text.isNotEmpty
                         ? () {
-                            controller.fetchData(phone!);
+                            Get.toNamed(Routes.signupPage2);
                           }
                         : null,
-                    text: "ادامه ثبت نام",
+                    text: "مرحله بعد",
                   ),
                 ),
               ),

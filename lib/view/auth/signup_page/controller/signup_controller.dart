@@ -20,19 +20,36 @@ import '../../../widgets/custom_snackbar/custom_snackbar.dart';
 
 class SignUPController extends GetxController {
   TextEditingController idCodeUserController = TextEditingController();
-  TextEditingController dateTimeTxtController = TextEditingController();
   TextEditingController phoneTxtController = TextEditingController();
+  TextEditingController dateTimeTxtController = TextEditingController();
   TextEditingController nameTxtController = TextEditingController();
   TextEditingController lastNameTxtController = TextEditingController();
+
+
+  TextEditingController lawyerLicenseNumTxtController = TextEditingController();
+  TextEditingController lawyerLicenseRecDateTxtController = TextEditingController();
+  TextEditingController lawyerLicenseExpDateTxtController = TextEditingController();
+
 
   final LocalStorageService pref = Get.find<LocalStorageService>();
   final ConnectionStatusController connectionStatusController =
       Get.find<ConnectionStatusController>();
   AuthRepository repo = AuthRepository();
 
+
+  Rx<Jalali>? receivedDate = Jalali
+      .now()
+      .obs;
+  Rx<Jalali>? expirationDate = Jalali
+      .now()
+      .obs;
+
+
   RxBool isBusyLogin = false.obs;
 
-  Future<void> fetchData(String phone) async {
+  Future<void> fetchData(
+      // String phone
+      ) async {
     if (isBusyLogin.isFalse &&
         connectionStatusController.connectionStatus ==
             ConnectionStatus.connect) {
@@ -42,7 +59,7 @@ class SignUPController extends GetxController {
         var result = await repo.registerRequest(RegisterRQM(
             firstName: nameTxtController.text,
             lastName: lastNameTxtController.text,
-            mobileNumber: phone,
+            mobileNumber: phoneTxtController.text,
             nationalCode: idCodeUserController.text));
         isBusyLogin.value = false;
 
@@ -65,8 +82,7 @@ class SignUPController extends GetxController {
   }
 
 
-
-  void showDatePicker(BuildContext context) async {
+  void showDatePickerReceivedDate(BuildContext context) async {
     Jalali? picked = await showPersianDatePicker(
       context: context,
       initialDate: Jalali.now(),
@@ -76,8 +92,29 @@ class SignUPController extends GetxController {
       initialDatePickerMode: PDatePickerMode.day,
     );
     if (picked != null) {
-      // dateTimeTxt.value = "${picked.formatFullDate()} ";
-      dateTimeTxtController.text = "${picked.formatFullDate()} ";
+      receivedDate!.value = picked;
+      lawyerLicenseRecDateTxtController.text =
+      "${receivedDate?.value.formatter.yyyy}/${receivedDate?.value.formatter
+          .mm}/${receivedDate?.value.formatter.dd}";
+    }
+  }
+
+  void showDatePickerExpirationDate(BuildContext context) async {
+    Jalali? picked = await showPersianDatePicker(
+      context: context,
+      initialDate: Jalali.now(),
+      firstDate: Jalali.now(),
+      lastDate: Jalali(DateTime
+          .now()
+          .year + 20, 12, 29),
+      textDirection: TextDirection.rtl,
+      initialDatePickerMode: PDatePickerMode.day,
+    );
+    if (picked != null) {
+      expirationDate!.value = picked;
+      lawyerLicenseExpDateTxtController.text =
+      "${expirationDate?.value.formatter.yyyy}/${expirationDate?.value.formatter
+          .mm}/${expirationDate?.value.formatter.dd}";
     }
   }
 }
