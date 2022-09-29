@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:kanoon_dadgostari/widgets/bottom_sheet.dart';
 import 'package:toast/toast.dart';
 import '../../../../app/app_pages.dart';
@@ -11,6 +12,7 @@ import '../../../../res/dimens/dimens.dart';
 import '../../../../service/preferences_service.dart';
 import '../../../widgets/customScaffold/customScaffold.dart';
 import '../../../widgets/custom_bottom_sheet.dart';
+import '../../../widgets/image_widget.dart';
 import '../controller/home_controller.dart';
 
 class HomePage extends StatelessWidget {
@@ -26,6 +28,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ToastContext().init(context);
+    debugPrint('token:${pref.token}');
 
     return GetBuilder<HomeController>(
       init: controller,
@@ -44,6 +47,7 @@ class HomePage extends StatelessWidget {
         context: context,
         body: Stack(
           children: [
+
             // Positioned(
             //   child: Image.asset(
             //     'assets/images/pic_bg_home.jpg',
@@ -66,110 +70,370 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               child: Center(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    SizedBox(
-                      width: fullWidth / 5.5,
-                      height: fullWidth / 5.5,
-                      child: Stack(
-                        children: [
-                          Positioned.fill(
-                            child: GestureDetector(
-                              onTap: () => homeSheet(context),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurRadius: 6,
-                                      spreadRadius: 0,
-                                      offset: const Offset(0, 3),
-                                      color:
-                                          const Color(0xff000000).withOpacity(
-                                        0.2,
+                    GestureDetector(
+                        onTap: () {
+                          homeSheet(context);
+                        },
+                        child: Icon(Icons.more_vert_sharp,color: Colors.red,)),
+
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: fullWidth / 5.5,
+                          height: fullWidth / 5.5,
+                          child: Stack(
+                            children: [
+                              Positioned.fill(
+                                child:GestureDetector(
+                                  onTap: () {
+                                    customBottomSheet(
+                                      Get.context!,
+                                      Column(
+                                        children: [
+                                          // Text(
+                                          //   '',
+                                          //   style: theme.textTheme.bodyText1?.copyWith(
+                                          //     fontWeight: FontWeight.w600,
+                                          //   ),
+                                          // ),
+                                          SizedBox(height: smallSize),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Material(
+                                                color: Colors.transparent,
+                                                child: InkWell(
+                                                  splashColor: AppColors.splashColor,
+                                                  borderRadius:
+                                                  BorderRadius.circular(xSmallRadius),
+                                                  onTap: () {
+                                                    controller.openCamera();
+                                                    controller.update();
+
+                                                  },
+                                                  child: Padding(
+                                                    padding: EdgeInsetsDirectional.only(
+                                                      start: xxLargeSize,
+                                                      end: xxLargeSize,
+                                                      top: standardSize,
+                                                      bottom: standardSize,
+                                                    ),
+                                                    child: Column(
+                                                      children: [
+                                                        Container(
+                                                          decoration: BoxDecoration(
+                                                            color: const Color(0xFFEAEBF9),
+                                                            borderRadius:
+                                                            BorderRadius.circular(
+                                                                xSmallRadius),
+                                                          ),
+                                                          padding: EdgeInsetsDirectional.all(
+                                                            standardSize,
+                                                          ),
+                                                          child: SvgPicture.asset(
+                                                            "assets/icons/camera.svg",
+                                                            color: theme.primaryColor,
+                                                            width: iconSizeMedium,
+                                                            height: iconSizeMedium,
+                                                          ),
+                                                        ),
+                                                        SizedBox(height: smallSize),
+                                                        const Text("دوربین"),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(width: standardSize),
+                                              Container(
+                                                height: xxLargeSize * 1.2,
+                                                width: 1,
+                                                color: AppColors.borderColor,
+                                              ),
+                                              SizedBox(width: standardSize),
+                                              Material(
+                                                color: Colors.transparent,
+                                                child: InkWell(
+                                                  splashColor: AppColors.splashColor,
+                                                  borderRadius:
+                                                  BorderRadius.circular(xSmallRadius),
+                                                  onTap: () {
+                                                    controller.openGallery();
+                                                    controller.update();
+                                                  },
+                                                  child: Padding(
+                                                    padding: EdgeInsetsDirectional.only(
+                                                      start: xxLargeSize,
+                                                      end: xxLargeSize,
+                                                      top: standardSize,
+                                                      bottom: standardSize,
+                                                    ),
+                                                    child: Column(
+                                                      children: [
+                                                        Container(
+                                                          decoration: BoxDecoration(
+                                                            color: const Color(0xFFEAEBF9),
+                                                            borderRadius:
+                                                            BorderRadius.circular(
+                                                              xSmallRadius,
+                                                            ),
+                                                          ),
+                                                          padding: EdgeInsetsDirectional.all(
+                                                              standardSize),
+                                                          child: SvgPicture.asset(
+                                                            "assets/icons/ic_gallery.svg",
+                                                            color: theme.primaryColor,
+                                                            width: iconSizeMedium,
+                                                            height: iconSizeMedium,
+                                                          ),
+                                                        ),
+                                                        SizedBox(height: smallSize),
+                                                        const Text('گالری'),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      padding: EdgeInsetsDirectional.only(
+                                        bottom: standardSize,
+                                      ),
+                                    );
+                                  },
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(xxLargeSize*100),
+                                    child:
+                                    // Image.file(controller.file.value)
+                                    imageWidget(
+                                      controller.res ?? ''
+                                    ),
+                                  )
+/*
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 6,
+                                          spreadRadius: 0,
+                                          offset: const Offset(0, 3),
+                                          color:
+                                              const Color(0xff000000).withOpacity(
+                                            0.2,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Container(
+                                      child: Image.file(
+                                        // controller.file.value.path.isNotEmpty ?
+                                        controller.file.value,
+                                            fit: BoxFit.contain
+                                            // 'assets/images/avatar.JPG'
+                                        ,
                                       ),
                                     ),
+                                  ),
+*/
+                                 ),
+                              ),
+                              Align(
+                                alignment: const AlignmentDirectional(-0.95, -1),
+                                child: SizedBox(
+                                  width: fullWidth / 18,
+                                  height: fullWidth / 18,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      customBottomSheet(
+                                        Get.context!,
+                                        Column(
+                                          children: [
+                                            // Text(
+                                            //   '',
+                                            //   style: theme.textTheme.bodyText1?.copyWith(
+                                            //     fontWeight: FontWeight.w600,
+                                            //   ),
+                                            // ),
+                                            SizedBox(height: smallSize),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Material(
+                                                  color: Colors.transparent,
+                                                  child: InkWell(
+                                                    splashColor: AppColors.splashColor,
+                                                    borderRadius:
+                                                    BorderRadius.circular(xSmallRadius),
+                                                    onTap: () {
+                                                      controller.openCamera();
+                                                      controller.update();
+
+                                                    },
+                                                    child: Padding(
+                                                      padding: EdgeInsetsDirectional.only(
+                                                        start: xxLargeSize,
+                                                        end: xxLargeSize,
+                                                        top: standardSize,
+                                                        bottom: standardSize,
+                                                      ),
+                                                      child: Column(
+                                                        children: [
+                                                          Container(
+                                                            decoration: BoxDecoration(
+                                                              color: const Color(0xFFEAEBF9),
+                                                              borderRadius:
+                                                              BorderRadius.circular(
+                                                                  xSmallRadius),
+                                                            ),
+                                                            padding: EdgeInsetsDirectional.all(
+                                                              standardSize,
+                                                            ),
+                                                            child: SvgPicture.asset(
+                                                              "assets/icons/ic_camera.svg",
+                                                              color: theme.primaryColor,
+                                                              width: iconSizeMedium,
+                                                              height: iconSizeMedium,
+                                                            ),
+                                                          ),
+                                                          SizedBox(height: smallSize),
+                                                          Text("camera".tr),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(width: standardSize),
+                                                Container(
+                                                  height: xxLargeSize * 1.2,
+                                                  width: 1,
+                                                  color: AppColors.borderColor,
+                                                ),
+                                                SizedBox(width: standardSize),
+                                                Material(
+                                                  color: Colors.transparent,
+                                                  child: InkWell(
+                                                    splashColor: AppColors.splashColor,
+                                                    borderRadius:
+                                                    BorderRadius.circular(xSmallRadius),
+                                                    onTap: () {
+                                                      controller.openGallery();
+                                                      controller.update();
+                                                    },
+                                                    child: Padding(
+                                                      padding: EdgeInsetsDirectional.only(
+                                                        start: xxLargeSize,
+                                                        end: xxLargeSize,
+                                                        top: standardSize,
+                                                        bottom: standardSize,
+                                                      ),
+                                                      child: Column(
+                                                        children: [
+                                                          Container(
+                                                            decoration: BoxDecoration(
+                                                              color: const Color(0xFFEAEBF9),
+                                                              borderRadius:
+                                                              BorderRadius.circular(
+                                                                xSmallRadius,
+                                                              ),
+                                                            ),
+                                                            padding: EdgeInsetsDirectional.all(
+                                                                standardSize),
+                                                            child: SvgPicture.asset(
+                                                              "assets/icons/ic_gallery.svg",
+                                                              color: theme.primaryColor,
+                                                              width: iconSizeMedium,
+                                                              height: iconSizeMedium,
+                                                            ),
+                                                          ),
+                                                          SizedBox(height: smallSize),
+                                                          Text("gallery".tr),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        padding: EdgeInsetsDirectional.only(
+                                          bottom: standardSize,
+                                        ),
+                                      );
+                                      // sheetPickImage();
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      foregroundColor: AppColors.splashColor,
+                                      padding: EdgeInsets.all(xxSmallSize),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          standardRadius,
+                                        ),
+                                        side: const BorderSide(
+                                          color: AppColors.primaryColor,
+                                          width: 1.5,
+                                        ),
+                                      ),
+                                      backgroundColor: Colors.white,
+                                      elevation: 0,
+                                    ),
+                                    child: SvgPicture.asset(
+                                      'assets/icons/ic_edit_filled.svg',
+                                      color: theme.primaryColor,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(right: xxSmallSize),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Flexible(
+                                      child: titleWidget(
+                                        '${controller.pref.user.firstName} ${controller.pref.user.lastName}',
+                                      ),
+                                    ),
+                                    SvgPicture.asset(
+                                      'assets/icons/ic_notification.svg',
+                                    )
                                   ],
                                 ),
-                                child: const CircleAvatar(
-                                  backgroundImage: AssetImage(
-                                    'assets/images/avatar.JPG',
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: const AlignmentDirectional(-0.95, -1),
-                            child: SizedBox(
-                              width: fullWidth / 18,
-                              height: fullWidth / 18,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  homeSheet(context);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  foregroundColor: AppColors.splashColor,
-                                  padding: EdgeInsets.all(xxSmallSize),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                      standardRadius,
-                                    ),
-                                    side: const BorderSide(
-                                      color: AppColors.primaryColor,
-                                      width: 1.5,
-                                    ),
-                                  ),
-                                  backgroundColor: Colors.white,
-                                  elevation: 0,
-                                ),
-                                child: SvgPicture.asset(
-                                  'assets/icons/ic_edit_filled.svg',
-                                  color: theme.primaryColor,
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.only(right: xxSmallSize),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Flexible(
-                                  child: titleWidget(
-                                    '${controller.pref.user.firstName} ${controller.pref.user.lastName}',
-                                  ),
-                                ),
-                                SvgPicture.asset(
-                                  'assets/icons/ic_notification.svg',
-                                )
+                                titleWidget(controller
+                                            .pref.lawyer.user?.code.isEmpty ??
+                                        false
+                                    ? 'فعالیت شما تایید نشده است'
+                                    : 'کد فعالیت :${controller.pref.lawyer.user!.code}'),
+                                titleWidget(
+                                    "شهر محل فعالیت : ${controller.pref.lawyer.profile?.cityName}"),
                               ],
                             ),
-                            titleWidget(controller
-                                        .pref.lawyer.user?.code.isEmpty ??
-                                    false
-                                ? 'فعالیت شما تایید نشده است'
-                                : 'کد فعالیت :${controller.pref.lawyer.user!.code}'),
-                            titleWidget(
-                                "شهر محل فعالیت : ${controller.pref.lawyer.profile?.cityName}"),
-                          ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ],
                 ),
               ),
             ),
+
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
@@ -213,6 +477,11 @@ class HomePage extends StatelessWidget {
                     'assets/icons/Ic_home_edu_center.webp',
                     'مرکز آموزش',
                     disabled: true,
+                    // action: () {
+                    //
+                    //
+                    //   // controller.openGallery();
+                    // },
                     action: () => showToast(),
                   ),
                   menuItemWidget(
@@ -448,6 +717,121 @@ class HomePage extends StatelessWidget {
             //     null),
           ],
         ),
+      ),
+    );
+  }
+  void sheetPickImage(){
+     customBottomSheet(
+      Get.context!,
+      Column(
+        children: [
+          // Text(
+          //   '',
+          //   style: theme.textTheme.bodyText1?.copyWith(
+          //     fontWeight: FontWeight.w600,
+          //   ),
+          // ),
+          SizedBox(height: smallSize),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  splashColor: AppColors.splashColor,
+                  borderRadius:
+                  BorderRadius.circular(xSmallRadius),
+                  onTap: () {
+                    controller.openCamera();
+                  },
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.only(
+                      start: xxLargeSize,
+                      end: xxLargeSize,
+                      top: standardSize,
+                      bottom: standardSize,
+                    ),
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFEAEBF9),
+                            borderRadius:
+                            BorderRadius.circular(
+                                xSmallRadius),
+                          ),
+                          padding: EdgeInsetsDirectional.all(
+                            standardSize,
+                          ),
+                          child: SvgPicture.asset(
+                            "assets/icons/ic_camera.svg",
+                            color: theme.primaryColor,
+                            width: iconSizeMedium,
+                            height: iconSizeMedium,
+                          ),
+                        ),
+                        SizedBox(height: smallSize),
+                        Text("camera".tr),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(width: standardSize),
+              Container(
+                height: xxLargeSize * 1.2,
+                width: 1,
+                color: AppColors.borderColor,
+              ),
+              SizedBox(width: standardSize),
+              Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  splashColor: AppColors.splashColor,
+                  borderRadius:
+                  BorderRadius.circular(xSmallRadius),
+                  onTap: () {
+                    controller.openGallery();
+                  },
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.only(
+                      start: xxLargeSize,
+                      end: xxLargeSize,
+                      top: standardSize,
+                      bottom: standardSize,
+                    ),
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFEAEBF9),
+                            borderRadius:
+                            BorderRadius.circular(
+                              xSmallRadius,
+                            ),
+                          ),
+                          padding: EdgeInsetsDirectional.all(
+                              standardSize),
+                          child: SvgPicture.asset(
+                            "assets/icons/ic_gallery.svg",
+                            color: theme.primaryColor,
+                            width: iconSizeMedium,
+                            height: iconSizeMedium,
+                          ),
+                        ),
+                        SizedBox(height: smallSize),
+                        Text("gallery".tr),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+      padding: EdgeInsetsDirectional.only(
+        bottom: standardSize,
       ),
     );
   }

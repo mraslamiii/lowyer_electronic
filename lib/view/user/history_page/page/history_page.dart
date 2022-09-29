@@ -51,9 +51,7 @@ class HistoryPage extends StatelessWidget {
               'assets/icons/ic_paper.svg',
               "نوع درخواست",
               RequestType.making.name == controller.rpm[index].requestType
-                  ? 'درحال ساخت'
-                  : controller.rpm[index].requestType == RequestType.active.name
-                  ? 'فعال' :
+                  ? 'درحال ساخت':
                   'مسدود شده'
           ),
           const Divider(),
@@ -65,7 +63,7 @@ class HistoryPage extends StatelessWidget {
               "وضعیت",
               controller.rpm[index].status == StatusType.pending.name
                   ? 'در حال بررسی'
-                  : controller.rpm[index].status == StatusType.accept.name
+                  : controller.rpm[index].status == StatusType.accepted.name
                   ? 'تایید شده'
                   : 'رد شده'),
         ],

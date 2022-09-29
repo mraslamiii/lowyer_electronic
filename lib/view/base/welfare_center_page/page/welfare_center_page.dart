@@ -13,123 +13,137 @@ import '../controller/welfare_center_controller.dart';
 
 class WelfareCenterPage extends StatelessWidget {
   WelfareCenterPage({Key? key}) : super(key: key);
-final WelfareCenterController controller = Get.put(WelfareCenterController());
+  final WelfareCenterController controller = Get.put(WelfareCenterController());
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WelfareCenterController>(
-      init: controller,
-      initState: (state) => controller.getCategory(),
-
-      builder: (controller) => customScaffold(
-        appBar: AppBar(
-          title: const Text(
-            "مـرکز رفاهـی",
-          ),
-          leading: backIcon(),
-          actions: [
-            IconButton(
-              splashColor: AppColors.splashColor,
-              splashRadius: largeSize / 1.2,
-              onPressed: () async {
-                Get.toNamed(Routes.scan_search_page);
-              },
-              icon: SvgPicture.asset('assets/icons/ic_scan.svg'),
-            )
-          ],
-        ),
-        context: context,
-        body: controller.obx((state) => SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                margin: EdgeInsets.only(
-                  top: standardSize,
-                  left: standardSize,
-                  right: standardSize,
+        init: controller,
+        initState: (state) => controller.getCategory(),
+        builder: (controller) => customScaffold(
+              appBar: AppBar(
+                title: const Text(
+                  "مـرکز رفاهـی",
                 ),
-                child: Text(
-                  "دسته بندی",
-                  style: Get.theme.textTheme.headline6?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: fullWidth / 1.95,
-                child: Padding(
-                  padding: EdgeInsetsDirectional.only(
-                    top: mediumSize,
-                    bottom: mediumSize,
-                  ),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: controller.rpm.data?.categories.length,
-                    scrollDirection: Axis.horizontal,
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return Container(
-                        margin: EdgeInsetsDirectional.only(
-                          end: standardSize,
-                          start: index == 0 ? standardSize : 0,
-                        ),
-                        child: categoryWidget(
-                          controller.images[index],//todo fix this images
-                          controller.rpm.data?.categories[index].title ?? '',
-
-                        ),
-                      );
+                leading: backIcon(),
+                actions: [
+                  IconButton(
+                    splashColor: AppColors.splashColor,
+                    splashRadius: largeSize / 1.2,
+                    onPressed: () async {
+                      Get.toNamed(Routes.scan_search_page);
                     },
-                  ),
-                ),
+                    icon: SvgPicture.asset('assets/icons/ic_scan.svg'),
+                  )
+                ],
               ),
-              Container(
-                margin: EdgeInsets.only(
-                  top: standardSize,
-                  left: standardSize,
-                  right: standardSize,
-                ),
-                child: Text(
-                  "مراکز خرید",
-                  style: Get.theme.textTheme.headline6?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              Container(
-                height: fullWidth / 1.7,
-                width: fullWidth,
-                margin: EdgeInsetsDirectional.only(
-                  top: mediumSize,
-                  bottom: mediumSize,
-                ),
-                child: ListView.builder(
-                  itemCount: controller.rpm.data?.acceptors.length,
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: EdgeInsetsDirectional.only(
-                        end: standardSize,
-                        start: index == 0 ? standardSize : 0,
+              context: context,
+              body: controller.obx(
+                  (state) => SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(
+                                top: standardSize,
+                                left: standardSize,
+                                right: standardSize,
+                              ),
+                              child: Text(
+                                "دسته بندی",
+                                style: Get.theme.textTheme.headline6?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: fullWidth / 1.95,
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.only(
+                                  top: mediumSize,
+                                  bottom: mediumSize,
+                                ),
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount:
+                                      controller.rpm.data?.categories.length,
+                                  scrollDirection: Axis.horizontal,
+                                  physics: const BouncingScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                      margin: EdgeInsetsDirectional.only(
+                                        end: standardSize,
+                                        start: index == 0 ? standardSize : 0,
+                                      ),
+                                      child: categoryWidget(
+                                        controller.rpm.data?.categories[index]
+                                                .image ??
+                                            '', //todo fix this images
+                                        controller.rpm.data?.categories[index]
+                                                .title ??
+                                            '',
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(
+                                top: standardSize,
+                                left: standardSize,
+                                right: standardSize,
+                              ),
+                              child: Text(
+                                "مراکز خرید",
+                                style: Get.theme.textTheme.headline6?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              height: fullWidth / 1.7,
+                              width: fullWidth,
+                              margin: EdgeInsetsDirectional.only(
+                                top: mediumSize,
+                                bottom: mediumSize,
+                              ),
+                              child: ListView.builder(
+                                itemCount:
+                                    controller.rpm.data?.acceptors.length,
+                                scrollDirection: Axis.horizontal,
+                                physics: const BouncingScrollPhysics(),
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    margin: EdgeInsetsDirectional.only(
+                                      end: standardSize,
+                                      start: index == 0 ? standardSize : 0,
+                                    ),
+                                    child: shoppingCenterWidget(
+                                      index,
+                                      controller.rpm.data?.acceptors[index]
+                                              .headerPic ??
+                                          '',
+                                      controller.rpm.data?.acceptors[index]
+                                              .bussinesTitle ??
+                                          '',
+                                      '4.8',
+                                      controller.rpm.data?.acceptors[index]
+                                              .acceptorAbout ??
+                                          '',
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      child: shoppingCenterWidget(
-                        index,
-                        controller.rpm.data?.acceptors[index].headerPic ?? '',
-                        controller.rpm.data?.acceptors[index].bussinesTitle ?? '',
-                        '4.8',
-                        controller.rpm.data?.acceptors[index].acceptorAbout ?? '',
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),onLoading: const Center(child: CupertinoActivityIndicator(),)
-      ),
-      ));
+                  onLoading: const Center(
+                    child: CupertinoActivityIndicator(),
+                  )),
+            ));
   }
 
   Widget categoryWidget(String picture, String title) {
@@ -165,16 +179,16 @@ final WelfareCenterController controller = Get.put(WelfareCenterController());
   }
 
   Widget shoppingCenterWidget(
-      int index,
+    int index,
     String picture,
     String shoppingName,
     String rating,
     String subTitle,
   ) {
     return GestureDetector(
-      onTap: () => Get.to(WelfareCenterDetailPage(title: controller.rpm.data?.acceptors[index].bussinesTitle ?? '',
-      id: controller.rpm.data?.acceptors[index].id.toString() ?? '',
-
+      onTap: () => Get.to(WelfareCenterDetailPage(
+        title: controller.rpm.data?.acceptors[index].bussinesTitle ?? '',
+        id: controller.rpm.data?.acceptors[index].id.toString() ?? '',
       )),
       child: Container(
         width: fullWidth / 1.35,

@@ -9,9 +9,9 @@ import 'package:kanoon_dadgostari/view/widgets/progress_button/progress_button.d
 
 
 class MapPage extends StatefulWidget {
-  // MapController controller;
-  //
-  // MapPage(this.controller);
+  MapController? controller;
+
+  MapPage({this.controller});
 
   @override
   State<StatefulWidget> createState() => _LocationAppExampleState();

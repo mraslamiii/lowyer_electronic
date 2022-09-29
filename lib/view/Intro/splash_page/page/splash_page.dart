@@ -15,6 +15,8 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('token:${controller.pref.token}');
+    debugPrint('user|Id:${controller.pref.user.lawyerProfile}');
     return GetBuilder<SplashController>(
       init: controller,
       builder: (controller) => customScaffold(

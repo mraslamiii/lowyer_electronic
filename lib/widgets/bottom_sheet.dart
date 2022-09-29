@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/view/auth/login_page/page/login_page.dart';
+import 'package:kanoon_dadgostari/view/base/home_page/controller/home_controller.dart';
 
 import '../res/colors/colors.dart';
 import '../res/dimens/dimens.dart';
@@ -15,6 +16,7 @@ void profileExitSheet(BuildContext context,
       VoidCallback? optionalCallBack
     }) {
   final LocalStorageService pref = Get.find<LocalStorageService>();
+  final HomeController controller = Get.find();
   var theme = Theme.of(context);
   showModalBottomSheet(
       elevation: 10,
@@ -79,9 +81,7 @@ void profileExitSheet(BuildContext context,
                             side:  const BorderSide(
                                 width: 1, color: AppColors.errorColor))),
                     onPressed: optionalCallBack ??() {
-                      pref.logOut();
-                      Get.offAll(
-                          LoginPage());
+                      controller.logOut();
                     },
                     child: Text('بله',
                         style: theme.textTheme.subtitle2?.copyWith(

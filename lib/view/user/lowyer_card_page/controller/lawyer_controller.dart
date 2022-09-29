@@ -103,6 +103,8 @@ class LawyerController extends GetxController {
         }
       }
     } catch (e) {
+      requestNewCard.value = false;
+      update();
       showTheResult(
           resultType: SnackbarType.error,
           showTheResultType: ShowTheResultType.snackBar,

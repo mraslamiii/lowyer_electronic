@@ -1,5 +1,3 @@
-import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -7,16 +5,15 @@ import 'package:kanoon_dadgostari/res/colors/colors.dart';
 import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
 import 'package:kanoon_dadgostari/view/auth/verification_page/controller/verify_controller.dart';
 import 'package:kanoon_dadgostari/view/widgets/customScaffold/customScaffold.dart';
-import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/view/widgets/progress_button/progress_button.dart';
 
-import '../../../../app/app_pages.dart';
-import '../../../widgets/text_form_field/text_form_field_widget.dart';
 import '../../login_page/page/login_page.dart';
 import '../widgets/pin_code_fields.dart';
 
 class VerificationPage extends StatelessWidget {
   late String phone;
+
+  VerificationPage({super.key});
 
   @override
   Widget build(BuildContext context) {

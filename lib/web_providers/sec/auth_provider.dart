@@ -1,9 +1,13 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/web_models/auth/auth_web_model.dart';
 import 'package:kanoon_dadgostari/web_providers/api_endpoints.dart';
 import '../../../models/base/base_response.dart';
+import '../../models/base/upload_model.dart';
+import '../../models/lawyer/info_profile_model.dart';
+import '../../utilites/app_logger.dart';
 import '../api_provider.dart';
 
 class AuthAPI {
@@ -17,13 +21,12 @@ class AuthAPI {
     try {
       String endpoint = "";
 
-      String url = APIEndpoint.urlCreator(APIControllers.register, endpoint,version: "");
+      String url = APIEndpoint.urlCreator(APIControllers.register, endpoint,
+          version: "");
       dynamic response = await _provider.postRequest(url, rqm.toJson());
 
-      BaseResponse baseResponse =  BaseResponse.fromJson(response, AuthRPM.fromJson);
-
-
-
+      BaseResponse baseResponse =
+          BaseResponse.fromJson(response, AuthRPM.fromJson);
 
       return baseResponse;
     } catch (e) {
@@ -43,11 +46,9 @@ class AuthAPI {
 
       dynamic json = await _provider.postRequest(url, inputs);
 
-      BaseResponse baseResponse =  BaseResponse.fromJson(json, null);
+      BaseResponse baseResponse = BaseResponse.fromJson(json, null);
       return baseResponse;
     } catch (e) {
-
-
       rethrow;
     }
   }
@@ -64,12 +65,57 @@ class AuthAPI {
 
       dynamic response = await _provider.postRequest(url, inputs);
 
-      BaseResponse baseResponse =  BaseResponse.fromJson(response, AuthRPM.fromJson);
-
+      BaseResponse baseResponse =
+          BaseResponse.fromJson(response, AuthRPM.fromJson);
 
       return baseResponse;
     } catch (e) {
       rethrow;
     }
   }
+
+  /// logOut request ///
+  Future logout() async {
+    try {
+      Map<String, dynamic> inputs = {};
+
+      String url =
+          // 'https://lawyerb.gelareco.ir/api/logout';
+          APIEndpoint.urlCreator(APIControllers.logout, '', version: "");
+
+      var response = await _provider.getRequest(url, inputs);
+
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  /// upload Avatar ///
+  Future uploadImage(File file) async {
+    try {
+      // Map<String , dynamic> input = {'file' :file};
+      // String url = APIEndpoint.urlCreator(controller, APIEndpoint.file);
+      String url = 'upload';
+      var response = await _provider.uploadRequest(
+        url,
+        file,
+        (sent, total) {
+          AppLogger.i("sent:$sent ,total:$total");
+        },
+      );
+      // UploadModel result= UploadModel.fromJson(response);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+}
+
+num calculatePercent(int sent, int total) => (sent * 100) / total;
+
+class FileClass {
+  File file;
+
+  FileClass({required this.file});
 }

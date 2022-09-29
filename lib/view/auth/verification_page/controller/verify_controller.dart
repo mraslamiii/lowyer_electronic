@@ -7,6 +7,7 @@ import 'package:kanoon_dadgostari/service/connection_service/connection_status.d
 import '../../../../enums/snackbar_type.dart';
 import '../../../../service/preferences_service.dart';
 import '../../../../enums/result_enum.dart';
+import '../../../../utilites/app_logger.dart';
 import '../../../../utilites/show_result.dart';
 
 class VerifyController extends GetxController {
@@ -38,6 +39,16 @@ class VerifyController extends GetxController {
     }
   }
 
+  Future fetchHomeData() async {
+    try {
+      bool result = await repo.fetchUser();
+      update();
+      return result;
+    } catch (e) {
+      AppLogger.e('$e');
+    }
+  }
+
   Future<void> fetchData(String phone ) async {
     if (isBusyLogin.isFalse  && connectionStatusController.connectionStatus == ConnectionStatus.connect) {
       try {
@@ -53,6 +64,8 @@ class VerifyController extends GetxController {
             message: 'با موفقیت وارد شدید');
 
         Get.offAllNamed(Routes.homePage);
+        update();
+        // fetchHomeData();
       } catch (e) {
         isBusyLogin.value = false;
         showTheResult(resultType: SnackbarType.error,
