@@ -6,9 +6,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kanoon_dadgostari/enums/result_enum.dart';
 import 'package:kanoon_dadgostari/enums/snackbar_type.dart';
-import 'package:kanoon_dadgostari/models/base/base_response.dart';
 import 'package:kanoon_dadgostari/utilites/show_result.dart';
-
 import '../../../../models/base/upload_model.dart';
 import '../../../../repo/sec/auth_repo.dart';
 import '../../../../service/preferences_service.dart';
@@ -31,6 +29,8 @@ class HomeController extends GetxController {
       sourcePath: pickedFile?.path ?? "",
     );
     file.value = fileCropped!;
+    upLoadAvatar(file.value);
+
   }
 
   Future<void> openGallery() async {
