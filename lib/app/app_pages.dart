@@ -15,6 +15,7 @@ import 'package:kanoon_dadgostari/view/user/edit_social_info_page/page/edit_soci
 import 'package:kanoon_dadgostari/view/user/lawyer_license_info_page/page/lawyer_license_info_page.dart';
 import '../map_page.dart';
 import '../view/auth/signup_page/binding/signup_binding.dart';
+import '../view/auth/signup_page/page/signup_lawyers_info_page.dart';
 import '../view/auth/verification_page/binding/verification_binding.dart';
 import '../view/base/welfare_center_detail_page/page/welfare_center_detail_page.dart';
 import '../view/user/edit_profile_page/binding/edit_profile_binding.dart';
@@ -37,6 +38,7 @@ abstract class Routes {
   static const lawyerLicenseInfoPage = '/lawyer_license_info_page';
   static const welfareCenterPageDetail = '/welfare_center_page_detail';
   static const signupPage = '/signup_page';
+  static const signupPage2 = '/signup_page2';
   static const verificationPage = '/verification_page';
   static const mapPage = '/map_page';
   static const verifyDetails = '/verifyDetails_page';
@@ -112,6 +114,14 @@ class AppPages {
     GetPage(
         name: Routes.signupPage,
         page: () => SignUpPage(),
+        binding: SignUpBinding()
+    ),
+
+
+
+    GetPage(
+        name: Routes.signupPage2,
+        page: () => SignUpLawyerInfoPage(),
         binding: SignUpBinding()
     ),
 
