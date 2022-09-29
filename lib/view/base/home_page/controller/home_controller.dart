@@ -21,17 +21,23 @@ class HomeController extends GetxController {
   UploadModel? response;
 
   Future<void> openCamera() async {
-    final pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.camera,
-    );
-    file.value = File(pickedFile?.path ?? "");
-    final fileCropped = await ImageCropper().cropImage(
-      sourcePath: pickedFile?.path ?? "",
-    );
-    file.value = fileCropped!;
-    upLoadAvatar(file.value);
-
+    try {
+      final pickedFile = await ImagePicker().pickImage(
+        source: ImageSource.camera
+      );
+      file.value = File(pickedFile?.path ?? "");
+      final fileCropped = await ImageCropper().cropImage(
+        sourcePath: pickedFile?.path ?? "",
+      );
+      file.value = fileCropped!;
+      // upLoadAvatar(file.value);
+      upLoadAvatar(file.value);
+    } catch (e) {
+      AppLogger.e('$e');
+    }
   }
+
+  // }
 
   Future<void> openGallery() async {
     try {
@@ -59,6 +65,7 @@ class HomeController extends GetxController {
     try {
       res = await repo.uploadFile(file);
       update();
+      Get.back();
       return res;
     } catch (e) {
       AppLogger.e('$e');
