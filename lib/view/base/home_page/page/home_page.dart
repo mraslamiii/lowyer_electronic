@@ -298,7 +298,7 @@ class HomePage extends StatelessWidget {
                                                               standardSize,
                                                             ),
                                                             child: SvgPicture.asset(
-                                                              "assets/icons/ic_camera.svg",
+                                                              "assets/icons/camera.svg",
                                                               color: theme.primaryColor,
                                                               width: iconSizeMedium,
                                                               height: iconSizeMedium,

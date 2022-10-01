@@ -1,40 +1,39 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:get/get.dart';
+import 'package:kanoon_dadgostari/app/app_pages.dart';
 import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
+import 'package:kanoon_dadgostari/service/preferences_service.dart';
 import 'package:kanoon_dadgostari/view/user/lawyer_license_info_page/controller/lawyer_license_info_controller.dart';
+import 'package:kanoon_dadgostari/view/user/lawyer_license_info_page/page/lawyer_license_info_page.dart';
 import 'package:kanoon_dadgostari/view/widgets/progress_button/progress_button.dart';
 
+class MapPage extends StatelessWidget {
+  // MapController? controller;
+  // MapPage({this.controller});
 
-class MapPage extends StatefulWidget {
-  MapController? controller;
+  // @override
+  // State<StatefulWidget> createState() => _LocationAppExampleState();
+// }
 
-  MapPage({this.controller});
-
-  @override
-  State<StatefulWidget> createState() => _LocationAppExampleState();
-}
-
-class _LocationAppExampleState extends State<MapPage> {
+// class _LocationAppExampleState extends State<MapPage> {
   final theme = Get.theme;
+  final LocalStorageService pref = Get.find();
+  LawyerLicenseInfoController controller = Get.put(LawyerLicenseInfoController());
 
-  @override
-  void initState() {
-    controller= PickerMapController(
-      initMapWithUserPosition: true,
-    );
+  // @override
+  // void initState() {
+  //   controller = PickerMapController(
+  //     initMapWithUserPosition: true,
+  //
+  //   );
+  // }
 
-  }
-
-  late PickerMapController controller ;
   @override
   Widget build(BuildContext context) {
-
     return CustomPickerLocation(
-      controller: controller,
-
+      controller: controller.pickerController,
       bottomWidgetPicker: Positioned(
         bottom: 0,
         right: 0,
@@ -44,32 +43,41 @@ class _LocationAppExampleState extends State<MapPage> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: standardSize),
               child: progressButton(
-                  onTap: (){},
-                  // async {
-                  //   var a = await controller
-                  //       .getCurrentPositionAdvancedPositionPicker();
-                  //   Get.back(result: a);
-                  // },
+                  onTap: () async {
+                    GeoPoint a = await controller.pickerController
+                        .getCurrentPositionAdvancedPositionPicker();
+                    debugPrint('${a.latitude} lattttAAAA');
+
+                    controller.lat = a.latitude;
+                    controller.long= a.longitude;
+                    controller.geoPoint = a;
+                    debugPrint('${controller.lat} latttt');
+                    debugPrint('${controller.long} longggggggg');
+                    // debugPrint('${pref.lawyer.profile?.lat} latttt');
+                    Get.offNamed(Routes.lawyerLicenseInfoPage);
+                    controller.update();
+
+                  },
                   text: "انتخاب موقیعت مکانی"),
             ),
-
             FloatingActionButton(
               child: const Icon(Icons.location_searching),
               onPressed: () async {
-                GeoPoint geoPoint = await controller.osmBaseController.myLocation();
+                GeoPoint geoPoint = await controller
+                    .mapController.osmBaseController
+                    .myLocation();
                 debugPrint('${geoPoint.latitude} FacELord');
                 debugPrint('${geoPoint.longitude} FacELordLong');
-                await controller.osmBaseController.changeLocation(geoPoint);
-                await controller.osmBaseController.setZoom(stepZoom: 3);
-
+                await controller.mapController.osmBaseController
+                    .changeLocation(geoPoint);
+                await controller.mapController.osmBaseController
+                    .setZoom(stepZoom: 3);
               },
             ),
-
           ],
         ),
       ),
-      pickerConfig:
-      CustomPickerLocationConfig(
+      pickerConfig: CustomPickerLocationConfig(
         initZoom: 16,
         minZoomLevel: 6,
         maxZoomLevel: 18,
@@ -89,13 +97,12 @@ class _LocationAppExampleState extends State<MapPage> {
             ),
           ],
         ),
-
         advancedMarkerPicker: MarkerIcon(
-          iconWidget:
-            Icon(Icons.location_on,
+          iconWidget: Icon(
+            Icons.location_on,
             color: Colors.red,
-              size: iconSizeLarge * 4,
-            ),
+            size: iconSizeLarge * 4,
+          ),
           // icon:Icon(Icons.access_alarm) ,
           // assetMarker: AssetMarker(scaleAssetImage: 12,
           // image: AssetImage('assets/avatar.JPG')),
@@ -103,21 +110,21 @@ class _LocationAppExampleState extends State<MapPage> {
           //     width: fullWidth/4, height: fullWidth/4),
         ),
       ),
-
     );
   }
 }
 
+/*
 class CustomMap extends GetView<LawyerLicenseInfoController> {
- final bool isPick ;
-  const CustomMap (this.isPick, {super.key});
+  final bool isPick;
+
+  const CustomMap(this.isPick, {super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
-      init: LawyerLicenseInfoController(),
-        initState: (state) {
-
-        },
+        init: LawyerLicenseInfoController(),
+        initState: (state) {},
         builder: (LawyerLicenseInfoController controller) => OSMFlutter(
               controller: controller.controller,
               isPicker: isPick,
@@ -150,3 +157,4 @@ class CustomMap extends GetView<LawyerLicenseInfoController> {
             ));
   }
 }
+*/
