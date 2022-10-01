@@ -63,16 +63,15 @@ class LoginController extends GetxController {
               message: result);
         }
       }
-      // on TitleValueException catch (exp) {
-      //
-      //   for (TitleValueModel error in exp.errors){
-      //     isBusyLogin.value = false;
-      //     Get.toNamed(Routes.signupPage, arguments: phoneNumber.value);
-      //
-      //
-      //   }
-      //
-      // }
+      on TitleValueException catch (exp) {
+
+        for (TitleValueModel error in exp.errors){
+          isBusyLogin.value = false;
+          Get.toNamed(Routes.signupPage, arguments: phoneNumber.value);
+
+        }
+
+      }
       catch (e) {
         isBusyLogin.value = false;
 
