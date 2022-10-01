@@ -1,9 +1,12 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kanoon_dadgostari/app/app_exeption.dart';
 import 'package:kanoon_dadgostari/models/base/title_value_model.dart';
 import 'package:kanoon_dadgostari/models/sec/user_model.dart';
@@ -35,6 +38,7 @@ class SignUPController extends GetxController {
   final ConnectionStatusController connectionStatusController =
       Get.find<ConnectionStatusController>();
   AuthRepository repo = AuthRepository();
+  Rx<File> file = File('').obs;
 
 
   Rx<Jalali>? receivedDate = Jalali
@@ -46,6 +50,25 @@ class SignUPController extends GetxController {
 
 
   RxBool isBusyLogin = false.obs;
+
+  Future<void> openGallery() async {
+    try {
+      final pickedFile =
+      await ImagePicker().pickImage(source: ImageSource.gallery);
+
+      file.value = File(pickedFile?.path ?? "");
+
+      final fileCropped = await ImageCropper().cropImage(
+        sourcePath: pickedFile?.path ?? "",
+      );
+
+      file.value = fileCropped!;
+    } catch (e) {
+      print(e);
+    }
+
+    // _file?.value = file;
+  }
 
   Future<void> fetchData(
       // String phone
@@ -60,7 +83,12 @@ class SignUPController extends GetxController {
             firstName: nameTxtController.text,
             lastName: lastNameTxtController.text,
             mobileNumber: phoneTxtController.text,
-            nationalCode: idCodeUserController.text));
+            nationalCode: idCodeUserController.text,
+            avatar: file.value.path,
+            licenseNumber: lawyerLicenseNumTxtController.text,
+            licenseCreateDate: lawyerLicenseRecDateTxtController.text,
+            licenseExpireDate: lawyerLicenseExpDateTxtController.text,
+        ));
         isBusyLogin.value = false;
 
         pref.setUser(result.user!.toJson());

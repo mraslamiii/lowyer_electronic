@@ -5,6 +5,7 @@ import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
 import 'package:kanoon_dadgostari/view/auth/signup_page/controller/signup_controller.dart';
 import 'package:kanoon_dadgostari/view/widgets/back_widget/back_widget.dart';
 import 'package:kanoon_dadgostari/view/widgets/progress_button/progress_button.dart';
+import 'package:kanoon_dadgostari/widgets/upload_image_box_widget.dart';
 
 import '../../../../app/app_pages.dart';
 import '../../../../widgets/avatar_image_circle.dart';
@@ -39,10 +40,14 @@ class SignUpPage extends StatelessWidget {
               children: [
                 Container(
                   alignment: Alignment.center,
-                  margin: EdgeInsets.only(
-                    top: largeSize
-                  ),
-                    child: avatarImageCircle('assets/images/avatar.JPG')),
+                  margin: EdgeInsets.only(top: largeSize),
+                  child: uploadImageBoxWidget(
+                      onTap: () {
+                        controller.openGallery();
+                      },
+                      file: controller.file,
+                      boxFit: BoxFit.fitWidth),
+                ),
                 Padding(
                   padding: EdgeInsets.symmetric(
                     vertical: standardSize,
@@ -182,7 +187,7 @@ class SignUpPage extends StatelessWidget {
                 child: Obx(
                   () => progressButton(
                     isProgress: controller.isBusyLogin.value,
-                    onTap: controller.nameTxtController.value.text.isNotEmpty &&
+                    onTap: controller.file.value.path != '' && controller.nameTxtController.value.text.isNotEmpty &&
                             controller
                                 .lastNameTxtController.value.text.isNotEmpty &&
                             controller
@@ -190,6 +195,7 @@ class SignUpPage extends StatelessWidget {
                             controller
                                 .idCodeUserController.value.text.isNotEmpty
                         ? () {
+                            // controller.fetchData();
                             Get.toNamed(Routes.signupPage2);
                           }
                         : null,

@@ -107,13 +107,11 @@ class SignUpLawyerInfoPage extends StatelessWidget {
                 child: Obx(
                   () => progressButton(
                     isProgress: controller.isBusyLogin.value,
-                    onTap: controller.nameTxtController.value.text.isNotEmpty &&
+                    onTap: controller.lawyerLicenseNumTxtController.value.text.isNotEmpty &&
                             controller
-                                .lastNameTxtController.value.text.isNotEmpty &&
+                                .lawyerLicenseRecDateTxtController.value.text.isNotEmpty &&
                             controller
-                                .phoneTxtController.value.text.isNotEmpty &&
-                            controller
-                                .idCodeUserController.value.text.isNotEmpty
+                                .lawyerLicenseExpDateTxtController.value.text.isNotEmpty
                         ? () {
                             controller.fetchData();
                           }

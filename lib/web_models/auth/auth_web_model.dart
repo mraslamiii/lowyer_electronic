@@ -1,5 +1,4 @@
 import 'package:kanoon_dadgostari/models/sec/user_model.dart';
-
 import '../../models/base/safe_convert.dart';
 
 class RegisterRQM {
@@ -7,12 +6,20 @@ class RegisterRQM {
   final String firstName;
   final String lastName;
   final String mobileNumber;
+  final String avatar;
+  final String licenseNumber;
+  final String licenseExpireDate;
+  final String licenseCreateDate;
 
   RegisterRQM({
     this.nationalCode = '',
     this.firstName = '',
     this.lastName = '',
     this.mobileNumber = '',
+    this.avatar = '',
+    this.licenseNumber = '',
+    this.licenseCreateDate = '',
+    this.licenseExpireDate = '',
   });
 
   Map<String, dynamic> toJson() => {
@@ -20,6 +27,10 @@ class RegisterRQM {
         'first_name': firstName,
         'last_name': lastName,
         'mobile_number': mobileNumber,
+        'avatar': avatar,
+        'license_number': licenseNumber,
+        'license_create_date': licenseCreateDate,
+        'license_expire_date': licenseExpireDate,
       };
 }
 
