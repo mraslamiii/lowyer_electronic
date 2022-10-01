@@ -36,6 +36,8 @@ class HomePage extends StatelessWidget {
         if (pref.isFirstTimeLaunch) {
           controller.fetchHomeData();
           pref.isFirstTimeLaunch = false;
+          debugPrint('asdasdasdasd:${pref.isFirstTimeLaunch}');
+
         }
       },
       builder: (controller) => customScaffold(
@@ -47,7 +49,6 @@ class HomePage extends StatelessWidget {
         context: context,
         body: Stack(
           children: [
-
             // Positioned(
             //   child: Image.asset(
             //     'assets/images/pic_bg_home.jpg',
@@ -75,7 +76,7 @@ class HomePage extends StatelessWidget {
                 children: [
                   Positioned(
                     right: xSmallSize,
-                    top: xxLargeSize/1.2,
+                    top: xxLargeSize / 1.2,
                     left: xSmallSize,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -84,7 +85,10 @@ class HomePage extends StatelessWidget {
                             onTap: () {
                               homeSheet(context);
                             },
-                            child: Icon(Icons.more_vert_sharp,color: Colors.white,)),
+                            child: Icon(
+                              Icons.more_vert_sharp,
+                              color: Colors.white,
+                            )),
                         SvgPicture.asset(
                           'assets/icons/ic_notification.svg',
                         )
@@ -99,81 +103,17 @@ class HomePage extends StatelessWidget {
                         child: Stack(
                           children: [
                             Positioned.fill(
-                              child:GestureDetector(
+                              child: GestureDetector(
                                   onTap: () {
-                                    customBottomSheet(
-                                      Get.context!,
-                                      Column(
-                                        children: [
-                                          // Text(
-                                          //   '',
-                                          //   style: theme.textTheme.bodyText1?.copyWith(
-                                          //     fontWeight: FontWeight.w600,
-                                          //   ),
-                                          // ),
-                                          SizedBox(height: smallSize),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              Material(
-                                                color: Colors.transparent,
-                                                child: InkWell(
-                                                  splashColor: AppColors.splashColor,
-                                                  borderRadius:
-                                                  BorderRadius.circular(xSmallRadius),
-                                                  onTap: () {
-                                                    controller.openGallery();
-                                                    controller.update();
-                                                  },
-                                                  child: Padding(
-                                                    padding: EdgeInsetsDirectional.only(
-                                                      start: xxLargeSize,
-                                                      end: xxLargeSize,
-                                                      top: standardSize,
-                                                      bottom: standardSize,
-                                                    ),
-                                                    child: Column(
-                                                      children: [
-                                                        Container(
-                                                          decoration: BoxDecoration(
-                                                            color: const Color(0xFFEAEBF9),
-                                                            borderRadius:
-                                                            BorderRadius.circular(
-                                                              xSmallRadius,
-                                                            ),
-                                                          ),
-                                                          padding: EdgeInsetsDirectional.all(
-                                                              standardSize),
-                                                          child: SvgPicture.asset(
-                                                            "assets/icons/ic_gallery.svg",
-                                                            color: theme.primaryColor,
-                                                            width: iconSizeMedium,
-                                                            height: iconSizeMedium,
-                                                          ),
-                                                        ),
-                                                        SizedBox(height: smallSize),
-                                                        const Text('گالری'),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      padding: EdgeInsetsDirectional.only(
-                                        bottom: standardSize,
-                                      ),
-                                    );
+                                    controller.openGallery();
+                                    controller.update();
                                   },
                                   child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(xxLargeSize*100),
+                                    borderRadius: BorderRadius.circular(
+                                        xxLargeSize * 100),
                                     child:
-                                    // Image.file(controller.file.value)
-                                    imageWidget(
-                                        controller.res ?? ''
-                                    ),
+                                        // Image.file(controller.file.value)
+                                        imageWidget(controller.res ?? ''),
                                   )
 /*
                                 Container(
@@ -202,7 +142,7 @@ class HomePage extends StatelessWidget {
                                   ),
                                 ),
 */
-                              ),
+                                  ),
                             ),
                             Align(
                               alignment: const AlignmentDirectional(-0.95, -1),
@@ -211,71 +151,8 @@ class HomePage extends StatelessWidget {
                                 height: fullWidth / 18,
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    customBottomSheet(
-                                      Get.context!,
-                                      Column(
-                                        children: [
-                                          // Text(
-                                          //   '',
-                                          //   style: theme.textTheme.bodyText1?.copyWith(
-                                          //     fontWeight: FontWeight.w600,
-                                          //   ),
-                                          // ),
-                                          SizedBox(height: smallSize),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              Material(
-                                                color: Colors.transparent,
-                                                child: InkWell(
-                                                  splashColor: AppColors.splashColor,
-                                                  borderRadius:
-                                                  BorderRadius.circular(xSmallRadius),
-                                                  onTap: () {
-                                                    controller.openGallery();
-                                                    controller.update();
-                                                  },
-                                                  child: Padding(
-                                                    padding: EdgeInsetsDirectional.only(
-                                                      start: xxLargeSize,
-                                                      end: xxLargeSize,
-                                                      top: standardSize,
-                                                      bottom: standardSize,
-                                                    ),
-                                                    child: Column(
-                                                      children: [
-                                                        Container(
-                                                          decoration: BoxDecoration(
-                                                            color: const Color(0xFFEAEBF9),
-                                                            borderRadius:
-                                                            BorderRadius.circular(
-                                                              xSmallRadius,
-                                                            ),
-                                                          ),
-                                                          padding: EdgeInsetsDirectional.all(
-                                                              standardSize),
-                                                          child: SvgPicture.asset(
-                                                            "assets/icons/ic_gallery.svg",
-                                                            color: theme.primaryColor,
-                                                            width: iconSizeMedium,
-                                                            height: iconSizeMedium,
-                                                          ),
-                                                        ),
-                                                        SizedBox(height: smallSize),
-                                                        Text("gallery".tr),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      padding: EdgeInsetsDirectional.only(
-                                        bottom: standardSize,
-                                      ),
-                                    );
+                                    controller.openGallery();
+                                    controller.update();
                                     // sheetPickImage();
                                   },
                                   style: ElevatedButton.styleFrom(
@@ -312,7 +189,8 @@ class HomePage extends StatelessWidget {
                             children: [
                               Flexible(
                                 child: titleWidget(
-                                  '${controller.pref.user.firstName} ${controller.pref.user.lastName}',
+                                  '${controller.pref.lawyer.user?.firstName} '
+                                      '${controller.pref.lawyer.user?.lastName}',
                                 ),
                               ),
                               titleWidget(controller
@@ -320,8 +198,9 @@ class HomePage extends StatelessWidget {
                                       false
                                   ? 'فعالیت شما تایید نشده است'
                                   : 'کد فعالیت :${controller.pref.lawyer.user!.code}'),
-                              titleWidget(controller.pref.lawyer.profile?.cityName.isEmpty ??
-                                  false
+                              titleWidget(controller.pref.lawyer.profile
+                                          ?.cityName.isEmpty ??
+                                      false
                                   ? 'شهری انتخاب نشده است'
                                   : "شهر محل فعالیت : ${controller.pref.lawyer.profile?.cityName}"),
                             ],
@@ -620,8 +499,9 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-  void sheetPickImage(){
-     customBottomSheet(
+
+  void sheetPickImage() {
+    customBottomSheet(
       Get.context!,
       Column(
         children: [
@@ -639,8 +519,7 @@ class HomePage extends StatelessWidget {
                 color: Colors.transparent,
                 child: InkWell(
                   splashColor: AppColors.splashColor,
-                  borderRadius:
-                  BorderRadius.circular(xSmallRadius),
+                  borderRadius: BorderRadius.circular(xSmallRadius),
                   onTap: () {
                     controller.openCamera();
                   },
@@ -656,9 +535,7 @@ class HomePage extends StatelessWidget {
                         Container(
                           decoration: BoxDecoration(
                             color: const Color(0xFFEAEBF9),
-                            borderRadius:
-                            BorderRadius.circular(
-                                xSmallRadius),
+                            borderRadius: BorderRadius.circular(xSmallRadius),
                           ),
                           padding: EdgeInsetsDirectional.all(
                             standardSize,
@@ -688,8 +565,7 @@ class HomePage extends StatelessWidget {
                 color: Colors.transparent,
                 child: InkWell(
                   splashColor: AppColors.splashColor,
-                  borderRadius:
-                  BorderRadius.circular(xSmallRadius),
+                  borderRadius: BorderRadius.circular(xSmallRadius),
                   onTap: () {
                     controller.openGallery();
                   },
@@ -705,13 +581,11 @@ class HomePage extends StatelessWidget {
                         Container(
                           decoration: BoxDecoration(
                             color: const Color(0xFFEAEBF9),
-                            borderRadius:
-                            BorderRadius.circular(
+                            borderRadius: BorderRadius.circular(
                               xSmallRadius,
                             ),
                           ),
-                          padding: EdgeInsetsDirectional.all(
-                              standardSize),
+                          padding: EdgeInsetsDirectional.all(standardSize),
                           child: SvgPicture.asset(
                             "assets/icons/ic_gallery.svg",
                             color: theme.primaryColor,

@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
 import 'package:kanoon_dadgostari/view/widgets/customScaffold/customScaffold.dart';
@@ -9,7 +8,6 @@ import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import '../../../../map_page.dart';
 import '../../../../preview_map_page.dart';
 import '../../../widgets/back_widget/back_widget.dart';
-import '../../../widgets/custom_bottom_sheet.dart';
 import '../../../widgets/progress_button/progress_button.dart';
 import '../../../widgets/text_form_field/text_form_field_widget.dart';
 import '../controller/lawyer_license_info_controller.dart';
@@ -26,16 +24,16 @@ class LawyerLicenseInfoPage extends StatelessWidget {
     var profile = controller.pref.lawyer.profile;
     if (isFirstLunch) {
       controller.licenceNumberTxtController.text =
-          '${profile?.licenseNumber}' ?? '';
+          '${profile?.licenseNumber}';
       controller.createDateLicenceTxtController.text =
-          '${profile?.licenseCreateDate} ' ?? '';
+          '${profile?.licenseCreateDate} ';
       controller.expirationDateTxtController.text =
-          '${profile?.licenseExpireDate} ' ?? '';
-      controller.cityTxtController.text = '${profile?.cityName} ' ?? '';
+          '${profile?.licenseExpireDate} ';
+      controller.cityTxtController.text = '${profile?.cityName} ';
       controller.officeAddressTxtController.text =
-          '${profile?.addressOffice} ' ?? '';
+          '${profile?.addressOffice} ';
       controller.officeTelephoneTxtController.text =
-          '${profile?.TellOffice}' ?? '';
+          '${profile?.TellOffice}';
       isFirstLunch = false;
       controller.update();
     }
@@ -46,14 +44,15 @@ class LawyerLicenseInfoPage extends StatelessWidget {
               margin: EdgeInsets.all(standardSize),
               child: SizedBox(
                 width: fullWidth,
-                child: progressButton(
-                    onTap: () {
+                child:Obx(()=> progressButton(
+
+                    onTap: controller.isBusyProfile.isFalse ?() {
                       controller.editAddressProfile();
-                    },
+                    }:null,
                     isProgress: controller.isBusyProfile.value,
                     text: "ثبت اطلاعات"),
               ),
-            )),
+            ))),
         appBar: AppBar(
           title: const Text(
             "اطلاعـات پروانه وکالت",
@@ -145,7 +144,7 @@ class LawyerLicenseInfoPage extends StatelessWidget {
                         // inputFormatters: [
                         //   FilteringTextInputFormatter.digitsOnly
                         // ],
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.text,
                         textInputAction: TextInputAction.next,
                         textDirection: TextDirection.rtl,
                         label: "شهر محل فعالیت",
@@ -186,7 +185,7 @@ class LawyerLicenseInfoPage extends StatelessWidget {
                                   child: Stack(
                                     children: [
                                       Positioned.fill(
-                                        child: Container(
+                                        child: SizedBox(
                                           width: fullWidth,
                                           height: fullHeight / 4,
                                           child: PreViewMapPage(
@@ -226,7 +225,7 @@ class LawyerLicenseInfoPage extends StatelessWidget {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(Icons.location_on),
+                                      const Icon(Icons.location_on),
                                       Center(
                                           child: Text(
                                         'اضافه کردن آدرس',

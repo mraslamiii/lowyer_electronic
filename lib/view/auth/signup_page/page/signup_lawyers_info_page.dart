@@ -12,7 +12,6 @@ import '../../../widgets/customScaffold/customScaffold.dart';
 import '../../../widgets/text_form_field/text_form_field_widget.dart';
 
 class SignUpLawyerInfoPage extends StatelessWidget {
-  // String? phone = "";
 
   SignUpLawyerInfoPage({Key? key}) : super(key: key);
 
@@ -20,8 +19,6 @@ class SignUpLawyerInfoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<SignUPController>(
       builder: (controller) {
-        // phone = Get.arguments as String;
-        // controller.phoneTxtController.text = phone!;
         return customScaffold(
           context: context,
           appBar: AppBar(
@@ -111,7 +108,7 @@ class SignUpLawyerInfoPage extends StatelessWidget {
                       controller
                           .isBusyLogin.isFalse
                       ? () {
-                          controller.fetchData();
+                          controller.fetchData(controller.phone!);
                         }
                       : null,
                   text: "تایید",

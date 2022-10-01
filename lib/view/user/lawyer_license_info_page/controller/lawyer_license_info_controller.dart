@@ -6,6 +6,7 @@ import 'package:kanoon_dadgostari/enums/snackbar_type.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
 import 'package:kanoon_dadgostari/enums/result_enum.dart';
 import 'package:kanoon_dadgostari/utilites/show_result.dart';
+import 'package:kanoon_dadgostari/view/base/home_page/page/home_page.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 import '../../../../models/lawyer/lawyer_rqm/edit_address_rqm.dart';
@@ -17,17 +18,20 @@ import '../../../../utilites/app_logger.dart';
 class LawyerLicenseInfoController extends GetxController
     with StateMixin<InfoProfileModel> {
   final LocalStorageService pref = Get.find<LocalStorageService>();
-  late GeoPoint geoPoint ; //todo //get from server f
+  late GeoPoint geoPoint; //todo //get from server f
   late MapController mapController;
   late PickerMapController pickerController;
-  double?  lat  ;
-  double? long ;
+  double? lat;
+
+  double? long;
+
   @override
   void onInit() async {
-
+    lat = double.parse(pref.lawyer.profile?.lat?? '');
+    long = double.parse(pref.lawyer.profile?.long?? '');
     pickerController = PickerMapController();
     mapController =
-        MapController(initPosition: geoPoint,initMapWithUserPosition: false);
+        MapController(initPosition: geoPoint, initMapWithUserPosition: false);
     super.onInit();
   }
 
@@ -114,16 +118,18 @@ class LawyerLicenseInfoController extends GetxController
           cityName: cityTxtController.text,
           addressOffice: officeAddressTxtController.text,
           tellOffice: officeTelephoneTxtController.text,
-          lat: lat.toString(),
-          long: long.toString(),
+          lat: '$lat',
+          long: '$long',
           licenseNumber: licenceNumberTxtController.text,
           licenseCreateDate: createDateLicenceTxtController.text,
           licenseExpiredDate: expirationDateTxtController.text,
         ));
+
         isBusyProfile.value = false;
         update();
         if (result) {
-          Get.back(result: 'result');
+          Get.offAll(HomePage());
+          // Get.back(result: 'result');
           showTheResult(
               resultType: SnackbarType.success,
               showTheResultType: ShowTheResultType.snackBar,

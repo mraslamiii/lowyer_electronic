@@ -114,7 +114,8 @@ class AppPages {
     GetPage(
         name: Routes.signupPage,
         page: () => SignUpPage(),
-        binding: SignUpBinding()
+        binding: SignUpBinding(),
+
     ),
 
 

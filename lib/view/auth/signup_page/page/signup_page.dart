@@ -3,26 +3,26 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
 import 'package:kanoon_dadgostari/view/auth/signup_page/controller/signup_controller.dart';
+import 'package:kanoon_dadgostari/view/auth/signup_page/page/signup_lawyers_info_page.dart';
 import 'package:kanoon_dadgostari/view/widgets/back_widget/back_widget.dart';
 import 'package:kanoon_dadgostari/view/widgets/progress_button/progress_button.dart';
 import 'package:kanoon_dadgostari/view/widgets/sign_up_upload_image_widget.dart';
-
-import '../../../../app/app_pages.dart';
-import '../../../../widgets/avatar_image_circle.dart';
 import '../../../widgets/customScaffold/customScaffold.dart';
 import '../../../widgets/text_form_field/text_form_field_widget.dart';
 
 class SignUpPage extends StatelessWidget {
-  // String? phone = "";
+  String? phone = "";
 
-  SignUpPage({Key? key}) : super(key: key);
+  SignUpPage({ this.phone,Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SignUPController>(
       builder: (controller) {
-        // phone = Get.arguments as String;
-        // controller.phoneTxtController.text = phone!;
+
+        phone = Get.arguments as String;
+        controller.phoneTxtController.text = phone!;
+        controller.phone = phone!;
         return WillPopScope(
           onWillPop: backtoLogin,
           child: customScaffold(
@@ -168,11 +168,12 @@ class SignUpPage extends StatelessWidget {
                       onEditingComplete: () {
                         controller.update();
                       },
-                      // onChange: (value) => phone = value,
+                      readOnly: true,
+                      onChange: (value) => phone = value,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       textDirection: TextDirection.rtl,
-                      // autovalidateMode: AutovalidateMode.onUserInteraction,
-                      hint: "09012345678",
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      // hint: "09012345678",
                       keyboardType: TextInputType.number,
                       textEditingController: controller.phoneTxtController,
                     ),
@@ -190,13 +191,12 @@ class SignUpPage extends StatelessWidget {
                     onTap: controller.nameTxtController.value.text.isNotEmpty &&
                             controller
                                 .lastNameTxtController.value.text.isNotEmpty &&
-                            controller
-                                .phoneTxtController.value.text.isNotEmpty &&
+                            (phone?.isNotEmpty ?? false) &&
                             controller
                                 .idCodeUserController.value.text.isNotEmpty
                         ? () {
                             // controller.fetchData();
-                            Get.toNamed(Routes.signupPage2);
+                            Get.to(SignUpLawyerInfoPage());
                           }
                         : null,
                     text: "مرحله بعد",
