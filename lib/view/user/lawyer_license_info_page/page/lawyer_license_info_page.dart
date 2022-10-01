@@ -42,9 +42,9 @@ bool isFirstLunch = true;
                   margin: EdgeInsets.all(standardSize),
                   child: SizedBox(
                     width: fullWidth,
-                    child: progressButton(onTap: () {
+                    child: progressButton(onTap: controller.isBusyProfile.isFalse ? () {
                       controller.editAddressProfile();
-                    },
+                    } : null,
                     isProgress: controller.isBusyProfile.value,
                      text: "ثبت اطلاعات"),
                   ),

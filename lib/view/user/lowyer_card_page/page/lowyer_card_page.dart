@@ -33,9 +33,9 @@ class LawyerCardPage extends StatelessWidget {
                           width: fullWidth,
                           child: progressButton(
                             isProgress: controller.requestNewCard.value,
-                              onTap: () {
+                              onTap: controller.requestNewCard.isFalse ? () {
                                 controller.makeRequest();
-                              }, text: "درخواست جدید"),
+                              } : null, text: "درخواست جدید"),
                         )),
                     SizedBox(
                       width: standardSize,

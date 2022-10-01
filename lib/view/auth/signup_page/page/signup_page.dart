@@ -5,7 +5,7 @@ import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
 import 'package:kanoon_dadgostari/view/auth/signup_page/controller/signup_controller.dart';
 import 'package:kanoon_dadgostari/view/widgets/back_widget/back_widget.dart';
 import 'package:kanoon_dadgostari/view/widgets/progress_button/progress_button.dart';
-import 'package:kanoon_dadgostari/widgets/upload_image_box_widget.dart';
+import 'package:kanoon_dadgostari/view/widgets/sign_up_upload_image_widget.dart';
 
 import '../../../../app/app_pages.dart';
 import '../../../../widgets/avatar_image_circle.dart';

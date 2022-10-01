@@ -320,8 +320,10 @@ class HomePage extends StatelessWidget {
                                       false
                                   ? 'فعالیت شما تایید نشده است'
                                   : 'کد فعالیت :${controller.pref.lawyer.user!.code}'),
-                              titleWidget(
-                                  "شهر محل فعالیت : ${controller.pref.lawyer.profile?.cityName}"),
+                              titleWidget(controller.pref.lawyer.profile?.cityName.isEmpty ??
+                                  false
+                                  ? 'شهری انتخاب نشده است'
+                                  : "شهر محل فعالیت : ${controller.pref.lawyer.profile?.cityName}"),
                             ],
                           ),
                         ),

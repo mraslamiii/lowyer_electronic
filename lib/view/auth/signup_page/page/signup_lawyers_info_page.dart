@@ -107,7 +107,9 @@ class SignUpLawyerInfoPage extends StatelessWidget {
                           controller
                               .lawyerLicenseRecDateTxtController.value.text.isNotEmpty &&
                           controller
-                              .lawyerLicenseExpDateTxtController.value.text.isNotEmpty
+                              .lawyerLicenseExpDateTxtController.value.text.isNotEmpty &&
+                      controller
+                          .isBusyLogin.isFalse
                       ? () {
                           controller.fetchData();
                         }

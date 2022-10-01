@@ -35,7 +35,7 @@ class SplashController extends GetxController {
       // Get.offAllNamed(Routes.loginPage);
 
       if (pref.isFirstTimeLaunch) {
-        Get.offNamed(Routes.loginPage);
+        Get.offNamed(Routes.signupPage);
       } else if (pref.token != "") {
         Get.toNamed(Routes.homePage);
         // await _navigationService.pushNamedAndRemoveUntil(Routes.loginPage);

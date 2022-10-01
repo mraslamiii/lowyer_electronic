@@ -2,9 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import '../res/colors/colors.dart';
-import '../res/dimens/dimens.dart';
-import 'avatar_image_circle.dart';
+import '../../res/colors/colors.dart';
+import '../../res/dimens/dimens.dart';
+import '../../widgets/avatar_image_circle.dart';
 
 Widget uploadImageBoxWidget(
     {required VoidCallback onTap,
