@@ -69,28 +69,37 @@ class HomePage extends StatelessWidget {
                   scale: 2.4,
                 ),
               ),
-              child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    GestureDetector(
-                        onTap: () {
-                          homeSheet(context);
-                        },
-                        child: Icon(Icons.more_vert_sharp,color: Colors.red,)),
-
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
+              child: Stack(
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Positioned(
+                    right: xSmallSize,
+                    top: xxLargeSize/1.2,
+                    left: xSmallSize,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
-                          width: fullWidth / 5.5,
-                          height: fullWidth / 5.5,
-                          child: Stack(
-                            children: [
-                              Positioned.fill(
-                                child:GestureDetector(
+                        GestureDetector(
+                            onTap: () {
+                              homeSheet(context);
+                            },
+                            child: Icon(Icons.more_vert_sharp,color: Colors.white,)),
+                        SvgPicture.asset(
+                          'assets/icons/ic_notification.svg',
+                        )
+                      ],
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: fullWidth / 5.5,
+                        height: fullWidth / 5.5,
+                        child: Stack(
+                          children: [
+                            Positioned.fill(
+                              child:GestureDetector(
                                   onTap: () {
                                     customBottomSheet(
                                       Get.context!,
@@ -106,57 +115,6 @@ class HomePage extends StatelessWidget {
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
-                                              Material(
-                                                color: Colors.transparent,
-                                                child: InkWell(
-                                                  splashColor: AppColors.splashColor,
-                                                  borderRadius:
-                                                  BorderRadius.circular(xSmallRadius),
-                                                  onTap: () {
-                                                    controller.openCamera();
-                                                    controller.update();
-
-                                                  },
-                                                  child: Padding(
-                                                    padding: EdgeInsetsDirectional.only(
-                                                      start: xxLargeSize,
-                                                      end: xxLargeSize,
-                                                      top: standardSize,
-                                                      bottom: standardSize,
-                                                    ),
-                                                    child: Column(
-                                                      children: [
-                                                        Container(
-                                                          decoration: BoxDecoration(
-                                                            color: const Color(0xFFEAEBF9),
-                                                            borderRadius:
-                                                            BorderRadius.circular(
-                                                                xSmallRadius),
-                                                          ),
-                                                          padding: EdgeInsetsDirectional.all(
-                                                            standardSize,
-                                                          ),
-                                                          child: SvgPicture.asset(
-                                                            "assets/icons/camera.svg",
-                                                            color: theme.primaryColor,
-                                                            width: iconSizeMedium,
-                                                            height: iconSizeMedium,
-                                                          ),
-                                                        ),
-                                                        SizedBox(height: smallSize),
-                                                        const Text("دوربین"),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(width: standardSize),
-                                              Container(
-                                                height: xxLargeSize * 1.2,
-                                                width: 1,
-                                                color: AppColors.borderColor,
-                                              ),
-                                              SizedBox(width: standardSize),
                                               Material(
                                                 color: Colors.transparent,
                                                 child: InkWell(
@@ -214,223 +172,165 @@ class HomePage extends StatelessWidget {
                                     child:
                                     // Image.file(controller.file.value)
                                     imageWidget(
-                                      controller.res ?? ''
+                                        controller.res ?? ''
                                     ),
                                   )
 /*
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          blurRadius: 6,
-                                          spreadRadius: 0,
-                                          offset: const Offset(0, 3),
-                                          color:
-                                              const Color(0xff000000).withOpacity(
-                                            0.2,
-                                          ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 6,
+                                        spreadRadius: 0,
+                                        offset: const Offset(0, 3),
+                                        color:
+                                            const Color(0xff000000).withOpacity(
+                                          0.2,
                                         ),
-                                      ],
-                                    ),
-                                    child: Container(
-                                      child: Image.file(
-                                        // controller.file.value.path.isNotEmpty ?
-                                        controller.file.value,
-                                            fit: BoxFit.contain
-                                            // 'assets/images/avatar.JPG'
-                                        ,
                                       ),
-                                    ),
+                                    ],
                                   ),
-*/
-                                 ),
-                              ),
-                              Align(
-                                alignment: const AlignmentDirectional(-0.95, -1),
-                                child: SizedBox(
-                                  width: fullWidth / 18,
-                                  height: fullWidth / 18,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      customBottomSheet(
-                                        Get.context!,
-                                        Column(
-                                          children: [
-                                            // Text(
-                                            //   '',
-                                            //   style: theme.textTheme.bodyText1?.copyWith(
-                                            //     fontWeight: FontWeight.w600,
-                                            //   ),
-                                            // ),
-                                            SizedBox(height: smallSize),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Material(
-                                                  color: Colors.transparent,
-                                                  child: InkWell(
-                                                    splashColor: AppColors.splashColor,
-                                                    borderRadius:
-                                                    BorderRadius.circular(xSmallRadius),
-                                                    onTap: () {
-                                                      controller.openCamera();
-                                                      controller.update();
-
-                                                    },
-                                                    child: Padding(
-                                                      padding: EdgeInsetsDirectional.only(
-                                                        start: xxLargeSize,
-                                                        end: xxLargeSize,
-                                                        top: standardSize,
-                                                        bottom: standardSize,
-                                                      ),
-                                                      child: Column(
-                                                        children: [
-                                                          Container(
-                                                            decoration: BoxDecoration(
-                                                              color: const Color(0xFFEAEBF9),
-                                                              borderRadius:
-                                                              BorderRadius.circular(
-                                                                  xSmallRadius),
-                                                            ),
-                                                            padding: EdgeInsetsDirectional.all(
-                                                              standardSize,
-                                                            ),
-                                                            child: SvgPicture.asset(
-                                                              "assets/icons/camera.svg",
-                                                              color: theme.primaryColor,
-                                                              width: iconSizeMedium,
-                                                              height: iconSizeMedium,
-                                                            ),
-                                                          ),
-                                                          SizedBox(height: smallSize),
-                                                          Text("camera".tr),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(width: standardSize),
-                                                Container(
-                                                  height: xxLargeSize * 1.2,
-                                                  width: 1,
-                                                  color: AppColors.borderColor,
-                                                ),
-                                                SizedBox(width: standardSize),
-                                                Material(
-                                                  color: Colors.transparent,
-                                                  child: InkWell(
-                                                    splashColor: AppColors.splashColor,
-                                                    borderRadius:
-                                                    BorderRadius.circular(xSmallRadius),
-                                                    onTap: () {
-                                                      controller.openGallery();
-                                                      controller.update();
-                                                    },
-                                                    child: Padding(
-                                                      padding: EdgeInsetsDirectional.only(
-                                                        start: xxLargeSize,
-                                                        end: xxLargeSize,
-                                                        top: standardSize,
-                                                        bottom: standardSize,
-                                                      ),
-                                                      child: Column(
-                                                        children: [
-                                                          Container(
-                                                            decoration: BoxDecoration(
-                                                              color: const Color(0xFFEAEBF9),
-                                                              borderRadius:
-                                                              BorderRadius.circular(
-                                                                xSmallRadius,
-                                                              ),
-                                                            ),
-                                                            padding: EdgeInsetsDirectional.all(
-                                                                standardSize),
-                                                            child: SvgPicture.asset(
-                                                              "assets/icons/ic_gallery.svg",
-                                                              color: theme.primaryColor,
-                                                              width: iconSizeMedium,
-                                                              height: iconSizeMedium,
-                                                            ),
-                                                          ),
-                                                          SizedBox(height: smallSize),
-                                                          Text("gallery".tr),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        padding: EdgeInsetsDirectional.only(
-                                          bottom: standardSize,
-                                        ),
-                                      );
-                                      // sheetPickImage();
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      foregroundColor: AppColors.splashColor,
-                                      padding: EdgeInsets.all(xxSmallSize),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          standardRadius,
-                                        ),
-                                        side: const BorderSide(
-                                          color: AppColors.primaryColor,
-                                          width: 1.5,
-                                        ),
-                                      ),
-                                      backgroundColor: Colors.white,
-                                      elevation: 0,
-                                    ),
-                                    child: SvgPicture.asset(
-                                      'assets/icons/ic_edit_filled.svg',
-                                      color: theme.primaryColor,
+                                  child: Container(
+                                    child: Image.file(
+                                      // controller.file.value.path.isNotEmpty ?
+                                      controller.file.value,
+                                          fit: BoxFit.contain
+                                          // 'assets/images/avatar.JPG'
+                                      ,
                                     ),
                                   ),
                                 ),
-                              )
+*/
+                              ),
+                            ),
+                            Align(
+                              alignment: const AlignmentDirectional(-0.95, -1),
+                              child: SizedBox(
+                                width: fullWidth / 18,
+                                height: fullWidth / 18,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    customBottomSheet(
+                                      Get.context!,
+                                      Column(
+                                        children: [
+                                          // Text(
+                                          //   '',
+                                          //   style: theme.textTheme.bodyText1?.copyWith(
+                                          //     fontWeight: FontWeight.w600,
+                                          //   ),
+                                          // ),
+                                          SizedBox(height: smallSize),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Material(
+                                                color: Colors.transparent,
+                                                child: InkWell(
+                                                  splashColor: AppColors.splashColor,
+                                                  borderRadius:
+                                                  BorderRadius.circular(xSmallRadius),
+                                                  onTap: () {
+                                                    controller.openGallery();
+                                                    controller.update();
+                                                  },
+                                                  child: Padding(
+                                                    padding: EdgeInsetsDirectional.only(
+                                                      start: xxLargeSize,
+                                                      end: xxLargeSize,
+                                                      top: standardSize,
+                                                      bottom: standardSize,
+                                                    ),
+                                                    child: Column(
+                                                      children: [
+                                                        Container(
+                                                          decoration: BoxDecoration(
+                                                            color: const Color(0xFFEAEBF9),
+                                                            borderRadius:
+                                                            BorderRadius.circular(
+                                                              xSmallRadius,
+                                                            ),
+                                                          ),
+                                                          padding: EdgeInsetsDirectional.all(
+                                                              standardSize),
+                                                          child: SvgPicture.asset(
+                                                            "assets/icons/ic_gallery.svg",
+                                                            color: theme.primaryColor,
+                                                            width: iconSizeMedium,
+                                                            height: iconSizeMedium,
+                                                          ),
+                                                        ),
+                                                        SizedBox(height: smallSize),
+                                                        Text("gallery".tr),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      padding: EdgeInsetsDirectional.only(
+                                        bottom: standardSize,
+                                      ),
+                                    );
+                                    // sheetPickImage();
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: AppColors.splashColor,
+                                    padding: EdgeInsets.all(xxSmallSize),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        standardRadius,
+                                      ),
+                                      side: const BorderSide(
+                                        color: AppColors.primaryColor,
+                                        width: 1.5,
+                                      ),
+                                    ),
+                                    backgroundColor: Colors.white,
+                                    elevation: 0,
+                                  ),
+                                  child: SvgPicture.asset(
+                                    'assets/icons/ic_edit_filled.svg',
+                                    color: theme.primaryColor,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(right: xxSmallSize),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Flexible(
+                                child: titleWidget(
+                                  '${controller.pref.user.firstName} ${controller.pref.user.lastName}',
+                                ),
+                              ),
+                              titleWidget(controller
+                                          .pref.lawyer.user?.code.isEmpty ??
+                                      false
+                                  ? 'فعالیت شما تایید نشده است'
+                                  : 'کد فعالیت :${controller.pref.lawyer.user!.code}'),
+                              titleWidget(controller.pref.lawyer.profile?.cityName.isEmpty ??
+                                  false
+                                  ? 'شهری انتخاب نشده است'
+                                  : "شهر محل فعالیت : ${controller.pref.lawyer.profile?.cityName}"),
                             ],
                           ),
                         ),
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.only(right: xxSmallSize),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Flexible(
-                                      child: titleWidget(
-                                        '${controller.pref.user.firstName} ${controller.pref.user.lastName}',
-                                      ),
-                                    ),
-                                    SvgPicture.asset(
-                                      'assets/icons/ic_notification.svg',
-                                    )
-                                  ],
-                                ),
-                                titleWidget(controller
-                                            .pref.lawyer.user?.code.isEmpty ??
-                                        false
-                                    ? 'فعالیت شما تایید نشده است'
-                                    : 'کد فعالیت :${controller.pref.lawyer.user!.code}'),
-                                titleWidget(
-                                    "شهر محل فعالیت : ${controller.pref.lawyer.profile?.cityName}"),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
 

@@ -41,9 +41,9 @@ class EditSocialInfoPage extends GetView<EditSocialInfoController> {
                   width: fullWidth,
                   child: progressButton(
                     isProgress: controller.isBusySocial.value,
-                      onTap: () {
+                      onTap: controller.isBusySocial.isFalse ? () {
                         controller.editSocialMedia();
-                      },
+                      } : null,
                       text: "ثبت اطلاعات"),
                 ),
               )),

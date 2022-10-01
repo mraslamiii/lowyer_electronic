@@ -22,102 +22,99 @@ class SignUpLawyerInfoPage extends StatelessWidget {
       builder: (controller) {
         // phone = Get.arguments as String;
         // controller.phoneTxtController.text = phone!;
-        return WillPopScope(
-          onWillPop: backtoLogin,
-          child: customScaffold(
-            context: context,
-            appBar: AppBar(
-              leading: backIcon(
-                onTap: () => backtoLogin(),
-              ),
-              title: const Text(
-                "ورود اپلیکیشن",
-              ),
+        return customScaffold(
+          context: context,
+          appBar: AppBar(
+            leading: backIcon(),
+            title: const Text(
+              "ورود اپلیکیشن",
             ),
-            body: ListView(
-              physics: const BouncingScrollPhysics(),
-              children: [
-                Container(
-                  margin: EdgeInsetsDirectional.only(
-                    start: standardSize,
-                    end: standardSize,
-                    top: standardSize,
-                  ),
-                  child: TextFormFieldWidget(
-                    // inputFormatters: [
-                    //   FilteringTextInputFormatter.digitsOnly
-                    // ],
-                    keyboardType: TextInputType.number,
-                    textInputAction: TextInputAction.next,
-                    textDirection: TextDirection.rtl,
-                    label: "شماره پروانه وکالت",
-                    // onChange: controller.valueChanged,
-                    hint: "78654230",
-                    textEditingController: controller.lawyerLicenseNumTxtController,
-                  ),
+          ),
+          body: ListView(
+            physics: const BouncingScrollPhysics(),
+            children: [
+              Container(
+                margin: EdgeInsetsDirectional.only(
+                  start: standardSize,
+                  end: standardSize,
+                  top: standardSize,
                 ),
-                Container(
-                  margin: EdgeInsetsDirectional.only(
-                    start: standardSize,
-                    end: standardSize,
-                    top: standardSize,
-                  ),
-                  child: TextFormFieldWidget(
-                    // inputFormatters: [
-                    //   FilteringTextInputFormatter.digitsOnly
-                    // ],
-                    readOnly: true,
-                    onTap: () => controller.showDatePickerReceivedDate(context),
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    textDirection: TextDirection.rtl,
-                    label: "تاریخ اخذ پروانه وکالت",
-                    // onChange: controller.valueChanged,
-                    hint: "${Jalali.now().formatter.yyyy}/${Jalali.now().formatter.mm}/${Jalali.now().formatter.dd}",
-                    textEditingController: controller.lawyerLicenseRecDateTxtController,
-                  ),
+                child: TextFormFieldWidget(
+                  // inputFormatters: [
+                  //   FilteringTextInputFormatter.digitsOnly
+                  // ],
+                  keyboardType: TextInputType.number,
+                  textInputAction: TextInputAction.next,
+                  textDirection: TextDirection.rtl,
+                  label: "شماره پروانه وکالت",
+                  // onChange: controller.valueChanged,
+                  hint: "78654230",
+                  textEditingController: controller.lawyerLicenseNumTxtController,
                 ),
-                Container(
-                  margin: EdgeInsetsDirectional.only(
-                    start: standardSize,
-                    end: standardSize,
-                    top: standardSize,
-                  ),
-                  child: TextFormFieldWidget(
-                    // inputFormatters: [
-                    //   FilteringTextInputFormatter.digitsOnly
-                    // ],
-                    readOnly: true,
-                    onTap: () => controller.showDatePickerExpirationDate(context),
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    textDirection: TextDirection.rtl,
-                    label: "تاریخ انقضاء پروانه وکالت",
-                    // onChange: controller.valueChanged,
-                    hint: "${Jalali.now().formatter.yyyy}/${Jalali.now().formatter.mm}/${Jalali.now().formatter.dd}",
-                    textEditingController: controller.lawyerLicenseExpDateTxtController,
-                  ),
+              ),
+              Container(
+                margin: EdgeInsetsDirectional.only(
+                  start: standardSize,
+                  end: standardSize,
+                  top: standardSize,
                 ),
-              ],
-            ),
-            bottomAppBar: Padding(
-              padding: EdgeInsets.all(standardSize),
-              child: SizedBox(
-                width: fullWidth,
-                child: Obx(
-                  () => progressButton(
-                    isProgress: controller.isBusyLogin.value,
-                    onTap: controller.lawyerLicenseNumTxtController.value.text.isNotEmpty &&
-                            controller
-                                .lawyerLicenseRecDateTxtController.value.text.isNotEmpty &&
-                            controller
-                                .lawyerLicenseExpDateTxtController.value.text.isNotEmpty
-                        ? () {
-                            controller.fetchData();
-                          }
-                        : null,
-                    text: "تایید",
-                  ),
+                child: TextFormFieldWidget(
+                  // inputFormatters: [
+                  //   FilteringTextInputFormatter.digitsOnly
+                  // ],
+                  readOnly: true,
+                  onTap: () => controller.showDatePickerReceivedDate(context),
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.next,
+                  textDirection: TextDirection.rtl,
+                  label: "تاریخ اخذ پروانه وکالت",
+                  // onChange: controller.valueChanged,
+                  hint: "${Jalali.now().formatter.yyyy}/${Jalali.now().formatter.mm}/${Jalali.now().formatter.dd}",
+                  textEditingController: controller.lawyerLicenseRecDateTxtController,
+                ),
+              ),
+              Container(
+                margin: EdgeInsetsDirectional.only(
+                  start: standardSize,
+                  end: standardSize,
+                  top: standardSize,
+                ),
+                child: TextFormFieldWidget(
+                  // inputFormatters: [
+                  //   FilteringTextInputFormatter.digitsOnly
+                  // ],
+                  readOnly: true,
+                  onTap: () => controller.showDatePickerExpirationDate(context),
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.next,
+                  textDirection: TextDirection.rtl,
+                  label: "تاریخ انقضاء پروانه وکالت",
+                  // onChange: controller.valueChanged,
+                  hint: "${Jalali.now().formatter.yyyy}/${Jalali.now().formatter.mm}/${Jalali.now().formatter.dd}",
+                  textEditingController: controller.lawyerLicenseExpDateTxtController,
+                ),
+              ),
+            ],
+          ),
+          bottomAppBar: Padding(
+            padding: EdgeInsets.all(standardSize),
+            child: SizedBox(
+              width: fullWidth,
+              child: Obx(
+                () => progressButton(
+                  isProgress: controller.isBusyLogin.value,
+                  onTap: controller.lawyerLicenseNumTxtController.value.text.isNotEmpty &&
+                          controller
+                              .lawyerLicenseRecDateTxtController.value.text.isNotEmpty &&
+                          controller
+                              .lawyerLicenseExpDateTxtController.value.text.isNotEmpty &&
+                      controller
+                          .isBusyLogin.isFalse
+                      ? () {
+                          controller.fetchData();
+                        }
+                      : null,
+                  text: "تایید",
                 ),
               ),
             ),

@@ -51,7 +51,7 @@ class VerifyDetailsPage extends StatelessWidget {
                 ),
                 const Expanded(child: SizedBox()),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: largeSize),
+                  padding: EdgeInsets.symmetric(horizontal: standardSize),
                   child: SizedBox(
                     width: fullWidth,
                     child: ElevatedButton(

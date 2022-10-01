@@ -56,9 +56,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                   width: fullWidth,
                   child: progressButton(
                     isProgress: controller.isBusyProfile.value,
-                    onTap: () {
+                    onTap: controller.isBusyProfile.isFalse ? () {
                       controller.editProfileEducation();
-                    },
+                    } : null,
                     text: "ثبت اطلاعات",
                   ),
                 ),
