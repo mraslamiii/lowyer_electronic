@@ -187,7 +187,7 @@ class SignUpPage extends StatelessWidget {
                 child: Obx(
                   () => progressButton(
                     isProgress: controller.isBusyLogin.value,
-                    onTap: controller.file.value.path != '' && controller.nameTxtController.value.text.isNotEmpty &&
+                    onTap: controller.nameTxtController.value.text.isNotEmpty &&
                             controller
                                 .lastNameTxtController.value.text.isNotEmpty &&
                             controller
