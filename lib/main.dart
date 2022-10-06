@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         designSize: const Size(360, 690),
-        useInheritedMediaQuery:true,
+        useInheritedMediaQuery: false,
         builder: (child, contextt) {
           ScreenUtil.init(context);
           return GetMaterialApp(
