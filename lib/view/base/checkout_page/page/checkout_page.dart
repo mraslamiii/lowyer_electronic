@@ -74,7 +74,7 @@ class CheckoutPage extends StatelessWidget {
                         controller.rpm.services[index],
                       ),
                     ),
-                    SizedBox(height: fullHeight / 3,),
+                    SizedBox(height: fullHeight / 2.8,),
                   ],
                 ),
               ),

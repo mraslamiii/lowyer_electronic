@@ -39,14 +39,12 @@ Widget customRadioItem({
           margin: EdgeInsetsDirectional.only(bottom: smallSize),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(smallRadius),
-            color: selected.value == index
-                ? AppColors.splashColor
-                : Colors.transparent,
+            color: AppColors.formFieldColor,
             border: Border.all(
               width: 1,
               color: selected.value == index
                   ? theme.primaryColor
-                  : theme.cardColor,
+                  : AppColors.formFieldColor,
             ),
           ),
           padding: EdgeInsets.symmetric(
