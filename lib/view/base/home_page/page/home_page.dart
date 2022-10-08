@@ -113,7 +113,7 @@ class HomePage extends StatelessWidget {
                                         xxLargeSize * 100),
                                     child:
                                         // Image.file(controller.file.value)
-                                        imageWidget(controller.res ?? ''),
+                                        imageWidget( controller.res  ??pref.lawyer.user?.avatar ??''  ),
                                   )
 /*
                                 Container(

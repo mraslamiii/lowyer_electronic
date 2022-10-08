@@ -16,6 +16,7 @@ class APIEndpoint {
   static const String skills = "skills";
   static const String code = "code";
   static const String address = "address";
+  static const String uploadImage = "pic/profile";
   static const String logout = "logout";
   static const String banCardRequest = "lawyers/cards/ban";
   static const String makeCardRequest = "lawyers/cards/make";

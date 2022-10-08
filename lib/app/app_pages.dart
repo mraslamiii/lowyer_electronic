@@ -17,7 +17,6 @@ import '../map_page.dart';
 import '../view/auth/signup_page/binding/signup_binding.dart';
 import '../view/auth/signup_page/page/signup_lawyers_info_page.dart';
 import '../view/auth/verification_page/binding/verification_binding.dart';
-import '../view/base/welfare_center_detail_page/page/welfare_center_detail_page.dart';
 import '../view/user/edit_profile_page/binding/edit_profile_binding.dart';
 import '../view/user/edit_profile_page/page/edit_profile_page.dart';
 import '../view/user/edit_social_info_page/binding/edit_social_info_binding.dart';

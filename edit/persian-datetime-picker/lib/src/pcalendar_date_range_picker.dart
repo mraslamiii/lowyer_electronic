@@ -313,7 +313,7 @@ class _CalendarKeyboardNavigatorState
   ///
   /// This will attempt to move the focused day to the next selectable day in
   /// the given direction. If the new date is not in the current month, then
-  /// the page view will be scrolled to show the new date's month.
+  /// the view view will be scrolled to show the new date's month.
   ///
   /// For horizontal directions, it will move forward or backward a day (depending
   /// on the current [TextDirection]). For vertical directions it will move up and

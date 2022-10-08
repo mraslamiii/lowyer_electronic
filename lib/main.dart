@@ -3,15 +3,24 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:kanoon_dadgostari/app/dependency.dart';
+import 'package:kanoon_dadgostari/models/entity/basket/basket_item.dart';
+import 'package:kanoon_dadgostari/models/entity/basket/service_entity.dart';
 import 'package:kanoon_dadgostari/res/app_theme.dart';
 import 'package:kanoon_dadgostari/service/deep_link_service.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
+import 'package:kanoon_dadgostari/utilites/app_logger.dart';
+import 'package:kanoon_dadgostari/utilites/hive_utils/hive_utils.dart';
+import 'package:kanoon_dadgostari/view/base/basket_controller/basket_controller.dart';
+import 'package:kanoon_dadgostari/view/base/welfare_center_detail_page/view/welfare_center_detail_page.dart';
 import 'app/app_pages.dart';
 import 'web_providers/api_provider.dart';
 import 'service/connection_service/connection_status_binding.dart';
 
 void main() async {
+  await setupHive();
+
   await initServices();
   DependencyCrator.init();
 
@@ -32,7 +41,7 @@ class MyApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         designSize: const Size(360, 690),
-        useInheritedMediaQuery:true,
+        useInheritedMediaQuery:false,
         builder: (child, contextt) {
           ScreenUtil.init(context);
           return GetMaterialApp(
@@ -78,13 +87,25 @@ Future initServices() async {
   Get.put(LocalStorageService());
   Get.put(DeepLinkService());
   Get.put(APIProvider());
+  // Get.put(BasketController());
 
   // Get.putAsync<Isar>(() async => IsarUtil(),
   //     permanent: true);
   //
   // await IsarUtil().initDatabase();
 }
-
+setupHive() async {
+  try {
+    await Hive.initFlutter();
+    Hive.registerAdapter(ServiceBasketAdapter());
+    // Hive.registerAdapter(BookmarkItemAdapter());
+    await Hive.openBox<ServiceBasket>(Boxes.basketBox);
+    // await Hive.openBox<BasketItem>(Boxes.nextShoppingBox);
+    // await Hive.openBox<BookmarkItem>(Boxes.bookmarkBox);
+  } catch (_) {
+    AppLogger.catchLog(_);
+  }
+}
 void setupChromeSystem() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,

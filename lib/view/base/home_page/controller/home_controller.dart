@@ -6,6 +6,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kanoon_dadgostari/enums/result_enum.dart';
 import 'package:kanoon_dadgostari/enums/snackbar_type.dart';
+import 'package:kanoon_dadgostari/models/sec/upload_image_rqm.dart';
 import 'package:kanoon_dadgostari/utilites/show_result.dart';
 import '../../../../models/base/upload_model.dart';
 import '../../../../repo/sec/auth_repo.dart';
@@ -22,16 +23,15 @@ class HomeController extends GetxController {
 
   Future<void> openCamera() async {
     try {
-      final pickedFile = await ImagePicker().pickImage(
-        source: ImageSource.camera
-      );
+      final pickedFile =
+          await ImagePicker().pickImage(source: ImageSource.camera);
       file.value = File(pickedFile?.path ?? "");
       final fileCropped = await ImageCropper().cropImage(
         sourcePath: pickedFile?.path ?? "",
       );
       file.value = fileCropped!;
       // upLoadAvatar(file.value);
-      upLoadAvatar(file.value);
+      upLoadAvatarToUploader(file.value);
     } catch (e) {
       AppLogger.e('$e');
     }
@@ -51,7 +51,7 @@ class HomeController extends GetxController {
       );
 
       file.value = fileCropped!;
-      upLoadAvatar(file.value);
+      upLoadAvatarToUploader(file.value);
     } catch (e) {
       AppLogger.e('$e');
     }
@@ -61,11 +61,23 @@ class HomeController extends GetxController {
 
   String? res;
 
-  Future upLoadAvatar(File file) async {
+  Future upLoadAvatarToServer() async {
+    var rqm = UploadImageRQM(avatar: res,method: 'patch');
+    try {
+      var a  = await repo.uploadImage(rqm);
+      update();
+      // Get.back();
+      return a;
+    } catch (e) {
+      AppLogger.e('$e');
+    }
+  }
+
+  Future upLoadAvatarToUploader(File file) async {
     try {
       res = await repo.uploadFile(file);
+      upLoadAvatarToServer();
       update();
-      Get.back();
       return res;
     } catch (e) {
       AppLogger.e('$e');

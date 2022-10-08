@@ -44,7 +44,7 @@ class LawyersAPI {
       Map<String, dynamic> inputs = rqm.toJson();
 
       String url = APIEndpoint.urlCreator(
-          APIControllers.lawyers, APIEndpoint.address,
+          APIControllers.lawyers, APIEndpoint.uploadImage,
           id: pref.user.lawyerProfile.toString());
       var response = await _provider.postRequest(url, inputs);
       return response["data"];

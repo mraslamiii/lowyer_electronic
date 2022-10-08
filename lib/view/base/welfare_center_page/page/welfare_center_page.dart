@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/app/app_pages.dart';
 import 'package:kanoon_dadgostari/res/colors/colors.dart';
-import 'package:kanoon_dadgostari/view/base/welfare_center_detail_page/page/welfare_center_detail_page.dart';
+import 'package:kanoon_dadgostari/view/base/welfare_center_detail_page/view/welfare_center_detail_page.dart';
 import 'package:kanoon_dadgostari/view/widgets/customScaffold/customScaffold.dart';
 import '../../../../res/dimens/dimens.dart';
 import '../../../widgets/back_widget/back_widget.dart';

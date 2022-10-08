@@ -18,7 +18,7 @@ import '../../../../utilites/app_logger.dart';
 class LawyerLicenseInfoController extends GetxController
     with StateMixin<InfoProfileModel> {
   final LocalStorageService pref = Get.find<LocalStorageService>();
-  late GeoPoint geoPoint; //todo //get from server f
+   GeoPoint? geoPoint; //todo //get from server f
   late MapController mapController;
   late PickerMapController pickerController;
   double? lat;
@@ -28,6 +28,7 @@ class LawyerLicenseInfoController extends GetxController
   @override
   void onInit() async {
     lat = double.parse(pref.lawyer.profile?.lat?? '');
+    debugPrint('${lat} asda');
     long = double.parse(pref.lawyer.profile?.long?? '');
     pickerController = PickerMapController();
     mapController =
@@ -120,6 +121,7 @@ class LawyerLicenseInfoController extends GetxController
           tellOffice: officeTelephoneTxtController.text,
           lat: '$lat',
           long: '$long',
+          method: 'patch',
           licenseNumber: licenceNumberTxtController.text,
           licenseCreateDate: createDateLicenceTxtController.text,
           licenseExpiredDate: expirationDateTxtController.text,

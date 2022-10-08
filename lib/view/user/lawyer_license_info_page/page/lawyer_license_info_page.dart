@@ -197,7 +197,9 @@ class LawyerLicenseInfoPage extends StatelessWidget {
                                         ),
                                       ),
                                       GestureDetector(
-                                        onTap: () => Get.off(MapPage()),
+                                        onTap: () {
+                                          Get.off(MapPage());}
+                                        ,
                                         child: Container(
                                           width: fullWidth,
                                           height: fullHeight / 4,
