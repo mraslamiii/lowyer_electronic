@@ -9,6 +9,7 @@ import '../../utilites/app_logger.dart';
 import '../../web_providers/lawyer_provider/lawyer_provider.dart';
 
 class AuthRepository {
+  ///logout request ///
   Future logoutRepo() async {
     try {
       var response = await AuthAPI().logout();

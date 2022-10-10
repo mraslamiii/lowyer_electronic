@@ -36,9 +36,6 @@ class HomeController extends GetxController {
       AppLogger.e('$e');
     }
   }
-
-  // }
-
   Future<void> openGallery() async {
     try {
       final pickedFile =
@@ -58,9 +55,7 @@ class HomeController extends GetxController {
 
     // _file?.value = file;
   }
-
   String? res;
-
   Future upLoadAvatarToServer() async {
     var rqm = UploadImageRQM(avatar: res,method: 'patch');
     try {
@@ -72,7 +67,6 @@ class HomeController extends GetxController {
       AppLogger.e('$e');
     }
   }
-
   Future upLoadAvatarToUploader(File file) async {
     try {
       res = await repo.uploadFile(file);
@@ -83,7 +77,6 @@ class HomeController extends GetxController {
       AppLogger.e('$e');
     }
   }
-
   Future fetchHomeData() async {
     try {
       bool result = await repo.fetchUser();
@@ -98,7 +91,6 @@ class HomeController extends GetxController {
       AppLogger.e('$e');
     }
   }
-
   Future logOut() async {
     try {
       var result = await repo.logoutRepo();
@@ -132,7 +124,6 @@ class HomeController extends GetxController {
       AppLogger.e('$e');
     }
   }
-
   Future<bool> back() async {
     printInfo(info: 'back');
     SystemNavigator.pop();

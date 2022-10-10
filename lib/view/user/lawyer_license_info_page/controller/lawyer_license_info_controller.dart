@@ -112,7 +112,6 @@ class LawyerLicenseInfoController extends GetxController
   Future editAddressProfile() async {
     try {
       if (isBusyProfile.value == false) {
-        var profile = pref.lawyer.profile;
         isBusyProfile.value = true;
         update();
         bool result = await repo.editAddress(EditAddressRQM(
@@ -126,7 +125,6 @@ class LawyerLicenseInfoController extends GetxController
           licenseCreateDate: createDateLicenceTxtController.text,
           licenseExpiredDate: expirationDateTxtController.text,
         ));
-
         isBusyProfile.value = false;
         update();
         if (result) {
