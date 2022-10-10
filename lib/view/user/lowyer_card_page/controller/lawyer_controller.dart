@@ -11,7 +11,7 @@ import 'package:kanoon_dadgostari/utilites/show_result.dart';
 
 import '../../../../utilites/app_logger.dart';
 
-class LawyerController extends GetxController {
+class LawyerController extends GetxController{
   @override
   void onClose() {
     super.onClose();

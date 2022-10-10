@@ -116,18 +116,26 @@ class _BankCard extends GetView<LawyerController>  {
     return ListView.builder(
       physics:const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: controller.lawyer.cards?.length,
+        itemCount: 1,
         itemBuilder: (context, index) {
           var card = controller.lawyer.cards?[index];
           return
             Obx(
           () =>
-               AnimatedCrossFade(
+         AnimatedCrossFade(
                  crossFadeState: controller.hasActiveCard.value == false ||
                  controller.lawyer.cards?[index].status == 'ban'
                      ?  CrossFadeState.showSecond : CrossFadeState.showFirst,
                 duration: const Duration(milliseconds: 750),
-                secondChild: const SizedBox(height: 0,width: 0),
+                secondChild: Container(height: fullHeight / 1.5,alignment: Alignment.center,child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset("assets/icons/ic_home_vakil_card.png",width: fullWidth / 4 ),
+                    Text("کارتی وجود ندارد",style: Get.theme.textTheme.bodyText1,)
+                  ],
+                ),),
                  firstChild: AnimatedContainer(
 
                    duration: const Duration(microseconds: 750),
@@ -137,13 +145,13 @@ class _BankCard extends GetView<LawyerController>  {
                       width: fullWidth,
                       decoration: BoxDecoration(
                           color: AppColors.primaryColor,
-                          boxShadow: [
-                            BoxShadow(
-                                color: AppColors.primaryColor.withOpacity(0.5),
-                                spreadRadius: 2,
-                                offset: const Offset(0, 4),
-                                blurRadius: 10)
-                          ],
+                          // boxShadow: [
+                          //   BoxShadow(
+                          //       color: AppColors.primaryColor.withOpacity(0.5),
+                          //       spreadRadius: 2,
+                          //       offset: const Offset(0, 4),
+                          //       blurRadius: 10)
+                          // ],
                           borderRadius:
                               BorderRadius.all(Radius.circular(smallRadius))),
                       height: controller.heightCard.value,
