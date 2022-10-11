@@ -33,7 +33,9 @@ class ScanSearchController extends GetxController {
       if (url.contains("/welfareCenter/?id=")) {
         Get.toNamed(Routes.welfareCenterPageDetail);
       } else {
-        Get.snackbar("آدرس نامعتبر", "بارکد اسکن شده معتبر نمیباشد");
+        if(!Get.isSnackbarOpen) {
+          Get.snackbar("آدرس نامعتبر", "بارکد اسکن شده معتبر نمیباشد");
+        }
       }
     }
 
