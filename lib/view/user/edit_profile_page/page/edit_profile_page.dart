@@ -48,12 +48,15 @@ final  EditProfileController controller = Get.put(EditProfileController());
                 margin: EdgeInsets.all(standardSize),
                 child: SizedBox(
                   width: fullWidth,
-                  child: progressButton(
-                    isProgress: controller.isBusyProfile.value,
-                    onTap: controller.isBusyProfile.isFalse ? () {
-                      controller.editProfileEducation();
-                    } : null,
-                    text: "ثبت اطلاعات",
+                  child: Obx(() {
+                      return progressButton(
+                        isProgress: controller.isBusyProfile.value,
+                        onTap: controller.isBusyProfile.isFalse ? () {
+                          controller.editProfileEducation();
+                        } : null,
+                        text: "ثبت اطلاعات",
+                      );
+                    }
                   ),
                 ),
               ),

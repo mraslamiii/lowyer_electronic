@@ -40,6 +40,7 @@ class SignUpLawyerInfoPage extends StatelessWidget {
                   // inputFormatters: [
                   //   FilteringTextInputFormatter.digitsOnly
                   // ],
+                  onChange: (value) => controller.lawyerLicenseNumTxt.value = value,
                   keyboardType: TextInputType.number,
                   textInputAction: TextInputAction.next,
                   textDirection: TextDirection.rtl,
@@ -100,11 +101,11 @@ class SignUpLawyerInfoPage extends StatelessWidget {
               child: Obx(
                 () => progressButton(
                   isProgress: controller.isBusyLogin.value,
-                  onTap: controller.lawyerLicenseNumTxtController.value.text.isNotEmpty &&
+                  onTap: controller.lawyerLicenseNumTxt.value.isNotEmpty &&
                           controller
-                              .lawyerLicenseRecDateTxtController.value.text.isNotEmpty &&
+                              .lawyerLicenseRecDateTxt.value.isNotEmpty &&
                           controller
-                              .lawyerLicenseExpDateTxtController.value.text.isNotEmpty &&
+                              .lawyerLicenseExpDateTxt.value.isNotEmpty &&
                       controller
                           .isBusyLogin.isFalse
                       ? () {

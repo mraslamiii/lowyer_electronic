@@ -22,18 +22,28 @@ import '../../../../app/app_pages.dart';
 import '../../../widgets/custom_snackbar/custom_snackbar.dart';
 
 class SignUPController extends GetxController {
+
+
+  /// Variables ///
+
+
+
+  /// page 1
   TextEditingController idCodeUserController = TextEditingController();
   TextEditingController phoneTxtController = TextEditingController();
-  TextEditingController dateTimeTxtController = TextEditingController();
   TextEditingController nameTxtController = TextEditingController();
   TextEditingController lastNameTxtController = TextEditingController();
-
-
+  RxString nameTxt = ''.obs;
+  RxString lastNameTxt = ''.obs;
+  RxString idCodeUserTxt = ''.obs;
+  String? phone = "";
+  /// page 2
   TextEditingController lawyerLicenseNumTxtController = TextEditingController();
   TextEditingController lawyerLicenseRecDateTxtController = TextEditingController();
   TextEditingController lawyerLicenseExpDateTxtController = TextEditingController();
-
-  String? phone = "";
+  RxString lawyerLicenseNumTxt = ''.obs;
+  RxString lawyerLicenseRecDateTxt = ''.obs;
+  RxString lawyerLicenseExpDateTxt = ''.obs;
 
   final LocalStorageService pref = Get.find<LocalStorageService>();
   final ConnectionStatusController connectionStatusController =
@@ -81,14 +91,14 @@ class SignUPController extends GetxController {
         isBusyLogin.value = true;
 
         var result = await repo.registerRequest(RegisterRQM(
-            firstName: nameTxtController.text,
-            lastName: lastNameTxtController.text,
+            firstName: nameTxt.value,
+            lastName: lastNameTxt.value,
             mobileNumber: phone,
-            nationalCode: idCodeUserController.text,
+            nationalCode: idCodeUserTxt.value,
             avatar: file.value.path,
-            licenseNumber: lawyerLicenseNumTxtController.text,
-            licenseCreateDate: lawyerLicenseRecDateTxtController.text,
-            licenseExpireDate: lawyerLicenseExpDateTxtController.text,
+            licenseNumber: lawyerLicenseNumTxt.value,
+            licenseCreateDate: lawyerLicenseRecDateTxt.value,
+            licenseExpireDate: lawyerLicenseExpDateTxt.value,
         ));
         isBusyLogin.value = false;
 
@@ -125,6 +135,7 @@ class SignUPController extends GetxController {
       lawyerLicenseRecDateTxtController.text =
       "${receivedDate?.value.formatter.yyyy}/${receivedDate?.value.formatter
           .mm}/${receivedDate?.value.formatter.dd}";
+      lawyerLicenseRecDateTxt.value = lawyerLicenseRecDateTxtController.text;
     }
   }
 
@@ -144,6 +155,7 @@ class SignUPController extends GetxController {
       lawyerLicenseExpDateTxtController.text =
       "${expirationDate?.value.formatter.yyyy}/${expirationDate?.value.formatter
           .mm}/${expirationDate?.value.formatter.dd}";
+      lawyerLicenseExpDateTxt.value = lawyerLicenseExpDateTxtController.text;
     }
   }
 }
