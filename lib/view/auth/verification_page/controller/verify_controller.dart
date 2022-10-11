@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:countdown/countdown.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/app/app_pages.dart';
@@ -14,12 +17,61 @@ class VerifyController extends GetxController {
   TextEditingController pinController = TextEditingController();
 
   var result ;
+  RxBool isBusyConfirmationCode = false.obs;
+  late CountDown countDownTime;
+  late StreamSubscription<Duration> subTime;
+  RxString time = "".obs;
+
   RxString value = RxString('');
   RxBool isValid = RxBool(false);
   RxBool isBusyLogin = false.obs;
   AuthRepository repo = AuthRepository();
   final LocalStorageService _pref = Get.find<LocalStorageService>();
   final ConnectionStatusController connectionStatusController = Get.find<ConnectionStatusController>();
+
+  /// Count down time ///
+
+  String showTime(Duration event) {
+    var min = "";
+
+    var sec = "";
+
+    var secs = event.inSeconds % 60;
+
+    if (event.inMinutes < 10) {
+      min = "0${event.inMinutes}";
+    } else {
+      min = "${event.inMinutes}";
+    }
+
+    if (secs < 10) {
+      sec = "0${event.inSeconds % 60}";
+    } else {
+      sec = (event.inSeconds % 60).toString();
+    }
+
+    return min + ":" + sec;
+  }
+
+  void countListener() {
+    countDownTime = CountDown(const Duration(seconds: 10));
+
+    subTime = countDownTime.stream.listen((event) {
+      time.value = showTime(event);
+
+      update();
+    });
+
+    subTime.onDone(() {
+      isBusyConfirmationCode.value = false;
+
+      subTime.cancel();
+
+      update();
+
+      debugPrint("subTime.onDone");
+    });
+  }
 
   void phoneChanged(String val) {
     value.value = val;
@@ -28,6 +80,7 @@ class VerifyController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    countListener();
     debounce<String>(value, lengthOK, time: const Duration(milliseconds: 500));
   }
 

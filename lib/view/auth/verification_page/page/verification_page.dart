@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/res/colors/colors.dart';
 import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
+import 'package:kanoon_dadgostari/view/auth/login_page/controller/login_controller.dart';
 import 'package:kanoon_dadgostari/view/auth/verification_page/controller/verify_controller.dart';
 import 'package:kanoon_dadgostari/view/widgets/customScaffold/customScaffold.dart';
 import 'package:kanoon_dadgostari/view/widgets/progress_button/progress_button.dart';
@@ -14,6 +16,8 @@ class VerificationPage extends StatelessWidget {
   late String phone;
 
   VerificationPage({super.key});
+
+  LoginController loginController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -46,27 +50,64 @@ class VerificationPage extends StatelessWidget {
                       child: PinCodeField(),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Get.offAll(LoginPage());
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(top: smallSize),
-                      child: Row(
-                        children: [
-                          SvgPicture.asset('assets/icons/ic_edit_underline.svg',
-                              color: AppColors.primaryColor),
-                          Padding(
-                              padding: EdgeInsets.only(right: xSmallSize),
-                              child: Text(
-                                "ویرایش شماره تلفن",
-                                style: Get.theme.textTheme.subtitle2
-                                    ?.copyWith(color: AppColors.primaryColor),
-                              ))
-                        ],
-                      ),
-                    ),
-                  ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Get.offAll(LoginPage());
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(top: smallSize),
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                    'assets/icons/ic_edit_underline.svg',
+                                    color: AppColors.primaryColor),
+                                Padding(
+                                    padding: EdgeInsets.only(right: xSmallSize),
+                                    child: Text(
+                                      "ویرایش شماره تلفن",
+                                      style: Get.theme.textTheme.subtitle2
+                                          ?.copyWith(
+                                              color: AppColors.primaryColor),
+                                    ))
+                              ],
+                            ),
+                          ),
+                        ),
+                        Obx(() {
+                            return Padding(
+                              padding: EdgeInsets.only(top: smallSize),
+                              child: controller.time.value == "00:00" ? GestureDetector(
+                                onTap: controller.time.value == "00:00"
+                                    ? () {
+                                        loginController.fetchData();
+                                      }
+                                    : null,
+                                child: loginController.isBusyLogin.value
+                                    ? const CupertinoActivityIndicator(
+                                        color: Colors.white,
+                                      )
+                                    : Text(
+                                        "ارسال کد".tr,
+                                        style:
+                                            Get.theme.textTheme.caption!.copyWith(
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                              ):
+                              Text(
+                                controller.time.value,
+                                style: Get.theme.textTheme.bodyText1!.copyWith(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold
+                                ),
+                              ),
+                            );
+                          }
+                        )
+                      ]),
                   const Expanded(child: SizedBox()),
                   SizedBox(
                     width: fullWidth,
