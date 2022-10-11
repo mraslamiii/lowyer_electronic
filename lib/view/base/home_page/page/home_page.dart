@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:kanoon_dadgostari/widgets/bottom_sheet.dart';
 import 'package:toast/toast.dart';
 import '../../../../app/app_pages.dart';
