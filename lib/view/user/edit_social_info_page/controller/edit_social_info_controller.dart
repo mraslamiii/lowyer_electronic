@@ -68,7 +68,7 @@ class EditSocialInfoController extends GetxController {
     } catch (e) {
       isBusySocial.value = false;
       update();
-      showTheResult(resultType: SnackbarType.success,
+      showTheResult(resultType: SnackbarType.error,
           showTheResultType: ShowTheResultType.snackBar,
           title: 'خطا',
           message: '$e');
