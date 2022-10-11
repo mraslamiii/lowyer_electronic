@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../../../models/entity/basket/basket_item.dart';
 import '../../../models/entity/basket/service_entity.dart';
 import '../../../utilites/app_logger.dart';
 import '../../../utilites/hive_utils/hive_utils.dart';
@@ -18,6 +17,16 @@ class BasketController extends GetxController {
   }
   var isBusyAddToCart = false.obs;
   List<ServiceBasket> item =<ServiceBasket>[];
+
+
+  // Future getBasket()async {
+  //   try{
+  //
+  //     return rpm;
+  //   }catch(e){
+  //     AppLogger.e('$e');
+  //   }
+  // }
 
   Future addToCart(ServiceBasket item) async {
     try {
@@ -97,13 +106,29 @@ class BasketController extends GetxController {
       return 0;
     }
   }
-  // int calculatedTotal() {
-  //   int total = 0;
-  //   for (var element in box.values) {
-  //     String price = element.price;
-  //     var shooz = element.quantity;
-  //     total = total + (price * shooz);
-  //   }
-  //   return total;
-  // }
+  double discountTotal() {
+    double total = 0;
+    for (var element in box.values) {
+      double discount = double.parse(element.discount);
+      var quant = element.quantity;
+      total = total + (discount * quant);
+    }
+    return total;
+  }
+  double calculatedTotal() {
+    double total = 0;
+    for (var element in box.values) {
+      double price = double.parse(element.price);
+      var quant = element.quantity;
+      total = total + (price * quant);
+    }
+    return total;
+  }
+  double total() {
+    double total = 0;
+    for (var element in box.values) {
+      total =calculatedTotal()-discountTotal();
+    }
+    return total;
+  }
 }

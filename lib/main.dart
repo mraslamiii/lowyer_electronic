@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:kanoon_dadgostari/app/dependency.dart';
-import 'package:kanoon_dadgostari/models/entity/basket/basket_item.dart';
 import 'package:kanoon_dadgostari/models/entity/basket/service_entity.dart';
 import 'package:kanoon_dadgostari/res/app_theme.dart';
 import 'package:kanoon_dadgostari/service/deep_link_service.dart';
