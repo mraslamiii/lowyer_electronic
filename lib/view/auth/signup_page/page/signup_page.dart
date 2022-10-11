@@ -19,10 +19,9 @@ class SignUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<SignUPController>(
       builder: (controller) {
-
         phone = Get.arguments as String;
-        controller.phoneTxtController.text = phone!;
-        controller.phone = phone!;
+        controller.phoneTxtController.text = phone ?? '';
+        controller.phone = phone ?? '';
         return WillPopScope(
           onWillPop: backtoLogin,
           child: customScaffold(
@@ -67,6 +66,7 @@ class SignUpPage extends StatelessWidget {
                     onEditingComplete: () {
                       controller.update();
                     },
+                    onChange: (value) => controller.nameTxt.value = value,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -98,6 +98,7 @@ class SignUpPage extends StatelessWidget {
                     onEditingComplete: () {
                       controller.update();
                     },
+                    onChange: (value) => controller.lastNameTxt.value = value,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -128,6 +129,7 @@ class SignUpPage extends StatelessWidget {
                       onEditingComplete: () {
                         controller.update();
                       },
+                      onChange: (value) => controller.idCodeUserTxt.value = value,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       textDirection: TextDirection.rtl,
                       maxLength: 10,
@@ -188,12 +190,12 @@ class SignUpPage extends StatelessWidget {
                 child: Obx(
                   () => progressButton(
                     isProgress: controller.isBusyLogin.value,
-                    onTap: controller.nameTxtController.value.text.isNotEmpty &&
+                    onTap: controller.nameTxt.value.isNotEmpty &&
                             controller
-                                .lastNameTxtController.value.text.isNotEmpty &&
+                                .lastNameTxt.value.isNotEmpty &&
                             (phone?.isNotEmpty ?? false) &&
                             controller
-                                .idCodeUserController.value.text.isNotEmpty
+                                .idCodeUserTxt.value.isNotEmpty
                         ? () {
                             // controller.fetchData();
                             Get.to(SignUpLawyerInfoPage());
