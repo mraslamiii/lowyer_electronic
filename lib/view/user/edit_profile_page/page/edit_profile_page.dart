@@ -69,8 +69,8 @@ final  EditProfileController controller = Get.put(EditProfileController());
                 // controller.obx(
                 //   (state) =>
                 ListView(
+                  padding: EdgeInsets.only(bottom: isOpenKeyBoard ? fullHeight/2.5 : 0),
               physics: const BouncingScrollPhysics(),
-
                 children: [
                   Container(
                     margin: EdgeInsetsDirectional.only(
