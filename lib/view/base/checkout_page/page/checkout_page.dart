@@ -74,118 +74,118 @@ class CheckoutPage extends StatelessWidget {
                         controller.rpm.services[index],
                       ),
                     ),
-                    SizedBox(height: fullHeight / 2.8,),
+                    // SizedBox(height: fullHeight / 2.8,),
                   ],
                 ),
               ),
-              DraggableScrollableSheet(
-                minChildSize: 0.4,
-                initialChildSize: 0.4,
-                maxChildSize: 0.4,
-                builder: (
-                  BuildContext context,
-                  ScrollController scrollController,
-                ) {
-                  return NotificationListener(
-                    onNotification:
-                        (OverscrollIndicatorNotification overScroll) {
-                      overScroll.disallowIndicator();
-                      return true;
-                    },
-                    child: SingleChildScrollView(
-                      child: Container(
-                        margin: EdgeInsets.only(
-                          top: xxSmallSize
-                        ),
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.06),
-                              blurRadius: 29,
-                              spreadRadius: 0,
-                            )
-                          ],
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(standardRadius),
-                            topRight: Radius.circular(standardRadius),
-                          ),
-                          color: AppColors.backgroundColor,
-                        ),
-                        child: SingleChildScrollView(
-                          controller: scrollController,
-                          padding: EdgeInsetsDirectional.all(standardSize),
-                          child: Column(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.circular(xSmallRadius),
-                                  color: AppColors.formFieldColor,
-                                ),
-                                padding:
-                                    EdgeInsets.symmetric(horizontal: smallSize),
-                                child: Column(
-                                  children: [
-                                    _factorItemWidget(
-                                      "جمع کـل",
-                                      "۱۲۰,۰۰۰ تـومان",
-                                    ),
-                                    const Divider(),
-                                    _factorItemWidget(
-                                      "تخفیـف",
-                                      "۴۰,۰۰۰ تـومان",
-                                    ),
-                                    const Divider(),
-                                    _factorItemWidget(
-                                      "مبلغ قابـل پرداخـت",
-                                      "۸۰,۰۰۰ تـومان",
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(height: standardSize),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "مبلغ قابـل پرداخـت :",
-                                        style: Get.theme.textTheme.subtitle2
-                                            ?.copyWith(
-                                          color: const Color(0xFF8C8A8A)
-                                              .withOpacity(0.80),
-                                        ),
-                                      ),
-                                      Text(
-                                        "۸۰,۰۰۰ تـومان",
-                                        style: Get.theme.textTheme.subtitle2
-                                            ?.copyWith(
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    width: fullWidth / 2.5,
-                                    child: progressButton(
-                                      onTap: () => Get.to(PaymentGatewayPage()),
-                                      text: "پرداخت",
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
+              // DraggableScrollableSheet(
+              //   minChildSize: 0.4,
+              //   initialChildSize: 0.4,
+              //   maxChildSize: 0.4,
+              //   builder: (
+              //     BuildContext context,
+              //     ScrollController scrollController,
+              //   ) {
+              //     return NotificationListener(
+              //       onNotification:
+              //           (OverscrollIndicatorNotification overScroll) {
+              //         overScroll.disallowIndicator();
+              //         return true;
+              //       },
+              //       child: SingleChildScrollView(
+              //         child: Container(
+              //           margin: EdgeInsets.only(
+              //             top: xxSmallSize
+              //           ),
+              //           decoration: BoxDecoration(
+              //             boxShadow: [
+              //               BoxShadow(
+              //                 color: Colors.black.withOpacity(0.06),
+              //                 blurRadius: 29,
+              //                 spreadRadius: 0,
+              //               )
+              //             ],
+              //             borderRadius: BorderRadius.only(
+              //               topLeft: Radius.circular(standardRadius),
+              //               topRight: Radius.circular(standardRadius),
+              //             ),
+              //             color: AppColors.backgroundColor,
+              //           ),
+              //           child: SingleChildScrollView(
+              //             controller: scrollController,
+              //             padding: EdgeInsetsDirectional.all(standardSize),
+              //             child: Column(
+              //               children: [
+              //                 Container(
+              //                   decoration: BoxDecoration(
+              //                     borderRadius:
+              //                         BorderRadius.circular(xSmallRadius),
+              //                     color: AppColors.formFieldColor,
+              //                   ),
+              //                   padding:
+              //                       EdgeInsets.symmetric(horizontal: smallSize),
+              //                   child: Column(
+              //                     children: [
+              //                       _factorItemWidget(
+              //                         "جمع کـل",
+              //                         "۱۲۰,۰۰۰ تـومان",
+              //                       ),
+              //                       const Divider(),
+              //                       _factorItemWidget(
+              //                         "تخفیـف",
+              //                         "۴۰,۰۰۰ تـومان",
+              //                       ),
+              //                       const Divider(),
+              //                       _factorItemWidget(
+              //                         "مبلغ قابـل پرداخـت",
+              //                         "۸۰,۰۰۰ تـومان",
+              //                       ),
+              //                     ],
+              //                   ),
+              //                 ),
+              //                 SizedBox(height: standardSize),
+              //                 Row(
+              //                   mainAxisAlignment:
+              //                       MainAxisAlignment.spaceBetween,
+              //                   children: [
+              //                     Column(
+              //                       crossAxisAlignment:
+              //                           CrossAxisAlignment.start,
+              //                       children: [
+              //                         Text(
+              //                           "مبلغ قابـل پرداخـت :",
+              //                           style: Get.theme.textTheme.subtitle2
+              //                               ?.copyWith(
+              //                             color: const Color(0xFF8C8A8A)
+              //                                 .withOpacity(0.80),
+              //                           ),
+              //                         ),
+              //                         Text(
+              //                           "۸۰,۰۰۰ تـومان",
+              //                           style: Get.theme.textTheme.subtitle2
+              //                               ?.copyWith(
+              //                             fontWeight: FontWeight.w700,
+              //                           ),
+              //                         ),
+              //                       ],
+              //                     ),
+              //                     SizedBox(
+              //                       width: fullWidth / 2.5,
+              //                       child: progressButton(
+              //                         onTap: () => Get.to(PaymentGatewayPage()),
+              //                         text: "پرداخت",
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+              //               ],
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     );
+              //   },
+              // ),
             ],
           ),
           onLoading: const Center(
@@ -199,6 +199,96 @@ class CheckoutPage extends StatelessWidget {
             text: "پرداخت",
           ),
         ),*/
+        bottomNavigationBar: SingleChildScrollView(
+          child: Container(
+            margin: EdgeInsets.only(
+                top: xxSmallSize
+            ),
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.06),
+                  blurRadius: 29,
+                  spreadRadius: 0,
+                )
+              ],
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(standardRadius),
+                topRight: Radius.circular(standardRadius),
+              ),
+              color: AppColors.backgroundColor,
+            ),
+            child: SingleChildScrollView(
+              padding: EdgeInsetsDirectional.all(standardSize),
+              child: Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius:
+                      BorderRadius.circular(xSmallRadius),
+                      color: AppColors.formFieldColor,
+                    ),
+                    padding:
+                    EdgeInsets.symmetric(horizontal: smallSize),
+                    child: Column(
+                      children: [
+                        _factorItemWidget(
+                          "جمع کـل",
+                          "۱۲۰,۰۰۰ تـومان",
+                        ),
+                        const Divider(),
+                        _factorItemWidget(
+                          "تخفیـف",
+                          "۴۰,۰۰۰ تـومان",
+                        ),
+                        const Divider(),
+                        _factorItemWidget(
+                          "مبلغ قابـل پرداخـت",
+                          "۸۰,۰۰۰ تـومان",
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: standardSize),
+                  Row(
+                    mainAxisAlignment:
+                    MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment:
+                        CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "مبلغ قابـل پرداخـت :",
+                            style: Get.theme.textTheme.subtitle2
+                                ?.copyWith(
+                              color: const Color(0xFF8C8A8A)
+                                  .withOpacity(0.80),
+                            ),
+                          ),
+                          Text(
+                            "۸۰,۰۰۰ تـومان",
+                            style: Get.theme.textTheme.subtitle2
+                                ?.copyWith(
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        width: fullWidth / 2.5,
+                        child: progressButton(
+                          onTap: () => Get.to(PaymentGatewayPage()),
+                          text: "پرداخت",
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
