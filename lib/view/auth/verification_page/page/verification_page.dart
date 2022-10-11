@@ -1,4 +1,5 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -50,26 +51,62 @@ class VerificationPage extends StatelessWidget {
                         child: PinCodeField(),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        _backToLogin();
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.only(top: smallSize),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset('assets/icons/ic_edit_underline.svg',
-                                color: AppColors.primaryColor),
-                            Padding(
-                                padding: EdgeInsets.only(right: xSmallSize),
-                                child: Text(
-                                  "ویرایش شماره تلفن",
-                                  style: Get.theme.textTheme.subtitle2
-                                      ?.copyWith(color: AppColors.primaryColor),
-                                ))
-                          ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            _backToLogin();
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(top: smallSize),
+                            child: Row(
+                              children: [
+                                SvgPicture.asset('assets/icons/ic_edit_underline.svg',
+                                    color: AppColors.primaryColor),
+                                Padding(
+                                    padding: EdgeInsets.only(right: xSmallSize),
+                                    child: Text(
+                                      "ویرایش شماره تلفن",
+                                      style: Get.theme.textTheme.subtitle2
+                                          ?.copyWith(color: AppColors.primaryColor),
+                                    ))
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
+                        Obx(() {
+                          return Padding(
+                            padding: EdgeInsets.only(top: smallSize),
+                            child: controller.time.value == "00:00" ? GestureDetector(
+                              onTap: controller.time.value == "00:00"
+                                  ? () {
+                                controller.resendCode(phone);
+                              }
+                                  : null,
+                              child: controller.isBusyConfirmationCode.value
+                                  ? const CupertinoActivityIndicator(
+                                color: Colors.black,
+                              )
+                                  : Text(
+                                "ارسال کد".tr,
+                                style:
+                                Get.theme.textTheme.subtitle2!.copyWith(
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ):
+                            Text(
+                              controller.time.value,
+                              style: Get.theme.textTheme.bodyText1!.copyWith(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          );
+                        }
+                        )
+                      ],
                     ),
                     const Expanded(child: SizedBox()),
                     SizedBox(

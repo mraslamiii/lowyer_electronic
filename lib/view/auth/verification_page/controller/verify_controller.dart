@@ -7,7 +7,9 @@ import 'package:kanoon_dadgostari/app/app_pages.dart';
 import 'package:kanoon_dadgostari/repo/sec/auth_repo.dart';
 import 'package:kanoon_dadgostari/service/connection_service/connection_status.dart';
 
+import '../../../../app/app_exeption.dart';
 import '../../../../enums/snackbar_type.dart';
+import '../../../../models/base/title_value_model.dart';
 import '../../../../service/preferences_service.dart';
 import '../../../../enums/result_enum.dart';
 import '../../../../utilites/app_logger.dart';
@@ -54,7 +56,7 @@ class VerifyController extends GetxController {
   }
 
   void countListener() {
-    countDownTime = CountDown(const Duration(seconds: 10));
+    countDownTime = CountDown(const Duration(minutes: 2));
 
     subTime = countDownTime.stream.listen((event) {
       time.value = showTime(event);
@@ -80,7 +82,6 @@ class VerifyController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    countListener();
     debounce<String>(value, lengthOK, time: const Duration(milliseconds: 500));
   }
 
@@ -133,6 +134,56 @@ class VerifyController extends GetxController {
     }
   }
 
+
+  Future<void> resendCode(String phoneNumber) async {
+    if (isBusyConfirmationCode.isFalse &&
+        connectionStatusController.connectionStatus ==
+            ConnectionStatus.connect) {
+      try {
+        isBusyConfirmationCode.value = true;
+
+        var result = await repo.loginRequest(phoneNumber);
+        isBusyConfirmationCode.value = false;
+        if (result == null) {
+          Get.offAllNamed(Routes.signupPage, arguments: phoneNumber);
+          showTheResult(
+              resultType: SnackbarType.error,
+              showTheResultType: ShowTheResultType.snackBar,
+              title: 'خطا',
+              message: "تلفن همراه مورد نظر معتبر نیست");//todo check
+
+        } else {
+          showTheResult(
+              resultType: SnackbarType.success,
+              showTheResultType: ShowTheResultType.snackBar,
+              title: 'موفقیت',
+              message: 'کد به شماره $result ارسال شد');
+          countListener();
+        }
+      }
+      on TitleValueException catch (exp) {
+
+        for (TitleValueModel error in exp.errors){
+          isBusyConfirmationCode.value = false;
+          Get.toNamed(Routes.signupPage, arguments: phoneNumber);
+
+        }
+
+      }
+      catch (e) {
+        isBusyConfirmationCode.value = false;
+        update();
+        Get.toNamed(Routes.signupPage, arguments: phoneNumber);
+        // showTheResult(
+        //     resultType: SnackbarType.error,
+        //     showTheResultType: ShowTheResultType.snackBar,
+        //     title: 'خطا',
+        //     message: '$e');
+      }
+    } else {
+      isBusyConfirmationCode.value = false;
+    }
+  }
 // Future<bool> back() async {
 //   bool isBack = false;
 //   Get.defaultDialog(
