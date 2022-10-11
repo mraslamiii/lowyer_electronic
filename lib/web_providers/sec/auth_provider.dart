@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:get/get.dart';
+import 'package:kanoon_dadgostari/models/sec/upload_image_rqm.dart';
+import 'package:kanoon_dadgostari/preview_map_page.dart';
 import 'package:kanoon_dadgostari/web_models/auth/auth_web_model.dart';
 import 'package:kanoon_dadgostari/web_providers/api_endpoints.dart';
 import '../../../models/base/base_response.dart';
@@ -91,7 +93,7 @@ class AuthAPI {
     }
   }
 
-  /// upload Avatar ///
+  /// upload Avatar to uploader ///
   Future uploadImage(File file) async {
     try {
       // Map<String , dynamic> input = {'file' :file};
@@ -110,7 +112,32 @@ class AuthAPI {
       rethrow;
     }
   }
+
+  /// upload Avatar  to server///
+
+  Future uploadImageToServer(UploadImageRQM rqm) async {
+    try {
+      Map<String , dynamic> input = rqm.toJson();
+      // String url = APIEndpoint.urlCreator(controller, APIEndpoint.file);
+      String url =APIEndpoint.urlCreator(APIControllers.lawyers, APIEndpoint.uploadImage,id: pref.user.lawyerProfile.toString());
+      var response = await _provider.postRequest(
+        url,
+        input,
+      );
+      // UploadModel result= UploadModel.fromJson(response);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
+
+
+
+
+
+
+/// PercentCalculate ///
 
 num calculatePercent(int sent, int total) => (sent * 100) / total;
 

@@ -11,21 +11,20 @@ import '../../../widgets/progress_button/progress_button.dart';
 import '../../../widgets/text_form_field/text_form_field_widget.dart';
 import '../controller/edit_profile_controller.dart';
 
-class EditProfilePage extends GetView<EditProfileController> {
+class EditProfilePage extends StatelessWidget {
   EditProfilePage({
     Key? key,
   }) : super(key: key);
   bool isFirstLunch = true;
 
-  @override
-  EditProfileController controller = Get.put(EditProfileController());
+final  EditProfileController controller = Get.put(EditProfileController());
 
   @override
   Widget build(BuildContext context) {
     var isOpenKeyBoard = MediaQuery.of(context).viewInsets.bottom !=0;
     // debugPrint('${} salam');
-    var profile = controller.lawyer.profile;
-    var user = controller.lawyer.user;
+    var profile = controller.pref.lawyer.profile;
+    var user = controller.pref.lawyer.user;
     if (isFirstLunch) {
       controller.nameTxtController.text = '${user?.firstName} ' ?? '';
       controller.lastNameTxtController.text = '${user?.lastName} ' ?? '';
@@ -36,17 +35,12 @@ class EditProfilePage extends GetView<EditProfileController> {
       controller.addressTxtController.text = '${user?.address} ' ?? '';
       controller.zipCodeTxtController.text = '${user?.postalCode}' ?? '';
       controller.eduMajorTxtController.text = '${profile?.academicDiscipline} ' ?? '';
-      controller.educationSelected =
+      controller.educationSelected.value =
           controller.educations.indexOf(profile?.education ?? '') ;
       isFirstLunch = false;
       controller.update();
     }
-    return GetBuilder<EditProfileController>(
-        init: controller,
-        initState: (state) {
-          // controller.fetchData();
-        },
-        builder: (_) {
+
           return customScaffold(
             bottomAppBar: BottomAppBar(
               elevation: 0,
@@ -54,12 +48,15 @@ class EditProfilePage extends GetView<EditProfileController> {
                 margin: EdgeInsets.all(standardSize),
                 child: SizedBox(
                   width: fullWidth,
-                  child: progressButton(
-                    isProgress: controller.isBusyProfile.value,
-                    onTap: controller.isBusyProfile.isFalse ? () {
-                      controller.editProfileEducation();
-                    } : null,
-                    text: "ثبت اطلاعات",
+                  child: Obx(() {
+                      return progressButton(
+                        isProgress: controller.isBusyProfile.value,
+                        onTap: controller.isBusyProfile.isFalse ? () {
+                          controller.editProfileEducation();
+                        } : null,
+                        text: "ثبت اطلاعات",
+                      );
+                    }
                   ),
                 ),
               ),
@@ -202,16 +199,16 @@ class EditProfilePage extends GetView<EditProfileController> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            controller.educationSelected !=-1 ?
+                         Obx(()=> Text(
+                            controller.educationSelected.value !=-1 ?
                             controller
-                                .educations[controller.educationSelected ] : 'تحصیلات',
+                                .educations[controller.educationSelected.value ] : 'تحصیلات',
                             style: Get.theme.textTheme.bodyText1?.copyWith(
-                              color: controller.educationSelected != -1
+                              color: controller.educationSelected.value != -1
                                   ? Colors.black
                                   : AppColors.hintColor,
                             ),
-                          ),
+                          )),
                           SvgPicture.asset(
                             "assets/icons/ic_arrow_down.svg",
                             color: Colors.black,
@@ -334,7 +331,7 @@ class EditProfilePage extends GetView<EditProfileController> {
             // ),
             context: context,
           );
-        });
+
   }
 
   Widget sheetItem({
@@ -345,7 +342,7 @@ class EditProfilePage extends GetView<EditProfileController> {
     return GestureDetector(
       onTap: () {
         Navigator.pop(context);
-        controller.educationSelected = index;
+        controller.educationSelected.value = index;
         controller.update();
       },
       child: Container(

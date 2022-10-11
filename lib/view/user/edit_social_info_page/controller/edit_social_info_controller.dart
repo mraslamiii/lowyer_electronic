@@ -68,6 +68,10 @@ class EditSocialInfoController extends GetxController {
     } catch (e) {
       isBusySocial.value = false;
       update();
+      showTheResult(resultType: SnackbarType.success,
+          showTheResultType: ShowTheResultType.snackBar,
+          title: 'خطا',
+          message: '$e');
       AppLogger.e('$e');
     }
   }

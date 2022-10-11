@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
 import 'package:kanoon_dadgostari/utilites/app_logger.dart';
 import 'package:kanoon_dadgostari/utilites/show_result.dart';
+import 'package:kanoon_dadgostari/view/base/home_page/page/home_page.dart';
 import '../../../../enums/snackbar_type.dart';
 import '../../../../models/lawyer/lawyer_rqm/edit_education_rqm.dart';
 import '../../../../models/lawyer/info_profile_model.dart';
@@ -14,12 +15,11 @@ import '../../../widgets/custom_snackbar/custom_snackbar.dart';
 // import 'package:keyboard_visibility/keyboard_visibility.dart';
 
 class EditProfileController extends GetxController {
-  late LawyerData lawyer;
 
   RxBool isBusyProfile = false.obs;
   RxBool isBusyGetEd = false.obs;
 
-  int educationSelected = -1;
+  RxInt educationSelected = RxInt(-1);
 
   List<String> educations = [
     "دیپلم",
@@ -65,7 +65,6 @@ class EditProfileController extends GetxController {
     // }
 
       // ,);
-    lawyer = pref.lawyer;
   }
 
   @override
@@ -101,13 +100,13 @@ class EditProfileController extends GetxController {
           address: addressTxtController.text,
           postalCode: zipCodeTxtController.text,
           academicDiscipline: eduMajorTxtController.text,
-          education: educationSelected !=-1 ? educations[educationSelected] :'',
+          education: educationSelected.value !=-1 ? educations[educationSelected.value] :'',
           educationPlace: eduLocationTxtController.text,
         ));
         isBusyProfile.value = false;
         update();
         if (result) {
-          Get.back(result: 'result');
+          Get.offAll(HomePage());
           showTheResult(resultType: SnackbarType.success,
               showTheResultType: ShowTheResultType.snackBar,
               title: 'موفقیت',

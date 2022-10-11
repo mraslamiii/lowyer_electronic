@@ -1,18 +1,15 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:kanoon_dadgostari/models/sec/upload_image_rqm.dart';
 import 'package:kanoon_dadgostari/web_models/auth/auth_web_model.dart';
 import 'package:kanoon_dadgostari/web_providers/sec/auth_provider.dart';
-
-import '../../models/base/base_response.dart';
-import '../../models/base/upload_model.dart';
-import '../../models/lawyer/info_profile_model.dart';
 import '../../service/preferences_service.dart';
 import '../../utilites/app_logger.dart';
 import '../../web_providers/lawyer_provider/lawyer_provider.dart';
 
 class AuthRepository {
+  ///logout request ///
   Future logoutRepo() async {
     try {
       var response = await AuthAPI().logout();
@@ -21,6 +18,7 @@ class AuthRepository {
       rethrow;
     }
   }
+
   /// Login signup request ///
   Future<String> loginRequest(String phone) async {
     try {
@@ -32,11 +30,12 @@ class AuthRepository {
       rethrow;
     }
   }
+
   Future<bool> fetchUser() async {
     final LocalStorageService pref = Get.find<LocalStorageService>();
     try {
       var response =
-      await LawyersAPI().getProfile(pref.user.lawyerProfile.toString());
+          await LawyersAPI().getProfile(pref.user.lawyerProfile.toString());
       pref.setLawyer(response["data"]);
 
       return true;
@@ -62,20 +61,29 @@ class AuthRepository {
       dynamic response = await AuthAPI().loginCode(phone, code);
 
       return response.success ? response.data : throw response.data;
-
     } catch (e) {
       AppLogger.catchLog(e);
       rethrow;
     }
   }
 
+  Future uploadImage(UploadImageRQM rqm) async {
+
+    try {
+      var response = await AuthAPI().uploadImageToServer(rqm);
+      return response['data'];
+
+    } catch (e) {
+      rethrow;
+    }
+  }
 
   Future uploadFile(File file) async {
     final LocalStorageService pref = Get.find();
     try {
       var response = await AuthAPI().uploadImage(file);
 
-    // UploadModel result= UploadModel.fromJson(response.data);
+      // UploadModel result= UploadModel.fromJson(response.data);
       // String imageUrl = response.data;
       // User user = pref.user;
       // user.avatar = imageUrl;
@@ -100,5 +108,4 @@ class AuthRepository {
       rethrow;
     }
   }
-
 }

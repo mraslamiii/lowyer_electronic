@@ -74,12 +74,14 @@ class LoginController extends GetxController {
       }
       catch (e) {
         isBusyLogin.value = false;
+        update();
+        Get.toNamed(Routes.signupPage, arguments: phoneNumber.value);
 
-        showTheResult(
-            resultType: SnackbarType.error,
-            showTheResultType: ShowTheResultType.snackBar,
-            title: 'خطا',
-            message: '$e');
+        // showTheResult(
+        //     resultType: SnackbarType.error,
+        //     showTheResultType: ShowTheResultType.snackBar,
+        //     title: 'خطا',
+        //     message: '$e');
       }
     } else {
       isBusyLogin.value = false;

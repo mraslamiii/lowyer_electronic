@@ -6,7 +6,7 @@ class EditAddressRQM {
   String? long;
   String? licenseNumber;
   String? licenseCreateDate;
-  String? _method;
+  String? method;
   String? licenseExpiredDate;
 
   EditAddressRQM({
@@ -14,6 +14,7 @@ class EditAddressRQM {
     this.addressOffice,
     this.tellOffice,
     this.lat,
+    this.method,
     this.long,
     this.licenseNumber,
     this.licenseCreateDate,
@@ -27,7 +28,7 @@ class EditAddressRQM {
     data['lat'] = lat;
     data['long'] =long;
     data['license_number'] = licenseNumber;
-    data['_method'] = 'patch';
+    data['_method'] = method;
     data['license_create_date'] = licenseCreateDate;
     data['license_expire_date'] = licenseExpiredDate;
     return data;

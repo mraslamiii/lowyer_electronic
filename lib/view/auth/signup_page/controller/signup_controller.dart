@@ -33,6 +33,7 @@ class SignUPController extends GetxController {
   TextEditingController lawyerLicenseRecDateTxtController = TextEditingController();
   TextEditingController lawyerLicenseExpDateTxtController = TextEditingController();
 
+  String? phone = "";
 
   final LocalStorageService pref = Get.find<LocalStorageService>();
   final ConnectionStatusController connectionStatusController =
@@ -71,7 +72,7 @@ class SignUPController extends GetxController {
   }
 
   Future<void> fetchData(
-      // String phone
+      String phone
       ) async {
     if (isBusyLogin.isFalse &&
         connectionStatusController.connectionStatus ==
@@ -82,7 +83,7 @@ class SignUPController extends GetxController {
         var result = await repo.registerRequest(RegisterRQM(
             firstName: nameTxtController.text,
             lastName: lastNameTxtController.text,
-            mobileNumber: phoneTxtController.text,
+            mobileNumber: phone,
             nationalCode: idCodeUserController.text,
             avatar: file.value.path,
             licenseNumber: lawyerLicenseNumTxtController.text,
