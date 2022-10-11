@@ -82,6 +82,7 @@ class VerifyController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    countListener();
     debounce<String>(value, lengthOK, time: const Duration(milliseconds: 500));
   }
 
