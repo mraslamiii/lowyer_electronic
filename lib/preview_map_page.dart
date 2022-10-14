@@ -3,11 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/app/app_pages.dart';
-import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
 import 'package:kanoon_dadgostari/view/user/lawyer_license_info_page/controller/lawyer_license_info_controller.dart';
-import 'package:kanoon_dadgostari/view/user/lowyer_card_page/controller/lawyer_controller.dart';
-import 'package:kanoon_dadgostari/view/widgets/progress_button/progress_button.dart';
 
 class PreViewMapPage extends StatefulWidget {
   double lat;

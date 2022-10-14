@@ -106,7 +106,7 @@ class EditProfileController extends GetxController {
         isBusyProfile.value = false;
         update();
         if (result) {
-          Get.offAll(HomePage());
+          Get.off(HomePage());
           showTheResult(resultType: SnackbarType.success,
               showTheResultType: ShowTheResultType.snackBar,
               title: 'موفقیت',

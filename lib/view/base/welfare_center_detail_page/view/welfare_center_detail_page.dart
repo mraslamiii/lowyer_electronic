@@ -9,6 +9,7 @@ import 'package:kanoon_dadgostari/models/entity/basket/service_entity.dart';
 import 'package:kanoon_dadgostari/res/colors/colors.dart';
 import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
 import 'package:get/get.dart';
+import 'package:kanoon_dadgostari/utilites/datetime_extentions.dart';
 import 'package:kanoon_dadgostari/view/widgets/image_widget.dart';
 import 'package:kanoon_dadgostari/view/widgets/progress_button/progress_button.dart';
 import 'package:readmore/readmore.dart';
@@ -243,7 +244,7 @@ class WelfareCenterDetailPage extends StatelessWidget {
                               borderRadius:
                               BorderRadius.circular(xxSmallRadius),
                               child: imageWidget(
-                                  controller.rpm.profile.headerPic
+                                  rpm.image
                                 // "https://qph.cf2.quoracdn.net/main-qimg-1cf247a96715fe142b6ff10da03e3bb0-pjlq",
                               ),
                             ),
@@ -261,7 +262,7 @@ class WelfareCenterDetailPage extends StatelessWidget {
                               SizedBox(height: xSmallSize),
                               _itemServiceCard(
                                 "قیمت",
-                                rpm.price,
+                                formatter.format(int.parse(double.parse(rpm.price).toStringAsFixed(0))),
                                 hasDesc: true,
                               ),
                               SizedBox(height: xSmallSize),
@@ -286,7 +287,7 @@ class WelfareCenterDetailPage extends StatelessWidget {
                                           xxSmallRadius / 1.5),
                                     ),
                                     child: Text(
-                                      rpm.discount,
+                                     '%${double.parse(rpm.discount).toStringAsFixed(0)}',
                                       style: Get.theme.textTheme.subtitle2!
                                           .copyWith(
                                         color: const Color(0xFFC62828),
@@ -305,13 +306,13 @@ class WelfareCenterDetailPage extends StatelessWidget {
                       padding: EdgeInsets.only(left: standardSize),
                       child: _itemServiceCard(
                         "تــوضیحــات",
-                        "با فروشگـاه رفـاه تخفیـف بگیـریـد بـا لـذت",
+                        rpm.description,
                       ),
                     ),
-                    Text(
-                      "هدف فروشگاه‌‌‌ های نسـل جدیـد فراتر از تأمین کالاهـای هدف فروشگاه‌‌‌ های نسـل جدیـد فراتر از تأمین کالاهـای مورد نیاز مشتریان اسـت. فروشگاه‌هـا به دنبال خلـق مورد نیاز مشتریان اسـت. فروشگاه‌هـا به دنبال خلـق تجربه ای متفاوت دلنشین برای مشتریان است.",
-                      style: Get.theme.textTheme.subtitle2,
-                    ),
+                    // Text(
+                    //   "هدف فروشگاه‌‌‌ های نسـل جدیـد فراتر از تأمین کالاهـای هدف فروشگاه‌‌‌ های نسـل جدیـد فراتر از تأمین کالاهـای مورد نیاز مشتریان اسـت. فروشگاه‌هـا به دنبال خلـق مورد نیاز مشتریان اسـت. فروشگاه‌هـا به دنبال خلـق تجربه ای متفاوت دلنشین برای مشتریان است.",
+                    //   style: Get.theme.textTheme.subtitle2,
+                    // ),
                     SizedBox(height: standardSize),
                   ],
                 ),
@@ -355,7 +356,7 @@ class WelfareCenterDetailPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(xxSmallRadius / 1.5),
                         ),
                         child: Text(
-                          rpm.discount,
+                          '%${double.parse(rpm.discount).toStringAsFixed(0)}',
                           style: Get.theme.textTheme.subtitle2!.copyWith(
                             color: const Color(0xFFC62828),
                           ),
@@ -377,8 +378,9 @@ class WelfareCenterDetailPage extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: xxSmallSize),
                   child: Row(
+
                     children: [
-                      Expanded(child: _itemServiceCard("قیمت", "${rpm.price} تومان")),
+                      Expanded(child: _itemServiceCard("قیمت", "${formatter.format(int.parse(double.parse(rpm.price).toStringAsFixed(0)))} تومان")),
                       ValueListenableBuilder(
                         valueListenable: Boxes.getBasketBox().listenable(),
                         builder: (context, box, widget) {
@@ -538,7 +540,7 @@ class WelfareCenterDetailPage extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(xxSmallRadius),
-                child: imageWidget(controller.rpm.profile.headerPic
+                child: imageWidget(rpm.image
                   // "https://qph.cf2.quoracdn.net/main-qimg-1cf247a96715fe142b6ff10da03e3bb0-pjlq",
                 ),
               ),

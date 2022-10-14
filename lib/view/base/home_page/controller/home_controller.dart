@@ -20,6 +20,7 @@ class HomeController extends GetxController {
   final AuthRepository repo = AuthRepository();
   final LocalStorageService pref = Get.find();
   UploadModel? response;
+  RxBool isBusyLogout = false.obs;
 
   Future<void> openCamera() async {
     try {
@@ -93,29 +94,36 @@ class HomeController extends GetxController {
   }
   Future logOut() async {
     try {
-      var result = await repo.logoutRepo();
-      if (result != null) {
-        pref.logOut();
+      if (isBusyLogout.value == false) {
+        isBusyLogout.value = true;
         update();
-        Get.offAll(LoginPage());
-        showTheResult(
-            resultType: SnackbarType.success,
-            showTheResultType: ShowTheResultType.snackBar,
-            title: 'موفق',
-            message: 'شما با موفقیت خارج شدید');
-        return result;
-      } else {
-        Get.offAll(LoginPage());
-
-        showTheResult(
-            resultType: SnackbarType.error,
-            showTheResultType: ShowTheResultType.snackBar,
-            title: 'خطا',
-            message: result.data);
+        var result = await repo.logoutRepo();
+        if (result != null) {
+          isBusyLogout.value =false;
+          pref.logOut();
+          update();
+          Get.offAll(LoginPage());
+          showTheResult(
+              resultType: SnackbarType.success,
+              showTheResultType: ShowTheResultType.snackBar,
+              title: 'موفق',
+              message: 'شما با موفقیت خارج شدید');
+          return result;
+        } else {
+          isBusyLogout.value =false;
+          update();
+          Get.offAll(LoginPage());
+          showTheResult(
+              resultType: SnackbarType.error,
+              showTheResultType: ShowTheResultType.snackBar,
+              title: 'خطا',
+              message: result.data);
+        }
       }
     } catch (e) {
+      isBusyLogout.value =false;
+      update();
       Get.offAll(LoginPage());
-
       showTheResult(
           resultType: SnackbarType.error,
           showTheResultType: ShowTheResultType.snackBar,

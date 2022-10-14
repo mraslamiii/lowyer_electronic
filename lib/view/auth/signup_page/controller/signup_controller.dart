@@ -19,6 +19,8 @@ import 'package:lottie/lottie.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 import '../../../../app/app_pages.dart';
+import '../../../../models/sec/upload_image_rqm.dart';
+import '../../../../utilites/app_logger.dart';
 import '../../../widgets/custom_snackbar/custom_snackbar.dart';
 
 class SignUPController extends GetxController {
@@ -37,6 +39,7 @@ class SignUPController extends GetxController {
   RxString lastNameTxt = ''.obs;
   RxString idCodeUserTxt = ''.obs;
   String? phone = "";
+  String? imagePath = "";
   /// page 2
   TextEditingController lawyerLicenseNumTxtController = TextEditingController();
   TextEditingController lawyerLicenseRecDateTxtController = TextEditingController();
@@ -50,17 +53,35 @@ class SignUPController extends GetxController {
       Get.find<ConnectionStatusController>();
   AuthRepository repo = AuthRepository();
   Rx<File> file = File('').obs;
-
-
   Rx<Jalali>? receivedDate = Jalali
       .now()
       .obs;
   Rx<Jalali>? expirationDate = Jalali
       .now()
       .obs;
-
-
   RxBool isBusyLogin = false.obs;
+  Future upLoadAvatarToServer() async {
+    var rqm = UploadImageRQM(avatar: imagePath,method: 'patch');
+    try {
+      var a  = await repo.uploadImage(rqm);
+      update();
+      // Get.back();
+      return a;
+    } catch (e) {
+      AppLogger.e('$e');
+    }
+  }
+
+  Future upLoadAvatarToUploader(File file) async {
+    try {
+      imagePath = await repo.uploadFile(file);
+      upLoadAvatarToServer();
+      update();
+      return imagePath;
+    } catch (e) {
+      AppLogger.e('$e');
+    }
+  }
 
   Future<void> openGallery() async {
     try {
@@ -74,6 +95,8 @@ class SignUPController extends GetxController {
       );
 
       file.value = fileCropped!;
+      upLoadAvatarToUploader(file.value);
+
     } catch (e) {
       print(e);
     }
@@ -95,7 +118,7 @@ class SignUPController extends GetxController {
             lastName: lastNameTxt.value,
             mobileNumber: phone,
             nationalCode: idCodeUserTxt.value,
-            avatar: file.value.path,
+            avatar: imagePath ?? file.value.path,
             licenseNumber: lawyerLicenseNumTxt.value,
             licenseCreateDate: lawyerLicenseRecDateTxt.value,
             licenseExpireDate: lawyerLicenseExpDateTxt.value,

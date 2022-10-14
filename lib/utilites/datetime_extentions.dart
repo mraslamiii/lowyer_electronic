@@ -3,6 +3,7 @@ import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 const String dateFormat = "yyyy-MM-dd HH:mm:ss";
 const String serverDateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+final formatter = NumberFormat("#,###");
 
 String getDate(Jalali time) {
   final DateFormatter formatter = time.formatter;

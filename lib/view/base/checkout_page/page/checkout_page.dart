@@ -9,6 +9,7 @@ import '../../../../models/category_model/detail_category_model.dart';
 import '../../../../models/entity/basket/service_entity.dart';
 import '../../../../res/colors/colors.dart';
 import '../../../../res/dimens/dimens.dart';
+import '../../../../utilites/datetime_extentions.dart';
 import '../../../../utilites/hive_utils/hive_utils.dart';
 import '../../../widgets/back_widget/back_widget.dart';
 import '../../../widgets/custom_bottom_sheet.dart';
@@ -226,26 +227,31 @@ class CheckoutPage extends GetView<BasketController> {
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius:
-                                BorderRadius.circular(xSmallRadius),
+                                    BorderRadius.circular(xSmallRadius),
                                 color: AppColors.formFieldColor,
                               ),
                               padding:
-                              EdgeInsets.symmetric(horizontal: smallSize),
+                                  EdgeInsets.symmetric(horizontal: smallSize),
                               child: Column(
                                 children: [
                                   _factorItemWidget(
                                     "جمع کـل",
-                                    controller.calculatedTotal().toStringAsFixed(0),
+                                    formatter.format(int.parse(controller
+                                        .calculatedTotal()
+                                        .toStringAsFixed(0))),
                                   ),
                                   const Divider(),
                                   _factorItemWidget(
                                     "تخفیـف",
-                                    controller.discountTotal().toStringAsFixed(0),
+                                    formatter.format(int.parse(controller
+                                        .discountTotal()
+                                        .toStringAsFixed(0))),
                                   ),
                                   const Divider(),
                                   _factorItemWidget(
                                     "مبلغ قابـل پرداخـت",
-                                    controller.total().toStringAsFixed(0),
+                                    formatter.format(int.parse(
+                                        controller.total().toStringAsFixed(0))),
                                   ),
                                 ],
                               ),
@@ -266,7 +272,9 @@ class CheckoutPage extends GetView<BasketController> {
                                       ),
                                     ),
                                     Text(
-                                      controller.total().toStringAsFixed(0),
+                                      formatter.format(int.parse(controller
+                                          .total()
+                                          .toStringAsFixed(0))),
                                       style: Get.theme.textTheme.subtitle2
                                           ?.copyWith(
                                         fontWeight: FontWeight.w700,
@@ -276,11 +284,21 @@ class CheckoutPage extends GetView<BasketController> {
                                 ),
                                 SizedBox(
                                   width: fullWidth / 2.5,
-                                  child: progressButton(
-                                    onTap: () => Get.to(PaymentGatewayPage()),
+                                  child: ValueListenableBuilder(
+                                      valueListenable: Boxes.getBasketBox().listenable(),
+                                      builder: (context, box, widget) {
+                                        return progressButton(
+                                    isDisabled: controller.box.values.isNotEmpty
+                                        ? false
+                                        : true,
+                                    onTap: () {
+                                      if (controller.box.values.isNotEmpty) {
+                                        Get.to(PaymentGatewayPage());
+                                      }
+                                    },
                                     text: "پرداخت",
-                                  ),
-                                ),
+                                  );
+                                      }))
                               ],
                             ),
                           ],
@@ -298,297 +316,299 @@ class CheckoutPage extends GetView<BasketController> {
         builder: (context, box, widget) {
           return controller.checkItemCount(rpm.id) != 0
               ? Stack(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  customBottomSheet(
-                    context,
-                    SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      padding: EdgeInsets.only(
-                        bottom: fullHeight / 18,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: fullHeight / 8,
-                                height: fullHeight / 8,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                        xSmallRadius),
-                                    border: Border.all(
-                                        width: 2, color: Colors.white),
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(
-                                        xxSmallRadius),
-                                    child: imageWidget(rpm.image
-                                      // "https://qph.cf2.quoracdn.net/main-qimg-1cf247a96715fe142b6ff10da03e3bb0-pjlq",
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        customBottomSheet(
+                          context,
+                          SingleChildScrollView(
+                            physics: const BouncingScrollPhysics(),
+                            padding: EdgeInsets.only(
+                              bottom: fullHeight / 18,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      width: fullHeight / 8,
+                                      height: fullHeight / 8,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                              xSmallRadius),
+                                          border: Border.all(
+                                              width: 2, color: Colors.white),
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                              xxSmallRadius),
+                                          child: imageWidget(rpm.image
+                                              // "https://qph.cf2.quoracdn.net/main-qimg-1cf247a96715fe142b6ff10da03e3bb0-pjlq",
+                                              ),
+                                        ),
+                                      ),
                                     ),
+                                    SizedBox(width: xSmallSize),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          _itemServiceCard(
+                                            "نـام خدمـت",
+                                            rpm.serviceName,
+                                          ),
+                                          SizedBox(height: xSmallSize),
+                                          _itemServiceCard(
+                                            "قیمت",
+                                            formatter.format(int.parse(
+                                                double.parse(rpm.price)
+                                                    .toStringAsFixed(0))),
+                                            hasDesc: true,
+                                          ),
+                                          SizedBox(height: xSmallSize),
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "تخفیف:",
+                                                style: Get
+                                                    .theme.textTheme.subtitle2!
+                                                    .copyWith(
+                                                  color: AppColors.primaryColor,
+                                                ),
+                                              ),
+                                              SizedBox(width: xxSmallSize),
+                                              Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: xSmallSize),
+                                                decoration: BoxDecoration(
+                                                  color: AppColors.errorColor
+                                                      .withOpacity(0.16),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          xxSmallRadius / 1.5),
+                                                ),
+                                                child: Text(
+                                                  '%${double.parse(rpm.discount).toStringAsFixed(0)}',
+                                                  style: Get.theme.textTheme
+                                                      .subtitle2!
+                                                      .copyWith(
+                                                    color:
+                                                        const Color(0xFFC62828),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: xSmallSize),
+                                Padding(
+                                  padding: EdgeInsets.only(left: standardSize),
+                                  child: _itemServiceCard(
+                                    "تــوضیحــات",
+                                    rpm.description,
                                   ),
                                 ),
-                              ),
-                              SizedBox(width: xSmallSize),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                                  children: [
-                                    _itemServiceCard(
+                                // Text(
+                                //   "هدف فروشگاه‌‌‌ های نسـل جدیـد فراتر از تأمین کالاهـای هدف فروشگاه‌‌‌ های نسـل جدیـد فراتر از تأمین کالاهـای مورد نیاز مشتریان اسـت. فروشگاه‌هـا به دنبال خلـق مورد نیاز مشتریان اسـت. فروشگاه‌هـا به دنبال خلـق تجربه ای متفاوت دلنشین برای مشتریان است.",
+                                //   style: Get.theme.textTheme.subtitle2,
+                                // ),
+                                SizedBox(height: standardSize),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(microseconds: 400),
+                        curve: Curves.fastLinearToSlowEaseIn,
+                        margin: EdgeInsets.only(
+                          top: xLargeSize,
+                          bottom: standardSize,
+                          right: standardSize,
+                          left: standardSize,
+                        ),
+                        padding: EdgeInsets.only(
+                          bottom: standardSize,
+                          top: xxLargeSize,
+                          right: standardSize,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(xSmallRadius),
+                          color: AppColors.formFieldColor,
+                        ),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: standardSize),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: _itemServiceCard(
                                       "نـام خدمـت",
                                       rpm.serviceName,
                                     ),
-                                    SizedBox(height: xSmallSize),
-                                    _itemServiceCard(
-                                      "قیمت",
-                                      rpm.price,
-                                      hasDesc: true,
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: xSmallSize),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.errorColor
+                                          .withOpacity(0.16),
+                                      borderRadius: BorderRadius.circular(
+                                          xxSmallRadius / 1.5),
                                     ),
-                                    SizedBox(height: xSmallSize),
-                                    Row(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "تخفیف:",
-                                          style: Get
-                                              .theme.textTheme.subtitle2!
-                                              .copyWith(
-                                            color: AppColors.primaryColor,
-                                          ),
+                                    child: Text(
+                                      '%${double.parse(rpm.discount).toStringAsFixed(0)}',
+                                      style: Get.theme.textTheme.subtitle2!
+                                          .copyWith(
+                                        color: const Color(0xFFC62828),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: standardSize),
+                            Padding(
+                              padding: EdgeInsets.only(left: standardSize),
+                              child: _itemServiceCard(
+                                "تــوضیحــات",
+                                rpm.description,
+                                hasDesc: true,
+                              ),
+                            ),
+                            SizedBox(height: smallSize),
+                            Padding(
+                              padding: EdgeInsets.only(left: xxSmallSize),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      child: _itemServiceCard("قیمت",
+                                          "${formatter.format(int.parse(double.parse(rpm.price).toStringAsFixed(0)))} تومان")),
+                                  // ValueListenableBuilder(
+                                  //     valueListenable:
+                                  //         Boxes.getBasketBox().listenable(),
+                                  //     builder: (context, box, widget) {
+                                  //       return controller
+                                  //                   .checkItemCount(rpm.id) ==
+                                  //               0
+                                  //           ? const SizedBox()
+                                  //           :
+                                  SizedBox(
+                                    width: fullWidth / 2.6,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: AppColors.primaryColor,
+                                          width: 1,
                                         ),
-                                        SizedBox(width: xxSmallSize),
-                                        Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: xSmallSize),
-                                          decoration: BoxDecoration(
-                                            color: AppColors.errorColor
-                                                .withOpacity(0.16),
-                                            borderRadius:
-                                            BorderRadius.circular(
-                                                xxSmallRadius / 1.5),
-                                          ),
-                                          child: Text(
-                                            rpm.discount,
-                                            style: Get.theme.textTheme
-                                                .subtitle2!
-                                                .copyWith(
-                                              color:
-                                              const Color(0xFFC62828),
+                                        borderRadius: BorderRadius.circular(
+                                          xSmallRadius,
+                                        ),
+                                      ),
+                                      // width: fullWidth,
+                                      height: fullHeight / 16,
+                                      margin: EdgeInsetsDirectional.only(
+                                        end: standardSize,
+                                      ),
+                                      padding: EdgeInsetsDirectional.only(
+                                        start: xSmallSize,
+                                        end: xSmallSize,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              controller.increase(rpm.id);
+                                              // controller.counter.value =
+                                              // controller.counter.value + 1;
+                                            },
+                                            child: Icon(
+                                              Icons.add,
+                                              color: Get.theme.primaryColor,
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                          Expanded(
+                                            child: GestureDetector(
+                                              onTap: () {},
+                                              child: Text(
+                                                controller
+                                                    .checkItemCount(rpm.id)
+                                                    .toString(),
+                                                style: Get
+                                                    .theme.textTheme.subtitle2,
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              controller.decrease(rpm.id);
+                                            },
+                                            child: Icon(
+                                              Icons.remove,
+                                              color: controller.checkItemCount(
+                                                          rpm.id) ==
+                                                      0
+                                                  ? AppColors.secondaryTextColor
+                                                  : AppColors.primaryColor,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: xSmallSize),
-                          Padding(
-                            padding: EdgeInsets.only(left: standardSize),
-                            child: _itemServiceCard(
-                              "تــوضیحــات",
-                              "با فروشگـاه رفـاه تخفیـف بگیـریـد بـا لـذت",
-                            ),
-                          ),
-                          Text(
-                            "هدف فروشگاه‌‌‌ های نسـل جدیـد فراتر از تأمین کالاهـای هدف فروشگاه‌‌‌ های نسـل جدیـد فراتر از تأمین کالاهـای مورد نیاز مشتریان اسـت. فروشگاه‌هـا به دنبال خلـق مورد نیاز مشتریان اسـت. فروشگاه‌هـا به دنبال خلـق تجربه ای متفاوت دلنشین برای مشتریان است.",
-                            style: Get.theme.textTheme.subtitle2,
-                          ),
-                          SizedBox(height: standardSize),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-                child: AnimatedContainer(
-                  duration: const Duration(microseconds: 400),
-                  curve: Curves.fastLinearToSlowEaseIn,
-                  margin: EdgeInsets.only(
-                    top: xLargeSize,
-                    bottom: standardSize,
-                    right: standardSize,
-                    left: standardSize,
-                  ),
-                  padding: EdgeInsets.only(
-                    bottom: standardSize,
-                    top: xxLargeSize,
-                    right: standardSize,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(xSmallRadius),
-                    color: AppColors.formFieldColor,
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: standardSize),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: _itemServiceCard(
-                                "نـام خدمـت",
-                                rpm.serviceName,
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: xSmallSize),
-                              decoration: BoxDecoration(
-                                color: AppColors.errorColor
-                                    .withOpacity(0.16),
-                                borderRadius: BorderRadius.circular(
-                                    xxSmallRadius / 1.5),
-                              ),
-                              child: Text(
-                                rpm.discount,
-                                style: Get.theme.textTheme.subtitle2!
-                                    .copyWith(
-                                  color: const Color(0xFFC62828),
-                                ),
+                                    // );
+                                    // }
+                                  )
+                                ],
                               ),
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(height: standardSize),
-                      Padding(
-                        padding: EdgeInsets.only(left: standardSize),
-                        child: _itemServiceCard(
-                          "تــوضیحــات",
-                          rpm.description,
-                          hasDesc: true,
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional.topStart,
+                      child: SizedBox(
+                        width: fullWidth / 4,
+                        height: fullWidth / 5.5,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(xSmallRadius),
+                            border: Border.all(width: 2, color: Colors.white),
+                          ),
+                          margin: EdgeInsetsDirectional.only(
+                            start: largeSize,
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(xxSmallRadius),
+                            child: imageWidget(rpm.image
+                                // "https://qph.cf2.quoracdn.net/main-qimg-1cf247a96715fe142b6ff10da03e3bb0-pjlq",
+                                ),
+                          ),
                         ),
                       ),
-                      SizedBox(height: smallSize),
-                      Padding(
-                        padding: EdgeInsets.only(left: xxSmallSize),
-                        child: Row(
-                          children: [
-                            Expanded(
-                                child: _itemServiceCard(
-                                    "قیمت", "${rpm.price} تومان")),
-                            // ValueListenableBuilder(
-                            //     valueListenable:
-                            //         Boxes.getBasketBox().listenable(),
-                            //     builder: (context, box, widget) {
-                            //       return controller
-                            //                   .checkItemCount(rpm.id) ==
-                            //               0
-                            //           ? const SizedBox()
-                            //           :
-                            SizedBox(
-                              width: fullWidth / 2.6,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: AppColors.primaryColor,
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(
-                                    xSmallRadius,
-                                  ),
-                                ),
-                                // width: fullWidth,
-                                height: fullHeight / 16,
-                                margin: EdgeInsetsDirectional.only(
-                                  end: standardSize,
-                                ),
-                                padding: EdgeInsetsDirectional.only(
-                                  start: xSmallSize,
-                                  end: xSmallSize,
-                                ),
-                                child: Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        controller.increase(rpm.id);
-                                        // controller.counter.value =
-                                        // controller.counter.value + 1;
-                                      },
-                                      child: Icon(
-                                        Icons.add,
-                                        color: Get.theme.primaryColor,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: GestureDetector(
-                                        onTap: () {},
-                                        child: Text(
-                                          controller
-                                              .checkItemCount(rpm.id)
-                                              .toString(),
-                                          style: Get
-                                              .theme.textTheme.subtitle2,
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        controller.decrease(rpm.id);
-                                      },
-                                      child: Icon(
-                                        Icons.remove,
-                                        color: controller.checkItemCount(
-                                            rpm.id) ==
-                                            0
-                                            ? AppColors.secondaryTextColor
-                                            : AppColors.primaryColor,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              // );
-                              // }
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional.topStart,
-                child: SizedBox(
-                  width: fullWidth / 4,
-                  height: fullWidth / 5.5,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(xSmallRadius),
-                      border: Border.all(width: 2, color: Colors.white),
                     ),
-                    margin: EdgeInsetsDirectional.only(
-                      start: largeSize,
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(xxSmallRadius),
-                      child: imageWidget(rpm.image
-                        // "https://qph.cf2.quoracdn.net/main-qimg-1cf247a96715fe142b6ff10da03e3bb0-pjlq",
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          )
+                  ],
+                )
               : const SizedBox();
         });
   }
 
   Widget _itemServiceCard(
-      String title,
-      String subTitle, {
-        bool hasDesc = false,
-      }) {
+    String title,
+    String subTitle, {
+    bool hasDesc = false,
+  }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -605,18 +625,18 @@ class CheckoutPage extends GetView<BasketController> {
               Expanded(
                 child: hasDesc
                     ? ReadMoreText(
-                  subTitle,
-                  trimLines: 1,
-                  colorClickableText: Get.theme.primaryColor,
-                  trimMode: TrimMode.Line,
-                  trimCollapsedText: 'بیشتر',
-                  style: Get.theme.textTheme.subtitle2,
-                  trimExpandedText: '  کمتر',
-                )
+                        subTitle,
+                        trimLines: 1,
+                        colorClickableText: Get.theme.primaryColor,
+                        trimMode: TrimMode.Line,
+                        trimCollapsedText: 'بیشتر',
+                        style: Get.theme.textTheme.subtitle2,
+                        trimExpandedText: '  کمتر',
+                      )
                     : Text(subTitle,
-                    style: Get.theme.textTheme.subtitle2,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis),
+                        style: Get.theme.textTheme.subtitle2,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis),
               ),
             ],
           ),
@@ -626,10 +646,10 @@ class CheckoutPage extends GetView<BasketController> {
   }
 
   Widget _factorItemWidget(
-      String title,
-      String subTitle, {
-        String? icon,
-      }) {
+    String title,
+    String subTitle, {
+    String? icon,
+  }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -651,11 +671,11 @@ class CheckoutPage extends GetView<BasketController> {
         SizedBox(width: xxSmallSize),
         Flexible(
             child: Text(
-              subTitle,
-              style: Get.theme.textTheme.subtitle2,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            )),
+          subTitle,
+          style: Get.theme.textTheme.subtitle2,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        )),
       ],
     );
   }

@@ -72,10 +72,16 @@ class PaymentGatewayPage extends StatelessWidget {
         ),
         bottomNavigationBar: Padding(
           padding: EdgeInsets.all(standardSize),
-          child: progressButton(
-            onTap: () => Get.off(const SuccessPaymentPage()),
+          child:Obx(()=> progressButton(
+            isDisabled:controller.selectedGateway.value == -1 ?
+            true : false,
+            onTap: () {
+              if (controller.selectedGateway.value != -1) {
+                Get.off(const SuccessPaymentPage());
+              }
+            },
             text: "پرداخت",
-          ),
+          )),
         ),
       ),
     );

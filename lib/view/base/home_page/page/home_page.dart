@@ -27,7 +27,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ToastContext().init(context);
-    debugPrint('token:${pref.token}');
+    debugPrint('lat:${pref.lawyer.profile!.lat}');
+    debugPrint('avatar:${pref.lawyer.user?.avatar}');
+    debugPrint('avatar:${controller.res}');
 
     return GetBuilder<HomeController>(
       init: controller,
@@ -36,7 +38,6 @@ class HomePage extends StatelessWidget {
           controller.fetchHomeData();
           pref.isFirstTimeLaunch = false;
           debugPrint('asdasdasdasd:${pref.isFirstTimeLaunch}');
-
         }
       },
       builder: (controller) => customScaffold(
@@ -84,7 +85,7 @@ class HomePage extends StatelessWidget {
                             onTap: () {
                               homeSheet(context);
                             },
-                            child: Icon(
+                            child: const Icon(
                               Icons.more_vert_sharp,
                               color: Colors.white,
                             )),
@@ -112,7 +113,9 @@ class HomePage extends StatelessWidget {
                                         xxLargeSize * 100),
                                     child:
                                         // Image.file(controller.file.value)
-                                        imageWidget( controller.res  ??pref.lawyer.user?.avatar ??''  ),
+                                        imageWidget(controller.res == null
+                                            ? pref.lawyer.user?.avatar ?? ''
+                                            : controller.res!),
                                   )
 /*
                                 Container(
@@ -189,7 +192,7 @@ class HomePage extends StatelessWidget {
                               Flexible(
                                 child: titleWidget(
                                   '${controller.pref.lawyer.user?.firstName} '
-                                      '${controller.pref.lawyer.user?.lastName}',
+                                  '${controller.pref.lawyer.user?.lastName}',
                                 ),
                               ),
                               titleWidget(controller

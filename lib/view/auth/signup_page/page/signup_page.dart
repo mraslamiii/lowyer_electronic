@@ -43,6 +43,7 @@ class SignUpPage extends StatelessWidget {
                   child: uploadImageBoxWidget(
                       onTap: () {
                         controller.openGallery();
+                        controller.update();
                       },
                       file: controller.file,
                       boxFit: BoxFit.fitWidth),

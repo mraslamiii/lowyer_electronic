@@ -47,22 +47,15 @@ class LoginController extends GetxController {
 
         var result = await repo.loginRequest(phoneNumber.value);
         isBusyLogin.value = false;
-        if (result == null) {
-          Get.offAllNamed(Routes.signupPage, arguments: phoneNumber.value);
-          showTheResult(
-              resultType: SnackbarType.error,
-              showTheResultType: ShowTheResultType.snackBar,
-              title: 'خطا',
-              message: "تلفن همراه مورد نظر معتبر نیست");//todo check
-
-        } else {
+        if (result != null) {
           Get.offAllNamed(Routes.verificationPage,
               arguments: phoneNumber.value);
           showTheResult(
               resultType: SnackbarType.success,
               showTheResultType: ShowTheResultType.snackBar,
               title: 'موفقیت',
-              message: 'کد به شماره $result ارسال شد');
+              message: 'کد به شماره $result ارسال شد');//todo check
+
         }
       }
       on TitleValueException catch (exp) {

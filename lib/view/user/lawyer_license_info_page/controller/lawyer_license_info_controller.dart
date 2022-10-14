@@ -27,9 +27,9 @@ class LawyerLicenseInfoController extends GetxController
 
   @override
   void onInit() async {
-    lat = double.parse(pref.lawyer.profile?.lat?? '');
+    lat = double.parse(pref.lawyer.profile!.lat);
     debugPrint('${lat} asda');
-    long = double.parse(pref.lawyer.profile?.long?? '');
+    long = double.parse(pref.lawyer.profile!.long?? '');
     pickerController = PickerMapController();
     mapController =
         MapController(initPosition: geoPoint, initMapWithUserPosition: false);

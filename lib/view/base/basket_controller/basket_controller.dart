@@ -7,17 +7,16 @@ import '../../../utilites/app_logger.dart';
 import '../../../utilites/hive_utils/hive_utils.dart';
 
 class BasketController extends GetxController {
-
-
   Box<ServiceBasket> box = Boxes.getBasketBox();
+
   @override
   void onInit() async {
     // getItems();
     super.onInit();
   }
-  var isBusyAddToCart = false.obs;
-  List<ServiceBasket> item =<ServiceBasket>[];
 
+  var isBusyAddToCart = false.obs;
+  List<ServiceBasket> item = <ServiceBasket>[];
 
   // Future getBasket()async {
   //   try{
@@ -65,8 +64,7 @@ class BasketController extends GetxController {
       return;
     }
     try {
-      item =
-          box.values.where((element) => element.id == productID).toList();
+      item = box.values.where((element) => element.id == productID).toList();
 
       if (item.isNotEmpty) {
         ServiceBasket items = item.first;
@@ -85,7 +83,7 @@ class BasketController extends GetxController {
       return;
     }
     ServiceBasket item =
-    box.values.singleWhere((element) => element.id == productID);
+        box.values.singleWhere((element) => element.id == productID);
     removeItem(item);
     item.quantity--;
     if (item.quantity > 0) {
@@ -99,22 +97,24 @@ class BasketController extends GetxController {
       if (productID == null) {
         return 0;
       }
-
       item = box.values.where((element) => element.id == productID).toList();
-      return item.isEmpty ? 0 : item[0].quantity ;
+      return item.isEmpty ? 0 : item[0].quantity;
     } catch (e) {
       return 0;
     }
   }
+
   double discountTotal() {
     double total = 0;
     for (var element in box.values) {
       double discount = double.parse(element.discount);
       var quant = element.quantity;
-      total = total + (discount * quant);
+      var price = element.price;
+      total =total+((double.parse(price) / 100) * discount) *quant;
     }
     return total;
   }
+
   double calculatedTotal() {
     double total = 0;
     for (var element in box.values) {
@@ -124,11 +124,42 @@ class BasketController extends GetxController {
     }
     return total;
   }
+
   double total() {
+    double total = 0;
+    for (var element in box.values) {
+      var quant = element.quantity;
+      total = calculatedTotal() - discountTotal() ;
+    }
+    return total;
+  }
+/*  double discountTotal() {
+    double total = 0;
+    for (var element in box.values) {
+      double discount = double.parse(element.discount);
+      var quant = element.quantity;
+      total = total + (discount * quant);
+    }
+    return total;
+  }*/ // todo old code
+
+/*
+  double calculatedTotal() {
+    double total = 0;
+    for (var element in box.values) {
+      double price = double.parse(element.price);
+      var quant = element.quantity;
+      total = total + (price * quant);
+    }
+    return total;
+  }
+*/ // todo old code
+
+/*  double total() {
     double total = 0;
     for (var element in box.values) {
       total =calculatedTotal()-discountTotal();
     }
     return total;
-  }
+  }*/ // todo old code
 }

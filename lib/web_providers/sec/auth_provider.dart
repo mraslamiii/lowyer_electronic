@@ -117,9 +117,11 @@ class AuthAPI {
 
   Future uploadImageToServer(UploadImageRQM rqm) async {
     try {
-      Map<String , dynamic> input = rqm.toJson();
+      Map<String, dynamic> input = rqm.toJson();
       // String url = APIEndpoint.urlCreator(controller, APIEndpoint.file);
-      String url =APIEndpoint.urlCreator(APIControllers.lawyers, APIEndpoint.uploadImage,id: pref.user.lawyerProfile.toString());
+      String url = APIEndpoint.urlCreator(
+          APIControllers.lawyers, APIEndpoint.uploadImage,
+          id: pref.user.lawyerProfile.toString());
       var response = await _provider.postRequest(
         url,
         input,
@@ -131,11 +133,6 @@ class AuthAPI {
     }
   }
 }
-
-
-
-
-
 
 /// PercentCalculate ///
 

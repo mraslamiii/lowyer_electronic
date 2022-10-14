@@ -11,8 +11,6 @@ import 'package:kanoon_dadgostari/service/deep_link_service.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
 import 'package:kanoon_dadgostari/utilites/app_logger.dart';
 import 'package:kanoon_dadgostari/utilites/hive_utils/hive_utils.dart';
-import 'package:kanoon_dadgostari/view/base/basket_controller/basket_controller.dart';
-import 'package:kanoon_dadgostari/view/base/welfare_center_detail_page/view/welfare_center_detail_page.dart';
 import 'app/app_pages.dart';
 import 'web_providers/api_provider.dart';
 import 'service/connection_service/connection_status_binding.dart';
