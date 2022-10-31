@@ -283,22 +283,25 @@ class CheckoutPage extends GetView<BasketController> {
                                   ],
                                 ),
                                 SizedBox(
-                                  width: fullWidth / 2.5,
-                                  child: ValueListenableBuilder(
-                                      valueListenable: Boxes.getBasketBox().listenable(),
-                                      builder: (context, box, widget) {
-                                        return progressButton(
-                                    isDisabled: controller.box.values.isNotEmpty
-                                        ? false
-                                        : true,
-                                    onTap: () {
-                                      if (controller.box.values.isNotEmpty) {
-                                        Get.to(PaymentGatewayPage());
-                                      }
-                                    },
-                                    text: "پرداخت",
-                                  );
-                                      }))
+                                    width: fullWidth / 2.5,
+                                    child: ValueListenableBuilder(
+                                        valueListenable:
+                                            Boxes.getBasketBox().listenable(),
+                                        builder: (context, box, widget) {
+                                          return progressButton(
+                                            isDisabled:
+                                                controller.box.values.isNotEmpty
+                                                    ? false
+                                                    : true,
+                                            onTap: () {
+                                              if (controller
+                                                  .box.values.isNotEmpty) {
+                                                Get.to(PaymentGatewayPage());
+                                              }
+                                            },
+                                            text: "پرداخت",
+                                          );
+                                        }))
                               ],
                             ),
                           ],
@@ -493,16 +496,10 @@ class CheckoutPage extends GetView<BasketController> {
                                 children: [
                                   Expanded(
                                       child: _itemServiceCard("قیمت",
-                                          "${formatter.format(int.parse(double.parse(rpm.price).toStringAsFixed(0)))} تومان")),
-                                  // ValueListenableBuilder(
-                                  //     valueListenable:
-                                  //         Boxes.getBasketBox().listenable(),
-                                  //     builder: (context, box, widget) {
-                                  //       return controller
-                                  //                   .checkItemCount(rpm.id) ==
-                                  //               0
-                                  //           ? const SizedBox()
-                                  //           :
+                                          "${formatter.format(int.parse(double.parse(rpm.price).toStringAsFixed(0)))} تومان",
+                                          isLineThrough: rpm.discount.isNotEmpty
+                                              ? true
+                                              : false)),
                                   SizedBox(
                                     width: fullWidth / 2.6,
                                     child: Container(
@@ -572,6 +569,10 @@ class CheckoutPage extends GetView<BasketController> {
                                 ],
                               ),
                             ),
+                            rpm.discount.isNotEmpty
+                                ? _itemServiceCard("قیمت",
+                                    "${formatter.format(int.parse(controller.discountSingleItem().toStringAsFixed(0)))} تومان")
+                                : const SizedBox(),
                           ],
                         ),
                       ),
@@ -608,6 +609,7 @@ class CheckoutPage extends GetView<BasketController> {
     String title,
     String subTitle, {
     bool hasDesc = false,
+    bool isLineThrough = false,
   }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -634,7 +636,10 @@ class CheckoutPage extends GetView<BasketController> {
                         trimExpandedText: '  کمتر',
                       )
                     : Text(subTitle,
-                        style: Get.theme.textTheme.subtitle2,
+                        style: Get.theme.textTheme.subtitle2!.copyWith(
+                            decoration: isLineThrough == true
+                                ? TextDecoration.lineThrough
+                                : TextDecoration.none),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis),
               ),

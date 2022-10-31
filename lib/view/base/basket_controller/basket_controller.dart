@@ -103,7 +103,16 @@ class BasketController extends GetxController {
       return 0;
     }
   }
-
+  double discountSingleItem() {
+    double total = 0;
+    for (var element in box.values) {
+      double discount = double.parse(element.discount);
+      var quant = element.quantity;
+      var price = double.parse(element.price);
+      total =price - ((price / 100) * discount) ;
+    }
+    return total;
+  }
   double discountTotal() {
     double total = 0;
     for (var element in box.values) {

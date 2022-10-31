@@ -12,8 +12,12 @@ import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/utilites/datetime_extentions.dart';
 import 'package:kanoon_dadgostari/view/widgets/image_widget.dart';
 import 'package:kanoon_dadgostari/view/widgets/progress_button/progress_button.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 import 'package:readmore/readmore.dart';
+import '../../../../map_page.dart';
+import '../../../../preview_map_page.dart';
 import '../../../../utilites/hive_utils/hive_utils.dart';
+import '../../../../widgets/error_widget.dart';
 import '../../../widgets/back_widget/back_widget.dart';
 import '../../../widgets/custom_bottom_sheet.dart';
 import '../../basket_controller/basket_controller.dart';
@@ -22,11 +26,15 @@ import '../controller/welfare_center_detail_controller.dart';
 
 class WelfareCenterDetailPage extends StatelessWidget {
   WelfareCenterDetailPage({Key? key, this.title, this.id}) : super(key: key);
-  final WelfareCenterDetailController controller =
-      Get.put(WelfareCenterDetailController());
+
   String? title;
   String? id;
+
+
+  final WelfareCenterDetailController controller =
+      Get.put(WelfareCenterDetailController());
   final BasketController cartController = Get.put(BasketController());
+  final theme = Get.theme;
 
   // RxBool isAddToCart = false.obs;
   @override
@@ -85,73 +93,129 @@ class WelfareCenterDetailPage extends StatelessWidget {
                 ],
               ),
               body: controller.obx(
-                  (state) => SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        child: Column(
+                (state) => SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: fullHeight / 4,
+                        child: Stack(
                           children: [
-                            SizedBox(
-                              height: fullHeight / 4,
-                              child: Stack(
-                                children: [
-                                  _bannerImage(),
-                                  _avatarImage(),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: standardSize),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                _descWidget(
-                                    title: 'تعـداد خدمـت',
-                                    count: controller.rpm.services.length),
-                                Container(
-                                  height: xxLargeSize,
-                                  width: 1,
-                                  color: AppColors.dividerColor,
-                                ),
-                                _descWidget(
-                                    title: 'تعـداد خریـد',
-                                    count: controller.rpm.profile.id ?? 0),
-                                //todo fix this part from server
-                              ],
-                            ),
-                            SizedBox(height: standardSize),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                left: standardSize,
-                                right: standardSize,
-                                bottom: standardSize,
-                              ),
-                              child: const Divider(),
-                            ),
-                            ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: controller.rpm.services.length,
-                              itemBuilder: (context, index) =>
-                                  _serviceCard(context,controller.rpm.services[index]),
-                            )
+                            _bannerImage(),
+                            _avatarImage(),
                           ],
                         ),
                       ),
-                  onLoading: const Center(child: CupertinoActivityIndicator())),
-              bottomNavigationBar: Padding(
-                padding: EdgeInsetsDirectional.all(standardSize),
-                child: ValueListenableBuilder(
-                    valueListenable: Boxes.getBasketBox().listenable(),
-                    builder: (context, box, widget) {
-                      return progressButton(
-                        onTap: () {
-                          Get.to(CheckoutPage(id: controller.rpm.profile.id.toString(),));
-                        },
-                        isDisabled:
-                            cartController.box.values.isNotEmpty ? false : true,
-                        text: "صورتحساب",
-                      );
-                    }),
+                      SizedBox(height: standardSize),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _descWidget(
+                              title: 'تعـداد خدمـت',
+                              count: controller.rpm.services.length),
+                          Container(
+                            height: xxLargeSize,
+                            width: 1,
+                            color: AppColors.dividerColor,
+                          ),
+                          _descWidget(
+                              title: 'تعـداد خریـد',
+                              count: controller.rpm.profile.id ?? 0),
+                          //todo fix this part from server
+                        ],
+                      ),
+                      SizedBox(height: standardSize),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: standardSize,
+                          right: standardSize,
+                          bottom: standardSize,
+                        ),
+                        child: const Divider(),
+                      ),
+                      Container(
+                        width: fullWidth,
+                        margin: EdgeInsetsDirectional.only(start: standardSize,bottom: standardSize),
+                        child: Text('موقعیت مکانی',style: theme.textTheme.subtitle1,
+                        textAlign: TextAlign.start,
+                        ),
+                      ),
+
+                      Stack(
+                        children: [
+                          Positioned.fill(
+                            child: Container(
+                              margin: EdgeInsetsDirectional.only(start: standardSize,end: standardSize),
+                              width: fullWidth,
+                              height: fullHeight / 4,
+                              child: PreViewMapPage(
+                                lat: 36.6554,
+                                long: 56.55454,
+                                // mapController: controller.mapController,
+                                // pickerMapController: controller.pickerController,
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              // Get.off(MapPage());
+                              MapsLauncher.launchCoordinates(36.6554, 56.55454,
+                                  'Google Headquarters are here');
+                            },
+                            child: Container(
+                              width: fullWidth,
+                              height: fullHeight / 4,
+                              color: Colors.transparent,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        margin: EdgeInsetsDirectional.all(standardSize),
+                        width: fullWidth,
+                        child: progressButton(
+                            onTap: () => MapsLauncher.launchCoordinates(36.6554,
+                                56.55454, 'Google Headquarters are here'),
+                            text: 'رفتن به این موقعیت مکانی'),
+                      ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: controller.rpm.services.length,
+                        itemBuilder: (context, index) => _serviceCard(
+                            context, controller.rpm.services[index]),
+                      )
+                    ],
+                  ),
+                ),
+                onLoading: const Center(child: CupertinoActivityIndicator()),
+                onError: (error) => errorWidget(
+                    onTap: () {
+                      controller.getDetailCategory(id ?? '');
+                    },
+                    isBusy: false.obs),
               ),
+              bottomNavigationBar: controller.isError == false
+                  ? Padding(
+                      padding: EdgeInsetsDirectional.all(standardSize),
+                      child: ValueListenableBuilder(
+                          valueListenable: Boxes.getBasketBox().listenable(),
+                          builder: (context, box, widget) {
+                            return progressButton(
+                              onTap: () {
+                                Get.to(CheckoutPage(
+                                  id: controller.rpm.profile.id.toString(),
+                                ));
+                              },
+                              isDisabled: cartController.box.values.isNotEmpty
+                                  ? false
+                                  : true,
+                              text: "صورتحساب",
+                            );
+                          }),
+                    )
+                  : const SizedBox(),
             ));
   }
 
@@ -215,7 +279,7 @@ class WelfareCenterDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _serviceCard(BuildContext context,ServicesItem rpm) {
+  Widget _serviceCard(BuildContext context, ServicesItem rpm) {
     return Stack(
       children: [
         GestureDetector(
@@ -242,11 +306,10 @@ class WelfareCenterDetailPage extends StatelessWidget {
                             ),
                             child: ClipRRect(
                               borderRadius:
-                              BorderRadius.circular(xxSmallRadius),
-                              child: imageWidget(
-                                  rpm.image
-                                // "https://qph.cf2.quoracdn.net/main-qimg-1cf247a96715fe142b6ff10da03e3bb0-pjlq",
-                              ),
+                                  BorderRadius.circular(xxSmallRadius),
+                              child: imageWidget(rpm.image
+                                  // "https://qph.cf2.quoracdn.net/main-qimg-1cf247a96715fe142b6ff10da03e3bb0-pjlq",
+                                  ),
                             ),
                           ),
                         ),
@@ -262,7 +325,9 @@ class WelfareCenterDetailPage extends StatelessWidget {
                               SizedBox(height: xSmallSize),
                               _itemServiceCard(
                                 "قیمت",
-                                formatter.format(int.parse(double.parse(rpm.price).toStringAsFixed(0))),
+                                formatter.format(int.parse(
+                                    double.parse(rpm.price)
+                                        .toStringAsFixed(0))),
                                 hasDesc: true,
                               ),
                               SizedBox(height: xSmallSize),
@@ -272,7 +337,7 @@ class WelfareCenterDetailPage extends StatelessWidget {
                                   Text(
                                     "تخفیف:",
                                     style:
-                                    Get.theme.textTheme.subtitle2!.copyWith(
+                                        Get.theme.textTheme.subtitle2!.copyWith(
                                       color: AppColors.primaryColor,
                                     ),
                                   ),
@@ -287,7 +352,7 @@ class WelfareCenterDetailPage extends StatelessWidget {
                                           xxSmallRadius / 1.5),
                                     ),
                                     child: Text(
-                                     '%${double.parse(rpm.discount).toStringAsFixed(0)}',
+                                      '%${double.parse(rpm.discount).toStringAsFixed(0)}',
                                       style: Get.theme.textTheme.subtitle2!
                                           .copyWith(
                                         color: const Color(0xFFC62828),
@@ -353,7 +418,8 @@ class WelfareCenterDetailPage extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: xSmallSize),
                         decoration: BoxDecoration(
                           color: AppColors.errorColor.withOpacity(0.16),
-                          borderRadius: BorderRadius.circular(xxSmallRadius / 1.5),
+                          borderRadius:
+                              BorderRadius.circular(xxSmallRadius / 1.5),
                         ),
                         child: Text(
                           '%${double.parse(rpm.discount).toStringAsFixed(0)}',
@@ -378,9 +444,12 @@ class WelfareCenterDetailPage extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: xxSmallSize),
                   child: Row(
-
                     children: [
-                      Expanded(child: _itemServiceCard("قیمت", "${formatter.format(int.parse(double.parse(rpm.price).toStringAsFixed(0)))} تومان")),
+                      Expanded(
+                          child: _itemServiceCard("قیمت",
+                              "${formatter.format(int.parse(double.parse(rpm.price).toStringAsFixed(0)))} تومان",
+                              isLineThrough:
+                                  rpm.discount.isNotEmpty ? true : false)),
                       ValueListenableBuilder(
                         valueListenable: Boxes.getBasketBox().listenable(),
                         builder: (context, box, widget) {
@@ -397,7 +466,8 @@ class WelfareCenterDetailPage extends StatelessWidget {
                                       onPressed: () {
                                         var item = ServiceBasket(
                                             image: rpm.image,
-                                            acceptorProfileId: rpm.acceptorProfileId,
+                                            acceptorProfileId:
+                                                rpm.acceptorProfileId,
                                             companyShares: rpm.companyShares,
                                             createdAt: rpm.createdAt,
                                             price: rpm.price,
@@ -439,14 +509,14 @@ class WelfareCenterDetailPage extends StatelessWidget {
                                         minimumSize: Size.zero,
                                         padding: EdgeInsets.zero,
                                         shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(xSmallRadius),
+                                          borderRadius: BorderRadius.circular(
+                                              xSmallRadius),
                                         ),
                                       ),
                                       child: Text(
                                         "افزودن",
-                                        style:
-                                            Get.theme.textTheme.bodyText1!.copyWith(
+                                        style: Get.theme.textTheme.bodyText1!
+                                            .copyWith(
                                           fontWeight: FontWeight.w700,
                                           color: Colors.white,
                                         ),
@@ -491,7 +561,8 @@ class WelfareCenterDetailPage extends StatelessWidget {
                                             cartController
                                                 .checkItemCount(rpm.id)
                                                 .toString(),
-                                            style: Get.theme.textTheme.subtitle2,
+                                            style:
+                                                Get.theme.textTheme.subtitle2,
                                             textAlign: TextAlign.center,
                                           ),
                                         ),
@@ -506,7 +577,8 @@ class WelfareCenterDetailPage extends StatelessWidget {
                                           child: Icon(
                                             Icons.remove,
                                             color: cartController
-                                                        .checkItemCount(rpm.id) ==
+                                                        .checkItemCount(
+                                                            rpm.id) ==
                                                     0
                                                 ? AppColors.secondaryTextColor
                                                 : AppColors.primaryColor,
@@ -521,6 +593,8 @@ class WelfareCenterDetailPage extends StatelessWidget {
                     ],
                   ),
                 ),
+                _itemServiceCard("قیمت با تخفیف",
+                    "${formatter.format(int.parse(cartController.discountSingleItem().toStringAsFixed(0)))} تومان")
               ],
             ),
           ),
@@ -541,8 +615,8 @@ class WelfareCenterDetailPage extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(xxSmallRadius),
                 child: imageWidget(rpm.image
-                  // "https://qph.cf2.quoracdn.net/main-qimg-1cf247a96715fe142b6ff10da03e3bb0-pjlq",
-                ),
+                    // "https://qph.cf2.quoracdn.net/main-qimg-1cf247a96715fe142b6ff10da03e3bb0-pjlq",
+                    ),
               ),
             ),
           ),
@@ -609,6 +683,7 @@ class WelfareCenterDetailPage extends StatelessWidget {
     String title,
     String subTitle, {
     bool hasDesc = false,
+    bool isLineThrough = false,
   }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -635,7 +710,10 @@ class WelfareCenterDetailPage extends StatelessWidget {
                         trimExpandedText: '  کمتر',
                       )
                     : Text(subTitle,
-                        style: Get.theme.textTheme.subtitle2,
+                        style: Get.theme.textTheme.subtitle2!.copyWith(
+                            decoration: isLineThrough == true
+                                ? TextDecoration.lineThrough
+                                : TextDecoration.none),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis),
               ),

@@ -13,6 +13,7 @@ class WelfareCenterDetailController extends GetxController with StateMixin<Detai
 
   final CategoryRepo _repo = CategoryRepo();
    late DetailCategoryModel rpm;
+   bool isError = false;
   // List<String> ids =['1','2','3',
   //
   //   '4',
@@ -21,15 +22,21 @@ class WelfareCenterDetailController extends GetxController with StateMixin<Detai
   // ];
   Future getDetailCategory(String id)async{
     try{
+
       change(null,status: RxStatus.loading());
       rpm = await _repo.getDetailCategory(id);
       if (rpm !=null) {
+        isError = false;
+        update();
         change(rpm,status: RxStatus.success());
       }  else{
         change(null,status: RxStatus.empty());
       }
 
     }catch(e){
+      change(null,status: RxStatus.error('$e'));
+      isError = true ;
+      update();
       AppLogger.e('$e');
     }
   }

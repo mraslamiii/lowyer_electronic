@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/app/app_pages.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
 import 'package:kanoon_dadgostari/view/user/lawyer_license_info_page/controller/lawyer_license_info_controller.dart';
-
+import 'package:flutter/material.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 class PreViewMapPage extends StatefulWidget {
   double lat;
   double long;
@@ -20,7 +21,7 @@ final LocalStorageService pref = Get.find();
 
 class _LocationAppExampleState extends State<PreViewMapPage> {
   final theme = Get.theme;
-  late LawyerLicenseInfoController controller = Get.find();
+  late LawyerLicenseInfoController controller = Get.put(LawyerLicenseInfoController());
   late MapController mapController;
 
   @override
@@ -192,5 +193,46 @@ class CustomMap extends GetView<LawyerLicenseInfoController> {
                 ),
               )),
             ));
+  }
+}
+
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Maps Launcher Demo',
+          ),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              ElevatedButton(
+                onPressed: () => MapsLauncher.launchQuery(
+                    '1600 Amphitheatre Pkwy, Mountain View, CA 94043, USA'),
+                child: Text('LAUNCH QUERY'),
+              ),
+              SizedBox(height: 32),
+              ElevatedButton(
+                onPressed: () => MapsLauncher.launchCoordinates(
+                    37.4220041, -122.0862462, 'Google Headquarters are here'),
+                child: Text('LAUNCH COORDINATES'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

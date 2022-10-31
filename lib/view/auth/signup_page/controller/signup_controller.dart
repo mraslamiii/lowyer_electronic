@@ -60,22 +60,22 @@ class SignUPController extends GetxController {
       .now()
       .obs;
   RxBool isBusyLogin = false.obs;
-  Future upLoadAvatarToServer() async {
-    var rqm = UploadImageRQM(avatar: imagePath,method: 'patch');
-    try {
-      var a  = await repo.uploadImage(rqm);
-      update();
-      // Get.back();
-      return a;
-    } catch (e) {
-      AppLogger.e('$e');
-    }
-  }
+  // Future upLoadAvatarToServer() async {
+  //   var rqm = UploadImageRQM(avatar: imagePath,method: 'patch');
+  //   try {
+  //     var a  = await repo.uploadImage(rqm);
+  //     update();
+  //     // Get.back();
+  //     return a;
+  //   } catch (e) {
+  //     AppLogger.e('$e');
+  //   }
+  // }
 
   Future upLoadAvatarToUploader(File file) async {
     try {
       imagePath = await repo.uploadFile(file);
-      upLoadAvatarToServer();
+      // upLoadAvatarToServer();
       update();
       return imagePath;
     } catch (e) {

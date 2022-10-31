@@ -7,6 +7,7 @@ import 'package:kanoon_dadgostari/res/colors/colors.dart';
 import 'package:kanoon_dadgostari/view/base/welfare_center_detail_page/view/welfare_center_detail_page.dart';
 import 'package:kanoon_dadgostari/view/widgets/customScaffold/customScaffold.dart';
 import '../../../../res/dimens/dimens.dart';
+import '../../../../widgets/error_widget.dart';
 import '../../../widgets/back_widget/back_widget.dart';
 import '../../../widgets/image_widget.dart';
 import '../controller/welfare_center_controller.dart';
@@ -142,7 +143,14 @@ class WelfareCenterPage extends StatelessWidget {
                       ),
                   onLoading: const Center(
                     child: CupertinoActivityIndicator(),
-                  )),
+                  ),onError: (error) => errorWidget(
+                isBusy: false.obs,
+                onTap: () {
+                  controller.getCategory();
+                },
+
+              ),),
+
             ));
   }
 

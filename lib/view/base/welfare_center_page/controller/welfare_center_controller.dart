@@ -45,6 +45,7 @@ class WelfareCenterController extends GetxController with StateMixin<AcceptorCat
       }
 
     }catch(e){
+      change(null,status: RxStatus.error('$e'));
       AppLogger.e('$e');
     }
   }

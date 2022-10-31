@@ -74,6 +74,7 @@ dependencies:
   lottie: ^1.4.2
   google_fonts: ^3.0.1
   readmore: ^2.1.0
+  maps_launcher: ^2.0.1
   persian_datetime_picker:
     path: edit/persian-datetime-picker
   logger: ^1.1.0
