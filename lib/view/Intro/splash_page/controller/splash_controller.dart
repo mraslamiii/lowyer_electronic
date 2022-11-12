@@ -3,9 +3,7 @@ import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/app/app_pages.dart';
 import 'package:kanoon_dadgostari/service/preferences_service.dart';
 import 'package:kanoon_dadgostari/utilites/app_logger.dart';
-import 'package:kanoon_dadgostari/view/auth/login_page/page/login_page.dart';
 
-import '../../../../models/lawyer/info_profile_model.dart';
 import '../../../../repo/base/splash_repo.dart';
 
 class SplashController extends GetxController {

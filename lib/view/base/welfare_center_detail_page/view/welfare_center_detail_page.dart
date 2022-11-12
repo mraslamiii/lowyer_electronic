@@ -483,23 +483,6 @@ class WelfareCenterDetailPage extends StatelessWidget {
                                             startDate: rpm.startDate
                                             // itemTotal: 0,
                                             );
-                                        // var item = BasketItem(
-                                        //     id: rpm.id,
-                                        //     // quantity: rpm.quantity,
-                                        //     status: rpm.status,
-                                        //     description: rpm.description,
-                                        //     createdAt: rpm.createdAt,
-                                        //     updatedAt: rpm.updatedAt,
-                                        //     image: rpm.image,
-                                        //     acceptorProfileId: rpm.acceptorProfileId,
-                                        //     companyShares: rpm.companyShares,
-                                        //     discount: rpm.discount,
-                                        //     endDate: rpm.endDate,
-                                        //     lawyerCenter: rpm.lawyerCenter,
-                                        //     price: 100,
-                                        //     serviceName: rpm.serviceName,
-                                        //     startDate: rpm.startDate
-                                        // );
                                         cartController.addToCart(item);
                                         cartController.increase(rpm.id);
                                         debugPrint(

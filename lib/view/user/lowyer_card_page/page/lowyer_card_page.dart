@@ -137,7 +137,6 @@ class _BankCard extends GetView<LawyerController>  {
                   ],
                 ),),
                  firstChild: AnimatedContainer(
-
                    duration: const Duration(microseconds: 750),
                       clipBehavior: Clip.antiAlias,
                       alignment: Alignment.center,
