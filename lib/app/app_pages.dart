@@ -44,7 +44,7 @@ abstract class Routes {
 }
 
 class AppPages {
-  static const initialRoute = Routes.splashPage;
+  static const initialRoute = Routes.welfareCenterPage;
 
   static final routes = [
     GetPage(

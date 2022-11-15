@@ -16,6 +16,9 @@ double largeSize = Get.width/15.6; //todo 24
 double xLargeSize = Get.width/11.71; //todo 32
 
 double xxLargeSize = Get.width/7.81;//todo 48.07
+
+double xxxLargeSize = Get.width/5.55;
+
 fullWidths(BuildContext context){
   double fullWidth = MediaQuery.of(context).size.width;
 

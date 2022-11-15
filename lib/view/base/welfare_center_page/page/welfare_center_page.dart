@@ -196,7 +196,7 @@ class WelfareCenterPage extends StatelessWidget {
     return GestureDetector(
       onTap: () => Get.to(WelfareCenterDetailPage(
         title: controller.rpm.data?.acceptors[index].bussinesTitle ?? '',
-        id: controller.rpm.data?.acceptors[index].id.toString() ?? '',
+        id: '2',
       )),
       child: Container(
         width: fullWidth / 1.35,

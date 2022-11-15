@@ -28,8 +28,7 @@ class WelfareCenterDetailPage extends StatelessWidget {
   WelfareCenterDetailPage({Key? key, this.title, this.id}) : super(key: key);
 
   String? title;
-  String? id;
-
+  String? id = "2";
 
   final WelfareCenterDetailController controller =
       Get.put(WelfareCenterDetailController());
@@ -50,47 +49,6 @@ class WelfareCenterDetailPage extends StatelessWidget {
                 elevation: 0,
                 automaticallyImplyLeading: false,
                 leading: backIcon(),
-                actions: [
-                  IconButton(
-                    icon: const Icon(
-                      Icons.more_vert_sharp,
-                      color: Colors.black,
-                    ),
-                    onPressed: () {
-                      customBottomSheet(
-                        context,
-                        SingleChildScrollView(
-                          physics: const BouncingScrollPhysics(),
-                          child: ListView(
-                            padding: EdgeInsetsDirectional.only(
-                              bottom: fullHeight / 18,
-                            ),
-                            shrinkWrap: true,
-                            physics: const BouncingScrollPhysics(),
-                            children: [
-                              _sheetItem(
-                                context: context,
-                                title: 'www.shop.com',
-                                icon: 'assets/icons/ic_global.svg',
-                                isFirst: true,
-                              ),
-                              _sheetItem(
-                                context: context,
-                                title: 'instagram.shop',
-                                icon: 'assets/icons/ic_instagram.svg',
-                              ),
-                              _sheetItem(
-                                context: context,
-                                title: 'whatsapp.shop',
-                                icon: 'assets/icons/ic_whatsapp.svg',
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
               ),
               body: controller.obx(
                 (state) => SingleChildScrollView(
@@ -98,55 +56,129 @@ class WelfareCenterDetailPage extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: fullHeight / 4,
+                        height: fullHeight / 3.7,
                         child: Stack(
                           children: [
-                            _bannerImage(),
+                            Positioned.fill(child: _bannerImage()),
+                            PositionedDirectional(
+                                top: smallSize,
+                                end: smallSize,
+                                child: Container(
+                                    padding: EdgeInsets.all(xSmallSize),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white,
+                                    ),
+                                    child: Icon(Icons.location_on,
+                                        color: Colors.black,
+                                        size: iconSizeLarge))),
+                            Positioned(
+                              bottom: xxLargeSize,
+                              left: smallSize,
+                              child: Container(
+                                width: fullWidth / 2.5,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.all(xSmallSize / 1.2),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.white,
+                                      ),
+                                      child: Image.asset(
+                                        'assets/whatsapp.png',
+                                        height: xLargeSize,
+                                        width: xLargeSize,
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.all(xSmallSize / 1.2),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.white,
+                                      ),
+                                      child: Image.asset(
+                                        'assets/telegram.png',
+                                        height: xLargeSize,
+                                        width: xLargeSize,
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.all(xSmallSize / 1.2),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.white,
+                                      ),
+                                      child: Image.asset(
+                                        'assets/instagram.png',
+                                        height: xLargeSize,
+                                        width: xLargeSize,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                             _avatarImage(),
                           ],
                         ),
                       ),
-                      SizedBox(height: standardSize),
+
+                      // SizedBox(height: standardSize),
+                      // Row(
+                      //   mainAxisSize: MainAxisSize.min,
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     _descWidget(
+                      //         title: 'تعـداد خدمـت',
+                      //         count: controller.rpm.services.length),
+                      //     Container(
+                      //       height: xxLargeSize,
+                      //       width: 1,
+                      //       color: AppColors.dividerColor,
+                      //     ),
+                      //     _descWidget(
+                      //         title: 'تعـداد خریـد',
+                      //         count: controller.rpm.profile.id ?? 0),
+                      //     //todo fix this part from server
+                      //   ],
+                      // ),
+                      // SizedBox(height: standardSize),
+                      // Padding(
+                      //   padding: EdgeInsets.only(
+                      //     left: standardSize,
+                      //     right: standardSize,
+                      //     bottom: standardSize,
+                      //   ),
+                      //   child: const Divider(),
+                      // ),
+
                       Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          _descWidget(
-                              title: 'تعـداد خدمـت',
-                              count: controller.rpm.services.length),
-                          Container(
-                            height: xxLargeSize,
-                            width: 1,
-                            color: AppColors.dividerColor,
-                          ),
-                          _descWidget(
-                              title: 'تعـداد خریـد',
-                              count: controller.rpm.profile.id ?? 0),
-                          //todo fix this part from server
+                          IconButton(
+                              onPressed: () {},
+                              icon: Text('مشاهده محصولات'
+                                  ''))
                         ],
-                      ),
-                      SizedBox(height: standardSize),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: standardSize,
-                          right: standardSize,
-                          bottom: standardSize,
-                        ),
-                        child: const Divider(),
                       ),
                       Container(
                         width: fullWidth,
-                        margin: EdgeInsetsDirectional.only(start: standardSize,bottom: standardSize),
-                        child: Text('موقعیت مکانی',style: theme.textTheme.subtitle1,
-                        textAlign: TextAlign.start,
+                        margin: EdgeInsetsDirectional.only(
+                            start: standardSize, bottom: standardSize),
+                        child: Text(
+                          'موقعیت مکانی',
+                          style: theme.textTheme.subtitle1,
+                          textAlign: TextAlign.start,
                         ),
                       ),
-
                       Stack(
                         children: [
                           Positioned.fill(
                             child: Container(
-                              margin: EdgeInsetsDirectional.only(start: standardSize,end: standardSize),
+                              margin: EdgeInsetsDirectional.only(
+                                  start: standardSize, end: standardSize),
                               width: fullWidth,
                               height: fullHeight / 4,
                               child: PreViewMapPage(
@@ -226,10 +258,8 @@ class WelfareCenterDetailPage extends StatelessWidget {
       left: 0,
       child: SizedBox(
         width: fullWidth,
-        height: fullHeight / 5,
-        child: imageWidget(controller.rpm.profile.headerPic
-            // "https://m3.healio.com/~/media/slack-news/stock-images/fm_im/u/ultraprocessed-foods.jpg",
-            ),
+        height: fullHeight / 4.6,
+        child: imageWidget(controller.rpm.profile.headerPic),
       ),
     );
   }
@@ -237,7 +267,7 @@ class WelfareCenterDetailPage extends StatelessWidget {
   Widget _avatarImage() {
     return Positioned(
       right: largeSize / 1.2,
-      bottom: 0,
+      bottom: largeSize / 1.1,
       child: SizedBox(
         width: fullHeight / 10,
         height: fullHeight / 10,
@@ -248,10 +278,7 @@ class WelfareCenterDetailPage extends StatelessWidget {
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(xxSmallRadius),
-            child: imageWidget(controller.rpm.profile.headerPic
-
-                // "https://qph.cf2.quoracdn.net/main-qimg-1cf247a96715fe142b6ff10da03e3bb0-pjlq",
-                ),
+            child: imageWidget(controller.rpm.profile.headerPic),
           ),
         ),
       ),
@@ -557,15 +584,6 @@ class WelfareCenterDetailPage extends StatelessWidget {
                                               cartController.decrease(rpm.id);
                                             }
                                           },
-                                          child: Icon(
-                                            Icons.remove,
-                                            color: cartController
-                                                        .checkItemCount(
-                                                            rpm.id) ==
-                                                    0
-                                                ? AppColors.secondaryTextColor
-                                                : AppColors.primaryColor,
-                                          ),
                                         ),
                                       ],
                                     ),
@@ -577,7 +595,7 @@ class WelfareCenterDetailPage extends StatelessWidget {
                   ),
                 ),
                 _itemServiceCard("قیمت با تخفیف",
-                    "${formatter.format(int.parse(cartController.discountSingleItem().toStringAsFixed(0)))} تومان")
+                    "${formatter.format(int.parse(cartController.discountSingleItem().toStringAsFixed(0)))} تومان"),
               ],
             ),
           ),
