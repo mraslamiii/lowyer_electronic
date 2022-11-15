@@ -1,5 +1,4 @@
 // ignore_for_file: must_be_immutable
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -39,216 +38,281 @@ class WelfareCenterDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WelfareCenterDetailController>(
-        init: controller,
-        initState: (state) => controller.getDetailCategory(id ?? ''),
-        builder: (controller) => Scaffold(
-              appBar: AppBar(
-                title: Text(
-                  title ?? '',
-                ),
-                elevation: 0,
-                automaticallyImplyLeading: false,
-                leading: backIcon(),
-              ),
-              body: controller.obx(
-                (state) => SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(
+      init: controller,
+      initState: (state) => controller.getDetailCategory(id ?? ''),
+      builder: (controller) => Scaffold(
+        appBar: AppBar(
+          title: Text(
+            title ?? '',
+          ),
+          elevation: 0,
+          automaticallyImplyLeading: false,
+          leading: backIcon(),
+        ),
+        body: controller.obx(
+          (state) => SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: fullHeight / 3.7,
+                  child: Stack(
                     children: [
-                      SizedBox(
-                        height: fullHeight / 3.7,
-                        child: Stack(
-                          children: [
-                            Positioned.fill(child: _bannerImage()),
-                            PositionedDirectional(
-                                top: smallSize,
-                                end: smallSize,
-                                child: Container(
-                                    padding: EdgeInsets.all(xSmallSize),
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.white,
-                                    ),
-                                    child: Icon(Icons.location_on,
-                                        color: Colors.black,
-                                        size: iconSizeLarge))),
-                            Positioned(
-                              bottom: xxLargeSize,
-                              left: smallSize,
-                              child: Container(
-                                width: fullWidth / 2.5,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.all(xSmallSize / 1.2),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.white,
-                                      ),
-                                      child: Image.asset(
-                                        'assets/whatsapp.png',
-                                        height: xLargeSize,
-                                        width: xLargeSize,
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.all(xSmallSize / 1.2),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.white,
-                                      ),
-                                      child: Image.asset(
-                                        'assets/telegram.png',
-                                        height: xLargeSize,
-                                        width: xLargeSize,
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.all(xSmallSize / 1.2),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.white,
-                                      ),
-                                      child: Image.asset(
-                                        'assets/instagram.png',
-                                        height: xLargeSize,
-                                        width: xLargeSize,
-                                      ),
-                                    ),
-                                  ],
+                      Positioned.fill(child: _bannerImage()),
+                      PositionedDirectional(
+                          top: smallSize,
+                          end: smallSize,
+                          child: Container(
+                              padding: EdgeInsets.all(xSmallSize),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white,
+                              ),
+                              child: Icon(Icons.location_on,
+                                  color: Colors.black, size: iconSizeLarge))),
+                      Positioned(
+                        bottom: xxLargeSize,
+                        left: smallSize,
+                        child: Container(
+                          width: fullWidth / 2.5,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(xSmallSize / 1.2),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                ),
+                                child: Image.asset(
+                                  'assets/whatsapp.png',
+                                  height: xLargeSize,
+                                  width: xLargeSize,
                                 ),
                               ),
-                            ),
-                            _avatarImage(),
-                          ],
-                        ),
-                      ),
-
-                      // SizedBox(height: standardSize),
-                      // Row(
-                      //   mainAxisSize: MainAxisSize.min,
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   children: [
-                      //     _descWidget(
-                      //         title: 'تعـداد خدمـت',
-                      //         count: controller.rpm.services.length),
-                      //     Container(
-                      //       height: xxLargeSize,
-                      //       width: 1,
-                      //       color: AppColors.dividerColor,
-                      //     ),
-                      //     _descWidget(
-                      //         title: 'تعـداد خریـد',
-                      //         count: controller.rpm.profile.id ?? 0),
-                      //     //todo fix this part from server
-                      //   ],
-                      // ),
-                      // SizedBox(height: standardSize),
-                      // Padding(
-                      //   padding: EdgeInsets.only(
-                      //     left: standardSize,
-                      //     right: standardSize,
-                      //     bottom: standardSize,
-                      //   ),
-                      //   child: const Divider(),
-                      // ),
-
-                      Row(
-                        children: [
-                          IconButton(
-                              onPressed: () {},
-                              icon: Text('مشاهده محصولات'
-                                  ''))
-                        ],
-                      ),
-                      Container(
-                        width: fullWidth,
-                        margin: EdgeInsetsDirectional.only(
-                            start: standardSize, bottom: standardSize),
-                        child: Text(
-                          'موقعیت مکانی',
-                          style: theme.textTheme.subtitle1,
-                          textAlign: TextAlign.start,
-                        ),
-                      ),
-                      Stack(
-                        children: [
-                          Positioned.fill(
-                            child: Container(
-                              margin: EdgeInsetsDirectional.only(
-                                  start: standardSize, end: standardSize),
-                              width: fullWidth,
-                              height: fullHeight / 4,
-                              child: PreViewMapPage(
-                                lat: 36.6554,
-                                long: 56.55454,
-                                // mapController: controller.mapController,
-                                // pickerMapController: controller.pickerController,
+                              Container(
+                                padding: EdgeInsets.all(xSmallSize / 1.2),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                ),
+                                child: Image.asset(
+                                  'assets/telegram.png',
+                                  height: xLargeSize,
+                                  width: xLargeSize,
+                                ),
                               ),
-                            ),
+                              Container(
+                                padding: EdgeInsets.all(xSmallSize / 1.2),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                ),
+                                child: Image.asset(
+                                  'assets/instagram.png',
+                                  height: xLargeSize,
+                                  width: xLargeSize,
+                                ),
+                              ),
+                            ],
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              // Get.off(MapPage());
-                              MapsLauncher.launchCoordinates(36.6554, 56.55454,
-                                  'Google Headquarters are here');
-                            },
-                            child: Container(
-                              width: fullWidth,
-                              height: fullHeight / 4,
-                              color: Colors.transparent,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                      Container(
-                        margin: EdgeInsetsDirectional.all(standardSize),
-                        width: fullWidth,
-                        child: progressButton(
-                            onTap: () => MapsLauncher.launchCoordinates(36.6554,
-                                56.55454, 'Google Headquarters are here'),
-                            text: 'رفتن به این موقعیت مکانی'),
-                      ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: controller.rpm.services.length,
-                        itemBuilder: (context, index) => _serviceCard(
-                            context, controller.rpm.services[index]),
-                      )
+                      _avatarImage(),
                     ],
                   ),
                 ),
-                onLoading: const Center(child: CupertinoActivityIndicator()),
-                onError: (error) => errorWidget(
-                    onTap: () {
-                      controller.getDetailCategory(id ?? '');
-                    },
-                    isBusy: false.obs),
-              ),
-              bottomNavigationBar: controller.isError == false
-                  ? Padding(
-                      padding: EdgeInsetsDirectional.all(standardSize),
-                      child: ValueListenableBuilder(
-                          valueListenable: Boxes.getBasketBox().listenable(),
-                          builder: (context, box, widget) {
-                            return progressButton(
-                              onTap: () {
-                                Get.to(CheckoutPage(
-                                  id: controller.rpm.profile.id.toString(),
-                                ));
-                              },
-                              isDisabled: cartController.box.values.isNotEmpty
-                                  ? false
-                                  : true,
-                              text: "صورتحساب",
-                            );
-                          }),
-                    )
-                  : const SizedBox(),
-            ));
+
+                // SizedBox(height: standardSize),
+                // Row(
+                //   mainAxisSize: MainAxisSize.min,
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     _descWidget(
+                //         title: 'تعـداد خدمـت',
+                //         count: controller.rpm.services.length),
+                //     Container(
+                //       height: xxLargeSize,
+                //       width: 1,
+                //       color: AppColors.dividerColor,
+                //     ),
+                //     _descWidget(
+                //         title: 'تعـداد خریـد',
+                //         count: controller.rpm.profile.id ?? 0),
+                //     //todo fix this part from server
+                //   ],
+                // ),
+                // SizedBox(height: standardSize),
+                // Padding(
+                //   padding: EdgeInsets.only(
+                //     left: standardSize,
+                //     right: standardSize,
+                //     bottom: standardSize,
+                //   ),
+                //   child: const Divider(),
+                // ),
+
+                Row(
+                  children: [
+                    Expanded(child: SizedBox()),
+                    Padding(
+                      padding: EdgeInsets.only(left: xSmallSize),
+                      child: Container(
+                          padding: EdgeInsets.all(smallSize / 1.1),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.yellow,
+                          ),
+                          child: Icon(Icons.call)),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: smallSize),
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            maximumSize: Size(fullWidth / 2.3, xxLargeSize),
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(xxLargeSize)),
+                          ),
+                          onPressed: () {},
+                          child: Text('مشاهده محصولات')),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.all(smallSize),
+                  child: Text(
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 3,
+                      'افرادی که به شما می‌گویند نمی‌توانید در این دنیا تغییراتی ایجاد کنید، دو گروه هستند؛ اول، کسانی که از تلاش برای امتحان کردن می‌ترسند و دوم، آن‌هایی که از موفق شدن شما می‌ترسند.'),
+                ),
+
+                Container(
+                  margin: EdgeInsets.all(smallSize),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(largeSize),
+                    color: Colors.red,
+                  ),
+                  width: fullWidth,
+                  height: fullHeight / 4,
+                  child: Center(
+                    child: ClipPath(
+                      child: Container(
+                        padding: EdgeInsets.all(smallSize),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.grey
+                          ),
+                          child: Icon(Icons.play_arrow,size: largeSize,)),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: largeSize,left: smallSize,right: smallSize),
+                  child: SizedBox(
+                    height: fullHeight / 6.6,
+                    width: fullWidth ,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 5,
+                      physics: BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) => Container(
+                        margin: EdgeInsets.symmetric(horizontal: xSmallSize),
+                        height: fullHeight / 6.6,
+                        width: fullWidth / 3.6,
+                        color: Colors.orange,
+                        child: Image.asset('assets/store.jpg',fit: BoxFit.cover,),
+                      ),
+                    ),
+                  ),
+                ),
+                // Container(
+                //   width: fullWidth,
+                //   margin: EdgeInsetsDirectional.only(
+                //       start: standardSize, bottom: standardSize),
+                //   child: Text(
+                //     'موقعیت مکانی',
+                //     style: theme.textTheme.subtitle1,
+                //     textAlign: TextAlign.start,
+                //   ),
+                // ),
+                // Stack(
+                //   children: [
+                //     Positioned.fill(
+                //       child: Container(
+                //         margin: EdgeInsetsDirectional.only(
+                //             start: standardSize, end: standardSize),
+                //         width: fullWidth,
+                //         height: fullHeight / 4,
+                //         child: PreViewMapPage(
+                //           lat: 36.6554,
+                //           long: 56.55454,
+                //           // mapController: controller.mapController,
+                //           // pickerMapController: controller.pickerController,
+                //         ),
+                //       ),
+                //     ),
+                //     GestureDetector(
+                //       onTap: () {
+                //         // Get.off(MapPage());
+                //         MapsLauncher.launchCoordinates(36.6554, 56.55454,
+                //             'Google Headquarters are here');
+                //       },
+                //       child: Container(
+                //         width: fullWidth,
+                //         height: fullHeight / 4,
+                //         color: Colors.transparent,
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                // Container(
+                //   margin: EdgeInsetsDirectional.all(standardSize),
+                //   width: fullWidth,
+                //   child: progressButton(
+                //       onTap: () => MapsLauncher.launchCoordinates(36.6554,
+                //           56.55454, 'Google Headquarters are here'),
+                //       text: 'رفتن به این موقعیت مکانی'),
+                // ),
+                // ListView.builder(
+                //   shrinkWrap: true,
+                //   physics: const NeverScrollableScrollPhysics(),
+                //   itemCount: controller.rpm.services.length,
+                //   itemBuilder: (context, index) => _serviceCard(
+                //       context, controller.rpm.services[index]),
+                // ),
+              ],
+            ),
+          ),
+          onLoading: const Center(child: CupertinoActivityIndicator()),
+          onError: (error) => errorWidget(
+              onTap: () {
+                controller.getDetailCategory(id ?? '');
+              },
+              isBusy: false.obs),
+        ),
+        bottomNavigationBar: controller.isError == false
+            ? Padding(
+                padding: EdgeInsetsDirectional.all(standardSize),
+                child: ValueListenableBuilder(
+                    valueListenable: Boxes.getBasketBox().listenable(),
+                    builder: (context, box, widget) {
+                      return progressButton(
+                        onTap: () {
+                          Get.to(CheckoutPage(
+                            id: controller.rpm.profile.id.toString(),
+                          ));
+                        },
+                        isDisabled:
+                            cartController.box.values.isNotEmpty ? false : true,
+                        text: "صورتحساب",
+                      );
+                    }),
+              )
+            : const SizedBox(),
+      ),
+    );
   }
 
   Widget _bannerImage() {
