@@ -13,6 +13,7 @@ import 'package:kanoon_dadgostari/view/base/scan_search_page/page/scan_search_pa
 import 'package:kanoon_dadgostari/view/base/welfare_center_page/page/welfare_center_page.dart';
 import 'package:kanoon_dadgostari/view/user/edit_social_info_page/page/edit_social_info_page.dart';
 import 'package:kanoon_dadgostari/view/user/lawyer_license_info_page/page/lawyer_license_info_page.dart';
+import '../categories_page.dart';
 import '../map_page.dart';
 import '../view/auth/signup_page/binding/signup_binding.dart';
 import '../view/auth/signup_page/page/signup_lawyers_info_page.dart';
@@ -41,6 +42,8 @@ abstract class Routes {
   static const verificationPage = '/verification_page';
   static const mapPage = '/map_page';
   static const verifyDetails = '/verifyDetails_page';
+
+  static const categories = '/categories_page';
 }
 
 class AppPages {
@@ -145,6 +148,12 @@ class AppPages {
       name: Routes.editSocialInfoPage,
       page: () =>  EditSocialInfoPage(),
       binding: EditSocialInfoBinding()
+    ),
+
+    GetPage(
+        name: Routes.categories,
+        page: () =>  Categories(),
+        binding: EditSocialInfoBinding()
     ),
   ];
 }

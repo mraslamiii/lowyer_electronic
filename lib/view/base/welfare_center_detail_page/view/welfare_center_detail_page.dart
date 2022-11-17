@@ -169,7 +169,7 @@ class WelfareCenterDetailPage extends StatelessWidget {
                       padding: EdgeInsets.only(left: smallSize),
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            maximumSize: Size(fullWidth / 2.3, xxLargeSize),
+                            // maximumSize: Size(fullWidth / 2.3, xxLargeSize),
                             shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.circular(xxLargeSize)),
@@ -198,20 +198,22 @@ class WelfareCenterDetailPage extends StatelessWidget {
                   child: Center(
                     child: ClipPath(
                       child: Container(
-                        padding: EdgeInsets.all(smallSize),
+                          padding: EdgeInsets.all(smallSize),
                           decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.grey
-                          ),
-                          child: Icon(Icons.play_arrow,size: largeSize,)),
+                              shape: BoxShape.circle, color: Colors.grey),
+                          child: Icon(
+                            Icons.play_arrow,
+                            size: largeSize,
+                          )),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: largeSize,left: smallSize,right: smallSize),
+                  padding: EdgeInsets.only(
+                      top: largeSize, left: smallSize, right: smallSize),
                   child: SizedBox(
                     height: fullHeight / 6.6,
-                    width: fullWidth ,
+                    width: fullWidth,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: 5,
@@ -222,7 +224,10 @@ class WelfareCenterDetailPage extends StatelessWidget {
                         height: fullHeight / 6.6,
                         width: fullWidth / 3.6,
                         color: Colors.orange,
-                        child: Image.asset('assets/store.jpg',fit: BoxFit.cover,),
+                        child: Image.asset(
+                          'assets/store.jpg',
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
