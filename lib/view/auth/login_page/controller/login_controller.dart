@@ -6,7 +6,6 @@ import 'package:kanoon_dadgostari/repo/sec/auth_repo.dart';
 import 'package:kanoon_dadgostari/service/connection_service/connection_status.dart';
 import 'package:kanoon_dadgostari/enums/result_enum.dart';
 import 'package:kanoon_dadgostari/utilites/show_result.dart';
-import 'package:kanoon_dadgostari/view/widgets/custom_snackbar/custom_snackbar.dart';
 
 import '../../../../app/app_pages.dart';
 import '../../../../enums/snackbar_type.dart';

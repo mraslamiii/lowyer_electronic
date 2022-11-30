@@ -21,9 +21,9 @@ class LawyerLicenseInfoController extends GetxController
    GeoPoint? geoPoint; //todo //get from server f
   late MapController mapController;
   late PickerMapController pickerController;
-  double? lat;
+  double? lat = 0.0;
 
-  double? long;
+  double? long = 0.0;
 
   @override
   void onInit() async {

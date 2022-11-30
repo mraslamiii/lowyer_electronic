@@ -18,6 +18,7 @@ import '../map_page.dart';
 import '../view/auth/signup_page/binding/signup_binding.dart';
 import '../view/auth/signup_page/page/signup_lawyers_info_page.dart';
 import '../view/auth/verification_page/binding/verification_binding.dart';
+import '../view/base/welfare_center_detail_page/view/walfare_serviceses.dart';
 import '../view/user/edit_profile_page/binding/edit_profile_binding.dart';
 import '../view/user/edit_profile_page/page/edit_profile_page.dart';
 import '../view/user/edit_social_info_page/binding/edit_social_info_binding.dart';
@@ -37,6 +38,7 @@ abstract class Routes {
   static const scan_search_page = '/scan_search_page';
   static const lawyerLicenseInfoPage = '/lawyer_license_info_page';
   static const welfareCenterPageDetail = '/welfare_center_page_detail';
+  static const welfareServicePageDetail = '/welfare_service_page_detail';
   static const signupPage = '/signup_page';
   static const signupPage2 = '/signup_page2';
   static const verificationPage = '/verification_page';
@@ -47,7 +49,7 @@ abstract class Routes {
 }
 
 class AppPages {
-  static const initialRoute = Routes.welfareCenterPage;
+  static const initialRoute = Routes.splashPage;
 
   static final routes = [
     GetPage(
@@ -69,7 +71,13 @@ class AppPages {
       page: () =>  WelfareCenterPage(),
     ),
 
-  GetPage(
+
+    GetPage(
+      name: Routes.welfareServicePageDetail,
+      page: () =>  WalfareServicePage(),
+    ),
+
+    GetPage(
       name: Routes.lawyerLicenseInfoPage,
       page: () =>  LawyerLicenseInfoPage(),
       binding: LawyerLicenseInfoBinding(),

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:kanoon_dadgostari/web_providers/api_endpoints.dart';
+
 import '../api_provider.dart';
 
 class CategoryAPI {
@@ -27,4 +28,16 @@ class CategoryAPI {
       rethrow;
     }
   }
+
+  Future getCategoryAcceptorApi(int id) async {
+    Map<String, dynamic> input = {};
+    try {
+      String url = "https://lawyerb.gelareco.ir/api/v1/acceptor/services/category/${id}";
+      var response = await _provider.getRequest(url, input);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 }

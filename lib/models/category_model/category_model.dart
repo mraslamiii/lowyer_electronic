@@ -46,6 +46,25 @@ class AcceptorCategoryModel {
   };
 }
 
+
+
+class CategoryAcceptorCategoryModel {
+  final List<AcceptorsItem> acceptors;
+
+  CategoryAcceptorCategoryModel({
+    required this.acceptors,
+  });
+
+  factory CategoryAcceptorCategoryModel.fromJson(Map<String, dynamic>? json) => CategoryAcceptorCategoryModel(
+    acceptors: asT<List>(json, 'acceptors').map((e) => AcceptorsItem.fromJson(e)).toList(),
+  );
+
+  Map<String, dynamic> toJson() => {
+    'acceptors': acceptors.map((e) => e.toJson()),
+  };
+}
+
+
 class AcceptorsItem {
   final String bussinesTitle;
   final dynamic logo;

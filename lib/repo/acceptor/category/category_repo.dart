@@ -24,4 +24,16 @@ class CategoryRepo {
       rethrow;
     }
   }
+
+  Future getCategoryAcceptor(int id) async {
+    try {
+      Map<String, dynamic> response = await CategoryAPI().getCategoryAcceptorApi(id);
+      BaseResponse<CategoryAcceptorCategoryModel> result =
+      BaseResponse.fromJson(response, CategoryAcceptorCategoryModel.fromJson);
+      return result.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 }

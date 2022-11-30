@@ -15,7 +15,8 @@ class APIProvider extends GetxService {
   static final _singleton = APIProvider();
 
   static APIProvider get instance => _singleton;
-  Future<T> upLoadTestRequest<T>(String url,File data,
+
+  Future<T> upLoadTestRequest<T>(String url, File data,
       {bool hasBaseResponse = true}) async {
     Map<String, String> _headers = Get.find<LocalStorageService>().headers;
 
@@ -34,10 +35,9 @@ class APIProvider extends GetxService {
 
     try {
       dio.Response response;
-       response = await _dio.post(
+      response = await _dio.post(
         url,
         data: data,
-
       );
       // if (data.path.isNotEmpty) {
       //   response = await _dio.post(url, data: data);
@@ -60,8 +60,6 @@ class APIProvider extends GetxService {
       throw (FetchDataException);
     }
   }
-
-
 
   Future<T> postRequest<T>(String url, Map<String, dynamic> data,
       {bool hasBaseResponse = true}) async {
@@ -252,12 +250,13 @@ class APIProvider extends GetxService {
       throw (FetchDataException);
     }
   }
-  Future upload(File file,String url) async {
+
+  Future upload(File file, String url) async {
     String fileName = file.path.split('/').last;
     print(fileName);
 
-    dio.FormData data =  dio.FormData.fromMap({
-      "file": await  dio.MultipartFile.fromFile(
+    dio.FormData data = dio.FormData.fromMap({
+      "file": await dio.MultipartFile.fromFile(
         file.path,
         filename: fileName,
       ),
@@ -272,18 +271,18 @@ class APIProvider extends GetxService {
       return jsonResponse;
     }).catchError((error) => print(error));
   }
+
   Future<T> uploadRequest<T>(
       String url, File file, Function(int sent, int total) progressFunc,
       {bool hasBaseResponse = true}) async {
     String fileName = file.path.split('/').last;
 
-    dio.FormData data =  dio.FormData.fromMap({
-      "file": await  dio.MultipartFile.fromFile(
+    dio.FormData data = dio.FormData.fromMap({
+      "file": await dio.MultipartFile.fromFile(
         file.path,
         filename: fileName,
       ),
     });
-
 
     // dio.FormData data = dio.FormData.fromMap({
     //   fileName: [await dio.MultipartFile.fromFile("file", filename: fileName)
@@ -341,7 +340,6 @@ class APIProvider extends GetxService {
         try {
           return response?.data;
 
-
           // var responseJson = jsonDecode(response?.data);
           // return responseJson;
         } catch (e) {
@@ -360,7 +358,10 @@ class APIProvider extends GetxService {
         var body = response?.data;
 
         BaseResponse baseResponse = BaseResponse.fromJson(body, null);
-      throw baseResponse.data.toString();
+        throw TitleValueException(baseResponse.exception ?? []);
+
+
+    // throw baseResponse.exception[value];
       // throw FetchDataException(FetchDataException
       //     'Error occured while communication with server' +
       //         ' with status code : ${response?.statusCode}');

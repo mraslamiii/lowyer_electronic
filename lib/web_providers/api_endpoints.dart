@@ -1,15 +1,12 @@
 import '../app/config.dart';
 
 class APIEndpoint {
-  static const String urlGeneralAPI =
-      "${ConfigConstants.domain}/api/";
-
+  static const String urlGeneralAPI = "${ConfigConstants.domain}/api/";
 
   static const String _generalURL = "https://lawyerb.gelareco.ir";
   static const String apiBaseURL = "$_generalURL/api/";
   static const String mediaURL = _generalURL;
   static const String uploadURL = "$_generalURL/api/";
-
 
 //****************************Custom ****************************//
   static const String trainings = "trainings";
@@ -24,8 +21,6 @@ class APIEndpoint {
   static const String category = "category/list";
   static const String social = "social";
   static const String education = "education";
-
-
 
   static String urlCreator(APIControllers controller, String endPoint,
       {String version = "v1", String? id}) {
@@ -48,4 +43,14 @@ class APIEndpoint {
   }
 }
 
-enum APIControllers { lawyers, register, login ,admin,acceptor,logout,upload}
+enum APIControllers {
+  lawyers,
+  register,
+  login,
+  admin,
+  acceptor,
+  category,
+  service,
+  logout,
+  upload
+}
