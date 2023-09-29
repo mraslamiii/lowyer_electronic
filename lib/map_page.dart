@@ -31,20 +31,22 @@ class _LocationAppExampleState extends State<MapPage> {
     Get.off(LawyerLicenseInfoPage());
     return Future.value(false);
   }
-
   @override
   void initState() {
+    var a = lawyerLicenseInfoController.pref.lawyer.profile;
+    debugPrint('${a!.lat} lattt');
+    a.lat.isEmpty  ? '0':
     lawyerLicenseInfoController.geoPoint =
         lawyerLicenseInfoController.geoPoint ??
             GeoPoint(
                 latitude: double.parse(
-                    lawyerLicenseInfoController.pref.lawyer.profile!.lat),
+                    a.lat),
                 longitude: double.parse(
-                    lawyerLicenseInfoController.pref.lawyer.profile!.long));
+                    a.long));
 
     controller = PickerMapController(
       initPosition: lawyerLicenseInfoController.geoPoint,
-      initMapWithUserPosition: true,
+      initMapWithUserPosition: false,
     );
   }
 

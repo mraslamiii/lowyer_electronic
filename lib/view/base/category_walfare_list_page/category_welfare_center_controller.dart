@@ -6,12 +6,13 @@ import 'package:kanoon_dadgostari/service/preferences_service.dart';
 import 'package:kanoon_dadgostari/utilites/app_logger.dart';
 
 import '../../../../repo/acceptor/category/category_repo.dart';
+import '../../../models/category_model/get_all_cat.dart';
 
 class CategoryWelfareCenterController extends GetxController
-    with StateMixin<CategoryAcceptorCategoryModel> {
+    with StateMixin<GetAllCategoryModel> {
   final LocalStorageService pref = Get.find<LocalStorageService>();
 
-  late BaseResponse<CategoryAcceptorCategoryModel> rpm;
+  GetAllCategoryModel? rpm;
 
   final CategoryRepo _repo = CategoryRepo();
 
@@ -26,7 +27,7 @@ class CategoryWelfareCenterController extends GetxController
       change(null, status: RxStatus.loading());
       rpm = await _repo.getCategoryAcceptor(id);
       if (rpm != null) {
-        change(rpm.data, status: RxStatus.success());
+        change(rpm , status: RxStatus.success());
       } else {
         change(null, status: RxStatus.empty());
       }

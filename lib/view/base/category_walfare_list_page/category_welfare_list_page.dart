@@ -1,26 +1,21 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/adapters.dart';
-import 'package:kanoon_dadgostari/view/base/basket_controller/basket_controller.dart';
-import 'package:kanoon_dadgostari/view/base/welfare_center_detail_page/controller/welfare_center_detail_controller.dart';
 import 'package:kanoon_dadgostari/view/base/welfare_center_page/page/welfare_center_page.dart';
-import 'package:readmore/readmore.dart';
-
-import '../../../../models/category_model/detail_category_model.dart';
-import '../../../../models/entity/basket/service_entity.dart';
-import '../../../../res/colors/colors.dart';
 import '../../../../res/dimens/dimens.dart';
-import '../../../../utilites/hive_utils/hive_utils.dart';
-
 import '../welfare_center_page/controller/welfare_center_controller.dart';
 import 'category_welfare_center_controller.dart';
 
 class CategoryWelfareListPage extends GetView<CategoryWelfareCenterController> {
+
   int id;
   WelfareCenterController centerController;
+
+  @override
   final CategoryWelfareCenterController controller = Get.put(CategoryWelfareCenterController());
 
-  CategoryWelfareListPage(this.id, this.centerController);
+  CategoryWelfareListPage(this.id, this.centerController, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +27,10 @@ class CategoryWelfareListPage extends GetView<CategoryWelfareCenterController> {
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
-              title: Text("دسته بندی ها"),
+              title:const Text("دسته بندی ها"),
               leading: IconButton(
                   onPressed: () => Get.back(),
-                  icon: Icon(
+                  icon:const Icon(
                     Icons.arrow_back,
                     color: Colors.black87,
                   )),
@@ -51,18 +46,18 @@ class CategoryWelfareListPage extends GetView<CategoryWelfareCenterController> {
                                 centerController,
                                 index,
                                 controller
-                                        .rpm.data?.acceptors[index].headerPic ??
+                                        .rpm?.data[index].headerPic ??
                                     '',
-                                controller.rpm.data?.acceptors[index]
+                                controller.rpm?.data[index]
                                         .bussinesTitle ??
                                     '',
                                 '4.8',
-                                controller.rpm.data?.acceptors[index]
+                                controller.rpm?.data[index]
                                         .acceptorAbout ??
                                     ''),
                           ),
                         ),
-                    childCount: controller.rpm.data?.acceptors.length))
+                    childCount: controller.rpm?.data.length))
           ],
         ),
       ),

@@ -30,6 +30,7 @@ class HomePage extends StatelessWidget {
     debugPrint('lat:${pref.lawyer.profile!.lat}');
     debugPrint('avatar:${pref.lawyer.user?.avatar}');
     debugPrint('avatar:${controller.res}');
+    debugPrint('Userr:${controller.pref.user.id}');
 
     return GetBuilder<HomeController>(
       init: controller,

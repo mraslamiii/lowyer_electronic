@@ -212,8 +212,8 @@ class LawyerLicenseInfoPage extends StatelessWidget {
                                             width: fullWidth,
                                             height: fullHeight / 4,
                                             child: PreViewMapPage(
-                                              lat: controller.lat!,
-                                              long: controller.long!,
+                                              lat: controller.lat ?? 0,
+                                              long: controller.long??0,
                                               // mapController: controller.mapController,
                                               // pickerMapController: controller.pickerController,
                                             ),

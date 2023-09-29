@@ -153,48 +153,6 @@ class _LocationAppExampleState extends State<PreViewMapPage> {
   }
 }
 
-class CustomMap extends GetView<LawyerLicenseInfoController> {
-  final bool isPick;
-
-  const CustomMap(this.isPick, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder(
-        init: LawyerLicenseInfoController(),
-        initState: (state) {},
-        builder: (LawyerLicenseInfoController controller) => OSMFlutter(
-              controller: controller.mapController,
-              isPicker: isPick,
-              initZoom: 16,
-              minZoomLevel: 8,
-              stepZoom: 3.0,
-              userLocationMarker: UserLocationMaker(
-                  personMarker: const MarkerIcon(
-                    icon: Icon(
-                      Icons.person_pin_circle,
-                      color: Colors.blue,
-                      size: 120,
-                    ),
-                  ),
-                  directionArrowMarker: const MarkerIcon(
-                    icon: Icon(
-                      Icons.person_pin_circle,
-                      color: Colors.blue,
-                      size: 120,
-                    ),
-                  )),
-              markerOption: MarkerOption(
-                  defaultMarker: const MarkerIcon(
-                icon: Icon(
-                  Icons.location_on,
-                  color: Colors.red,
-                  size: 120,
-                ),
-              )),
-            ));
-  }
-}
 
 
 void main() => runApp(MyApp());

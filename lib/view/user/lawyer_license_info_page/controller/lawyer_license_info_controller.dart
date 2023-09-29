@@ -21,18 +21,16 @@ class LawyerLicenseInfoController extends GetxController
    GeoPoint? geoPoint; //todo //get from server f
   late MapController mapController;
   late PickerMapController pickerController;
-  double? lat = 0.0;
+  double? lat ;
 
-  double? long = 0.0;
+  double? long;
 
   @override
   void onInit() async {
-    lat = double.parse(pref.lawyer.profile!.lat);
-    debugPrint('${lat} asda');
-    long = double.parse(pref.lawyer.profile!.long?? '');
-    pickerController = PickerMapController();
-    mapController =
-        MapController(initPosition: geoPoint, initMapWithUserPosition: false);
+    lat = double.parse(pref.lawyer.profile?.lat ?? '');
+    long = double.parse(pref.lawyer.profile?.long?? '');
+    pickerController = PickerMapController(initMapWithUserPosition: false);
+
     super.onInit();
   }
 
@@ -150,7 +148,7 @@ class LawyerLicenseInfoController extends GetxController
       showTheResult(
           resultType: SnackbarType.error,
           showTheResultType: ShowTheResultType.snackBar,
-          title: 'Error',
+          title: 'خطا',
           message: '$e');
       AppLogger.e('$e');
     }

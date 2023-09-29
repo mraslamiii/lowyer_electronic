@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:kanoon_dadgostari/res/colors/colors.dart';
 import 'package:kanoon_dadgostari/res/dimens/dimens.dart';
 import 'package:kanoon_dadgostari/utilites/datetime_extentions.dart';
-import 'package:kanoon_dadgostari/view/user/history_page/binding/history_binding.dart';
 import 'package:kanoon_dadgostari/view/widgets/customScaffold/customScaffold.dart';
 
 import '../../../widgets/back_widget/back_widget.dart';
@@ -32,10 +30,13 @@ class LawyerCardPage extends StatelessWidget {
                         child: SizedBox(
                           width: fullWidth,
                           child: progressButton(
-                            isProgress: controller.requestNewCard.value,
-                              onTap: controller.requestNewCard.isFalse ? () {
-                                controller.makeRequest();
-                              } : null, text: "درخواست جدید"),
+                              isProgress: controller.requestNewCard.value,
+                              onTap: controller.requestNewCard.isFalse
+                                  ? () {
+                                      controller.makeRequest();
+                                    }
+                                  : null,
+                              text: "درخواست جدید"),
                         )),
                     SizedBox(
                       width: standardSize,
@@ -45,7 +46,7 @@ class LawyerCardPage extends StatelessWidget {
                         child: SizedBox(
                           width: fullWidth,
                           child: progressButton(
-                            isProgress: controller.isBusyBan.value,
+                              isProgress: controller.isBusyBan.value,
                               onTap: () {
                                 // controller.hasActiveCard.value = !controller.hasActiveCard.value;
                                 // controller.update();
@@ -89,7 +90,7 @@ class LawyerCardPage extends StatelessWidget {
                   color: Get.theme.iconTheme.color,
                 ),
                 onPressed: () {
-                  Get.to( HistoryPage());
+                  Get.to(HistoryPage());
                 },
               )
             ],
@@ -99,7 +100,7 @@ class LawyerCardPage extends StatelessWidget {
                 vertical: standardSize, horizontal: standardSize),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: const [
+              children:  const [
                 _BankCard(),
               ],
             ),
@@ -108,36 +109,60 @@ class LawyerCardPage extends StatelessWidget {
   }
 }
 
-class _BankCard extends GetView<LawyerController>  {
+class _BankCard extends GetView<LawyerController> {
 
-  const _BankCard();
+   const _BankCard();
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      physics:const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: 1,
-        itemBuilder: (context, index) {
-          var card = controller.lawyer.cards?[index];
-          return
-            Obx(
-          () =>
-         AnimatedCrossFade(
-                 crossFadeState: controller.hasActiveCard.value == false ||
-                 controller.lawyer.cards?[index].status == 'ban'
-                     ?  CrossFadeState.showSecond : CrossFadeState.showFirst,
-                duration: const Duration(milliseconds: 750),
-                secondChild: Container(height: fullHeight / 1.5,alignment: Alignment.center,child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset("assets/icons/ic_home_vakil_card.png",width: fullWidth / 4 ),
-                    Text("کارتی وجود ندارد",style: Get.theme.textTheme.bodyText1,)
-                  ],
-                ),),
-                 firstChild: AnimatedContainer(
-                   duration: const Duration(microseconds: 750),
+   var lawyer =controller.lawyer.cards;
+    return controller.lawyer.cards?.isEmpty ?? false
+        ? Container(
+            height: fullHeight / 1.5,
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset("assets/icons/ic_home_vakil_card.png",
+                    width: fullWidth / 4),
+                Text(
+                  "کارتی وجود ندارد",
+                  style: Get.theme.textTheme.bodyText1,
+                )
+              ],
+            ),
+          )
+        : ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: lawyer?.isEmpty ?? false ? 0 : 1,
+            itemBuilder: (context, index) {
+              return Obx(() => AnimatedCrossFade(
+                    crossFadeState: controller.hasActiveCard.value == false ||
+                        lawyer?[index].status == 'ban'
+                        ? CrossFadeState.showSecond
+                        : CrossFadeState.showFirst,
+                    duration: const Duration(milliseconds: 750),
+                    secondChild: Container(
+                      height: fullHeight / 1.5,
+                      alignment: Alignment.center,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image.asset("assets/icons/ic_home_vakil_card.png",
+                              width: fullWidth / 4),
+                          Text(
+                            "کارتی وجود ندارد",
+                            style: Get.theme.textTheme.bodyText1,
+                          )
+                        ],
+                      ),
+                    ),
+                    firstChild: AnimatedContainer(
+                      duration: const Duration(microseconds: 750),
                       clipBehavior: Clip.antiAlias,
                       alignment: Alignment.center,
                       // duration: const Duration(milliseconds: 1000),
@@ -158,16 +183,18 @@ class _BankCard extends GetView<LawyerController>  {
                         Positioned(
                             top: -xLargeSize / 1.4,
                             right: -standardSize,
-                            child: SvgPicture.asset('assets/icons/dots_btm.svg')),
+                            child:
+                                SvgPicture.asset('assets/icons/dots_btm.svg')),
                         Positioned(
                             bottom: -xLargeSize / 1.4,
                             left: -standardSize,
-                            child: SvgPicture.asset('assets/icons/dots_btm.svg')),
+                            child:
+                                SvgPicture.asset('assets/icons/dots_btm.svg')),
                         Align(
                             alignment: Alignment.center,
                             child: Text(
                                 numberFormatter(
-                                    int.parse(card?.cardNumber ?? '')),
+                                    int.parse( lawyer?[index].cardNumber ?? '')),
                                 textDirection: TextDirection.ltr,
                                 style: Get.theme.textTheme.headline5!
                                     .copyWith(color: Colors.white))),
@@ -200,7 +227,7 @@ class _BankCard extends GetView<LawyerController>  {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "تاریخ انقضا :${card?.expirationDate}",
+                                  "تاریخ انقضا :${ lawyer?[index].expirationDate}",
                                   style: Get.theme.textTheme.subtitle2!
                                       .copyWith(color: Colors.white),
                                 ),
@@ -213,9 +240,8 @@ class _BankCard extends GetView<LawyerController>  {
                               ],
                             )),
                       ]),
-
-                  ),
-               ));
-        });
+                    ),
+                  ));
+            });
   }
 }
